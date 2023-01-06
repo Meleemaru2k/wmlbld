@@ -1,10 +1,8 @@
 <template>
   <div>Game</div>
-  <imageGridVue></imageGridVue>
+  <imageGridVue :game-name="gameName"></imageGridVue>
 </template>
 <script setup lang="ts">
 import imageGridVue from "~~/components/gameboard/image-grid.vue";
-/**
- * Play game here
- */
+const gameName = <string>useRoute().params.name ?? "samplegame";
 </script>
