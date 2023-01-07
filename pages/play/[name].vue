@@ -14,13 +14,13 @@
           }}s</span
         >
       </div>
-      <div class="flex flex-row flex-nowrap items-baseline gap-x-1">
-        <basicButton class="shrink-0" @click="toggleGrid()"
-          >Raster ein/aus</basicButton
-        >
-        <basicButton class="shrink-0">+</basicButton>
-        <basicButton class="shrink-0">-</basicButton>
+      <div class="shrink-0 flex flex-row flex-nowrap">
+        <span class="text-xl">ℹ️ Info</span>
       </div>
+
+      <basicButton class="shrink-0" @click="toggleGrid()"
+        >Raster <i>A</i></basicButton
+      >
     </div>
     <div
       class="p-4 md:p-8 shadow-inner grow flex flex-col bg-opacity-50 bg-stone-300"

@@ -1,6 +1,6 @@
 <template>
   <button
-    class="rounded border-solid border-slate-200 border-[1px] px-3 py-1 text-center"
+    class="rounded shadow-inner border-solid border-[rgba(0,0,0,0.2)] border-[1px] px-3 py-1 text-center"
     :class="theme"
   >
     <slot />
