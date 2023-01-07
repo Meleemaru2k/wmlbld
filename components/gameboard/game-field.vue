@@ -1,6 +1,10 @@
 <template>
   <div
-    class="w-[100%] max-h-[75vh] overflow-auto overscroll-contain shadow-2xl shadow-black border-2 border-solid border-white rounded-lg"
+    v-dragscroll:hidden
+    class="w-[100%] max-h-[75vh] overflow-hidden overscroll-contain shadow-2xl shadow-black border-2 border-solid border-white rounded-lg"
+    :style="`cursor:${cursor};`"
+    @mousedown="setCursor('grabbing')"
+    @mouseup="setCursor('grab')"
   >
     <div
       class="overflow-auto overscroll-contain shadow-2xl shadow-black relative rounded-lg"
@@ -12,16 +16,16 @@
       >
         <img ref="gameImage" :src="`/games/${gameName}/img.jpg`" />
       </div>
-      <TileGrid v-if="showGrid" :rows="grid.rows" :columns="grid.columns" />
-      <FoundEggs :found-eggs="foundEggs" />
+      <tileGrid v-if="showGrid" :rows="grid.rows" :columns="grid.columns" />
+      <foundEggsVisual :found-eggs="foundEggs" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { GameConfig } from "~~/types/game";
-import TileGrid from "./tile-grid.vue";
-import FoundEggs from "./found-eggs.vue";
+import tileGrid from "./tile-grid.vue";
+import foundEggsVisual from "./found-eggs.vue";
 
 const props = defineProps({
   gameName: { type: String, default: "samplegame" },
@@ -36,6 +40,7 @@ const gameImage = ref<HTMLImageElement>();
 const grid = reactive({ height: 0, width: 0, rows: 6, columns: 4 });
 const clickfields = gameconfig.value?.game.eggs ?? [];
 const foundEggs = ref<Set<GameConfig["game"]["eggs"][0]>>(new Set());
+const cursor = ref<String>("grab");
 
 onMounted(() => {
   setTimeout(() => {
@@ -82,6 +87,10 @@ function allEggsFoundCheck() {
   } else {
     return false;
   }
+}
+
+function setCursor(style: string) {
+  cursor.value = style;
 }
 
 const emit = defineEmits<{ (event: "gamewon"): void }>();

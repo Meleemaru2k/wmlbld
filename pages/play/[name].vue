@@ -1,18 +1,19 @@
 <template>
   <div
-    class="flex flex-col bg-opacity-25"
-    style="background: url(/images/paper.jpg)"
+    class="flex flex-col"
+    style="
+      background-repeat: repeat;
+      background-size: 100%;
+      back
+    "
+    :style="`background:url(/images/game_bg_${backgroundImageIndex}.png)`"
   >
     <div
       class="bg-slate-900 text-stone-100 px-8 py-4 flex flex-row items-baseline gap-x-4 overflow-auto"
     >
-      <div class="shrink-0">
+      <div class="shrink-0 flex flex-row flex-nowrap w-28">
         <span class="text-xl">⌛</span>
-        <span class="font-bold text-xl"
-          >{{
-            (((timeStarted.getTime() - timestamp) * -1) / 1000).toFixed(2)
-          }}s</span
-        >
+        <span class="font-bold text-xl">{{ playtimeInSeconds }}s</span>
       </div>
       <div class="shrink-0 flex flex-row flex-nowrap">
         <span class="text-xl">ℹ️ Info</span>
@@ -23,30 +24,46 @@
       >
     </div>
     <div
-      class="p-4 md:p-8 shadow-inner grow flex flex-col bg-opacity-50 bg-stone-300"
+      class="p-4 md:p-8 shadow-inner grow flex flex-col bg-opacity-80 bg-stone-300"
     >
-      <imageGridVue
+      <gameField
         @gamewon="gamewon = true"
         v-if="gamewon === false"
         :game-name="gameName"
         :show-grid="showGrid"
-      ></imageGridVue>
-      <div v-else>You win</div>
+      ></gameField>
+      <div v-else class="flex flex-col">
+        <div>Gewonnen!</div>
+        <div>Zeit: {{ playtimeInSeconds }}</div>
+      </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import imageGridVue from "~~/components/gameboard/image-grid.vue";
+import gameField from "~~/components/gameboard/game-field.vue";
 import basicButton from "~~/components/generic/button/basic.vue";
 
 const gameName = <string>useRoute().params.name ?? "samplegame";
 const gamewon = ref(false);
 const showGrid = ref(false);
+const backgroundImageIndex = Math.floor(Math.random() * 6);
 
 const timeStarted = new Date();
-const { timestamp, pause, resume } = useTimestamp({ controls: true });
+const {
+  timestamp,
+  pause: timestamp_pause,
+  resume: timestamp_resume,
+} = useTimestamp({ controls: true });
 
 function toggleGrid() {
   showGrid.value = !showGrid.value;
 }
+
+const playtimeInSeconds = computed(() => {
+  return (((timeStarted.getTime() - timestamp.value) * -1) / 1000).toFixed(0);
+});
+
+watch(gamewon, () => {
+  timestamp_pause();
+});
 </script>

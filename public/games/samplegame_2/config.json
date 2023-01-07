@@ -1,6 +1,6 @@
 {
   "game": {
-    "name": "Samplegame",
+    "name": "Samplegame 2",
     "author": "Author Name here",
     "passphrase": "sample",
     "description": "Find things in this image! :)",
@@ -11,19 +11,24 @@
     ],
     "eggs": [
       {
-        "x": 100,
-        "y": 100,
-        "size": 20
+        "x": 1468,
+        "y": 791,
+        "size": 25
       },
       {
-        "x": 400,
-        "y": 500,
+        "x": 2565,
+        "y": 1415,
         "size": 50
       },
       {
-        "x": 233,
-        "y": 444,
-        "size": 88
+        "x": 950,
+        "y": 1205,
+        "size": 25
+      },
+      {
+        "x": 2730,
+        "y": 1115,
+        "size": 25
       }
     ],
     "version": 0

@@ -18,6 +18,7 @@
   "dependencies": {
     "@pinia/nuxt": "^0.4.6",
     "fs": "^0.0.1-security",
-    "pinia": "^2.0.28"
+    "pinia": "^2.0.28",
+    "vue-dragscroll": "^4.0.5"
   }
 }

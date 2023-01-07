@@ -2,6 +2,7 @@
   <button
     class="rounded shadow-inner border-solid border-[rgba(0,0,0,0.2)] border-[1px] px-3 py-1 text-center"
     :class="theme"
+    @click="useSfx().sounds.button_click.play()"
   >
     <slot />
   </button>
@@ -12,7 +13,7 @@ import { PropType } from "vue";
 
 defineProps({
   theme: {
-    type: Object as PropType<"primary" | "secondary" | "success" | "error">,
+    type: String as PropType<"primary" | "secondary" | "success" | "error">,
     required: false,
     default: "primary",
   },
