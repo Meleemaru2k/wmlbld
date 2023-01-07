@@ -9,7 +9,8 @@
       :style="{ width: `${100 / columns}%` }"
       v-for="column in columns"
       :key="column"
-      class="border-r-2 border-t-2 border-dashed border-black relative"
+      class="border-r-2 border-t-2 border-dashed border-slate-700 relative"
+      :class="{ 'border-l-2': column === 1, 'border-b-2': row === rows }"
     >
       <TileIndicator :row="row" :column="column" />
     </div>

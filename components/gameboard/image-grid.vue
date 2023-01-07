@@ -1,7 +1,9 @@
 <template>
-  <div>
+  <div
+    class="w-[100%] min-h-[500px] max-h-[630px] overflow-auto overscroll-contain shadow-2xl shadow-black border-2 border-solid border-white rounded-lg"
+  >
     <div
-      class="flex flex-col w-full relative"
+      class="flex flex-col overflow-auto overscroll-contain shadow-2xl shadow-black relative rounded-lg"
       :style="`height: ${grid.height}px; width: ${grid.width}px;`"
     >
       <div
