@@ -11,18 +11,7 @@
         <img ref="gameImage" :src="`/games/${gameName}/img.jpg`" />
       </div>
       <TileGrid :rows="grid.rows" :columns="grid.columns" />
-      <div
-        v-for="(foundField, index) in foundFields"
-        :key="index"
-        class="absolute bg-green-500 rounded-full text-center border-solid border-green-900 border-2 pointer-events-none"
-        :style="`top: ${foundField.y}px; left: ${foundField.x}px; width:${foundField.size}px; height:${foundField.size}px;`"
-      >
-        <div
-          class="text-white absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-        >
-          👍🏻
-        </div>
-      </div>
+      <FoundEggs :found-eggs="foundEggs" />
     </div>
   </div>
 </template>
@@ -30,12 +19,12 @@
 <script setup lang="ts">
 import { GameConfig } from "~~/types/game";
 import TileGrid from "./tile-grid.vue";
+import FoundEggs from "./found-eggs.vue";
 
 const props = defineProps({
   gameName: { type: String, default: "samplegame" },
 });
 
-//const gamepath = await useFetch(`/api/games/${props.gameName}`);
 const { data: gameconfig } = await useFetch<GameConfig>(
   `/games/${props.gameName}/config.json`
 );
@@ -43,7 +32,7 @@ const { data: gameconfig } = await useFetch<GameConfig>(
 const gameImage = ref<HTMLImageElement>();
 const grid = reactive({ height: 0, width: 0, rows: 6, columns: 4 });
 const clickfields = gameconfig.value?.game.eggs ?? [];
-const foundFields = ref<Set<GameConfig["game"]["eggs"][0]>>(new Set());
+const foundEggs = ref<Set<GameConfig["game"]["eggs"][0]>>(new Set());
 
 onMounted(() => {
   setTimeout(() => {
@@ -60,9 +49,13 @@ function handleGridClick(event: MouseEvent) {
   const rect = target.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const y = event.clientY - rect.top;
+
   const foundEgg = pointIsInBox(x, y);
   if (foundEgg) {
-    foundFields.value.add(foundEgg);
+    foundEggs.value.add(foundEgg);
+    if (allEggsFoundCheck()) {
+      emit("gamewon");
+    }
   }
 }
 
@@ -74,9 +67,19 @@ function pointIsInBox(x: number, y: number) {
       y >= field.y - field.size &&
       y <= field.y + field.size
     ) {
-      return { x: field.x, y: field.y, size: field.size };
+      return field;
     }
   }
   return null;
 }
+
+function allEggsFoundCheck() {
+  if (foundEggs.value.size === gameconfig.value?.game.eggs.length) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+const emit = defineEmits<{ (event: "gamewon"): void }>();
 </script>
