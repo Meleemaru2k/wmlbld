@@ -37,10 +37,10 @@ defineProps({
 animation: plop 1s linear;
 }
 @keyframes plop {
-  0% {scale:0.3;}
+  0% {scale:0.3; transform:rotate(360deg);}
   30% {scale:0.8}
   50% {scale:1.2}
-  85% {scale:1.3}
+  85% {scale:1.3; transform:rotate(0deg);}
   90% {scale:0.8}
   100% {scale:1}
 }

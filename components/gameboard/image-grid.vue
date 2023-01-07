@@ -1,9 +1,9 @@
 <template>
   <div
-    class="w-[100%] min-h-[500px] max-h-[630px] overflow-auto overscroll-contain shadow-2xl shadow-black border-2 border-solid border-white rounded-lg"
+    class="w-[100%] max-h-[75vh] overflow-auto overscroll-contain shadow-2xl shadow-black border-2 border-solid border-white rounded-lg"
   >
     <div
-      class="flex flex-col overflow-auto overscroll-contain shadow-2xl shadow-black relative rounded-lg"
+      class="overflow-auto overscroll-contain shadow-2xl shadow-black relative rounded-lg"
       :style="`height: ${grid.height}px; width: ${grid.width}px;`"
     >
       <div
@@ -12,7 +12,7 @@
       >
         <img ref="gameImage" :src="`/games/${gameName}/img.jpg`" />
       </div>
-      <TileGrid :rows="grid.rows" :columns="grid.columns" />
+      <TileGrid v-if="showGrid" :rows="grid.rows" :columns="grid.columns" />
       <FoundEggs :found-eggs="foundEggs" />
     </div>
   </div>
@@ -25,6 +25,7 @@ import FoundEggs from "./found-eggs.vue";
 
 const props = defineProps({
   gameName: { type: String, default: "samplegame" },
+  showGrid: { type: Boolean, default: false },
 });
 
 const { data: gameconfig } = await useFetch<GameConfig>(

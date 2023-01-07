@@ -1,5 +1,8 @@
 <template>
-  <button class="rounded border-solid border-black border-2" :class="theme">
+  <button
+    class="rounded border-solid border-slate-200 border-[1px] px-3 py-1 text-center"
+    :class="theme"
+  >
     <slot />
   </button>
 </template>

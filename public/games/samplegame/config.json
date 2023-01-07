@@ -1,9 +1,10 @@
 {
   "game": {
-    "name": "test",
-    "imgUrl": "later",
-    "height": 0,
-    "width": 0,
+    "name": "Samplegame",
+    "description": "Find things in this image! :)",
+    "quests": [
+      "Sample Quest"
+    ],
     "eggs": [
       {
         "x": 100,
@@ -20,6 +21,7 @@
         "y": 444,
         "size": 88
       }
-    ]
+    ],
+    "version": 0
   }
 }
