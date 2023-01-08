@@ -1,38 +1,37 @@
-import { NuxtAuthHandler } from "#auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { NuxtAuthHandler } from "#auth";
+
 export default NuxtAuthHandler({
   providers: [
-    CredentialsProvider({
-      // The name to display on the sign in form (e.g. 'Sign in with...')
+    // @ts-expect-error Import is exported on .default during SSR, so we need to call it this way. May be fixed via Vite at some point
+    CredentialsProvider.default({
       name: "Credentials",
-      // The credentials is used to generate a suitable form on the sign in page.
-      // You can specify whatever fields you are expecting to be submitted.
-      // e.g. domain, username, password, 2FA token, etc.
-      // You can pass any HTML attribute to the <input> tag through the object.
+
       credentials: {
         username: { label: "Username", type: "text", placeholder: "jsmith" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
-        // You need to provide your own logic here that takes the credentials
-        // submitted and returns either a object representing a user or value
-        // that is false/null if the credentials are invalid.
-        // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
-        // You can also use the `req` object to obtain additional parameters
-        // (i.e., the request IP address)
-        const res = await fetch("/api/user/login", {
-          method: "POST",
-          body: JSON.stringify(credentials),
-          headers: { "Content-Type": "application/json" },
+      async authorize(credentials: any, req: any) {
+        // const user = { id: '1', name: 'J Smith', email: 'jsmith@example.com' }
+        const token = Buffer.from(
+          `${credentials.username}:${credentials.password}`
+        ).toString("base64");
+        const res = await fetch("http://localhost/login", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Basic ${token}`,
+          },
         });
         const user = await res.json();
-
         // If no error and we have user data, return it
         if (res.ok && user) {
           return user;
+        } else {
+          // If you return null then an error will be displayed advising the user to check their details.
+          return null;
+          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
         }
-        // Return null if user data could not be retrieved
-        return null;
       },
     }),
   ],
