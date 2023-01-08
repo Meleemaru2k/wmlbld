@@ -50,7 +50,7 @@ async function signUp() {
     },
     onResponse({ response }) {
       if (response.ok) {
-        navigateTo("/dashboard");
+        navigateTo("/login");
       }
     },
   }).catch(() => {});

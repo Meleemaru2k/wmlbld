@@ -3,7 +3,13 @@
     class="rounded shadow-inner transition-all relative border-solid border-[rgba(0,0,0,0.2)] border-[1px] px-3 py-1 text-center font-semibold font-mono"
     :class="[theme, { loading__all: loading }, { 'saturate-0': disabled }]"
     :disabled="disabled"
-    @click="useSfx().sounds.button_click.play()"
+    @click="
+      {
+        useSfx().sounds.button_click.pause();
+        useSfx().sounds.button_click.currentTime = 0;
+        useSfx().sounds.button_click.play();
+      }
+    "
   >
     <div
       v-show="loading"

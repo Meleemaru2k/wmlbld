@@ -21,22 +21,32 @@
         <GenericButtonBasic
           :disabled="isLoading"
           :loading="isLoading"
-          @click="signUp()"
+          @click="sin()"
           class="mt-4"
           >Anmelden</GenericButtonBasic
         >
       </div>
+      s:{{ status }} d:{{ data }}
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import inputText from "~/components/generic/input/text.vue";
-
+definePageMeta({ auth: false });
 const loginData = reactive({ email: "", password: "" });
 const isLoading = ref(false);
 const errorMessage = ref<string>("");
+const { status, data, signIn, signOut } = useSession();
 
-async function signUp() {
+async function sin() {
+  await signIn("credentials", {
+    username: loginData.email,
+    password: loginData.password,
+    redirect: false,
+  });
+}
+
+async function login() {
   isLoading.value = true;
   await $fetch("/api/user/login", {
     method: "POST",
