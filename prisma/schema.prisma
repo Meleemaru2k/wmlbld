@@ -17,12 +17,44 @@ model User {
   password String @default("")
   authenticationCode String?
   isAuthenticated Boolean @default(false)
+  
   isCreator Boolean @default(false)
+
   games Game[]
+  scores GameUserScore[]
 }
 
 model Game {
   id Int @id @default(autoincrement())
   author User @relation(fields:[authorId], references: [id])
   authorId Int
+
+  passphrase String?
+  image String
+
+  eggs Egg[]
+  scores GameUserScore[]
+}
+
+model Egg {
+  id Int @id @default(autoincrement())
+  game Game @relation(fields:[gameId], references: [id])
+  gameId Int
+
+  pos_x Int
+  pos_y Int
+  size Int
+  description String?
+  hint String?
+}
+
+model GameUserScore{
+  game Game @relation(fields:[gameId], references: [id])
+  gameId Int
+  user User @relation(fields:[userId], references: [id])
+  userId Int
+
+  score Int
+
+  @@id([userId, gameId])
 }

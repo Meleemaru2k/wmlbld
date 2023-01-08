@@ -4,26 +4,27 @@
     "author": "Author Name here",
     "passphrase": "sample",
     "description": "Find things in this image! :)",
-    "quests": [
-      "Sample Quest 1",
-      "Sample Quest 2",
-      "Sample Quest 3"
-    ],
     "eggs": [
       {
         "x": 100,
         "y": 100,
-        "size": 20
+        "size": 20,
+        "description": "Find the jumping man in a yellow shirt",
+        "hint": "This person really loves to hang out at the beach"
       },
       {
         "x": 400,
         "y": 500,
-        "size": 50
+        "size": 50,
+        "description": "Find the jumping man in a yellow shirt",
+        "hint": "This person really loves to hang out at the beach"
       },
       {
         "x": 233,
         "y": 444,
-        "size": 88
+        "size": 88,
+        "description": "Find the jumping man in a yellow shirt",
+        "hint": "This person really loves to hang out at the beach"
       }
     ],
     "version": 0
