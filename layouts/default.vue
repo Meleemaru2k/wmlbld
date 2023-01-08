@@ -1,13 +1,14 @@
 <template>
   <div class="relative flex flex-col w-full h-full">
     <div
-      class="bg-slate-700 py-2 px-6 h-16 text-stone-100 flex flex-row flex-nowrap items-center [&_>*]:mr-4"
+      class="bg-slate-700 py-2 px-6 h-16 text-stone-100 flex flex-row flex-nowrap items-center [&_>*]:mr-4 z-40"
     >
-      <div>
-        <img class="w-12 h-12 rounded" src="~/assets/images/logo/output2.jpg" />
-      </div>
+      <NuxtLink to="/"
+        ><img class="w-12 h-12 rounded" src="~/assets/images/logo/output2.jpg"
+      /></NuxtLink>
+
       <div v-if="status === 'authenticated'">
-        <NuxtLink to="/signup">Dashboard</NuxtLink>
+        <NuxtLink to="/dashboard">Dashboard</NuxtLink>
       </div>
       <div class="ml-auto"></div>
       <div v-if="status !== 'authenticated'">
@@ -19,7 +20,7 @@
       <div v-if="status === 'authenticated'"><logoutButton /></div>
     </div>
     <slot />
-    <div class="bg-slate-700 py-2 px-6 text-stone-100 sticky bottom-0">
+    <div class="bg-slate-700 py-2 px-6 text-stone-100 sticky bottom-0 z-40">
       Footer
     </div>
   </div>

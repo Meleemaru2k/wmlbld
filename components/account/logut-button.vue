@@ -13,7 +13,7 @@ const isLoading = ref(false);
 
 async function logoutUser() {
   isLoading.value = true;
-  await signOut();
+  await signOut({ callbackUrl: "/login" });
   isLoading.value = false;
 }
 </script>

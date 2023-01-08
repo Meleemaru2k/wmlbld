@@ -28,6 +28,7 @@
         >
       </div>
     </div>
+    <div class="mb-32"></div>
   </div>
 </template>
 <script setup lang="ts">

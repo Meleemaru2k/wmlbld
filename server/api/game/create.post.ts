@@ -5,5 +5,7 @@ export default eventHandler(async (event) => {
   if (!session) {
     return { status: "unauthenticated!" };
   }
+  const body = await readBody(event);
+
   return { status: "authenticated!" };
 });

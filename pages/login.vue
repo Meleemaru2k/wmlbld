@@ -21,13 +21,13 @@
         <GenericButtonBasic
           :disabled="isLoading"
           :loading="isLoading"
-          @click="sin()"
+          @click="login()"
           class="mt-4"
           >Anmelden</GenericButtonBasic
         >
       </div>
-      s:{{ status }} d:{{ data }}
     </div>
+    <div class="mb-32"></div>
   </div>
 </template>
 <script setup lang="ts">
@@ -36,33 +36,19 @@ definePageMeta({ auth: false });
 const loginData = reactive({ email: "", password: "" });
 const isLoading = ref(false);
 const errorMessage = ref<string>("");
-const { status, data, signIn, signOut } = useSession();
+const { signIn } = useSession();
 
-async function sin() {
+async function login() {
   await signIn("credentials", {
     username: loginData.email,
     password: loginData.password,
     redirect: false,
+  }).then((response) => {
+    if (response.error) {
+      errorMessage.value = "Login-Daten nicht korrekt";
+    } else {
+      navigateTo("/dashboard");
+    }
   });
-}
-
-async function login() {
-  isLoading.value = true;
-  await $fetch("/api/user/login", {
-    method: "POST",
-    body: loginData,
-    onRequestError({ error }) {
-      errorMessage.value = error.message;
-    },
-    onResponseError({ response }) {
-      errorMessage.value = response._data.message;
-    },
-    onResponse({ response }) {
-      if (response.ok) {
-        navigateTo("/dashboard");
-      }
-    },
-  }).catch(() => {});
-  isLoading.value = false;
 }
 </script>

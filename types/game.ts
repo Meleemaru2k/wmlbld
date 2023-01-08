@@ -1,8 +1,18 @@
+import internal from "stream";
+
 export type GameConfig = {
   game: {
+    id: number;
     name: string;
-    description: string;
-    quests: Array<string>;
-    eggs: Array<{ x: number; y: number; size: number }>;
+    authorId: number;
+    description?: string;
+    image: string;
+    eggs: Array<{
+      x: number;
+      y: number;
+      size: number;
+      description?: string;
+      hint?: string;
+    }>;
   };
 };

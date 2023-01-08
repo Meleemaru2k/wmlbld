@@ -11,6 +11,7 @@
         </NuxtLink>
       </div>
       <div class="text-center">Wimmelbild-Spiel - suchen & finden.</div>
+      <div class="mb-32"></div>
     </div>
   </div>
 </template>

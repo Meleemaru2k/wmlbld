@@ -31,3 +31,5 @@ A Wimmelbild-Game WebApp
 - Game
    - Add a Pause & Resume function when playing a game
    - Make it a bit cheat-safe and get "objective found" info only from server (dont store coordinates clientside basically)
+   - A "is ready to play" check
+   - Edit Game (only if isReadyToPlay == false)
