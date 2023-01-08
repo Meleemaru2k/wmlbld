@@ -8,4 +8,5 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@sidebase/nuxt-auth",
   ],
+  auth: { origin: process.env.AUTH_ORIGIN },
 });
