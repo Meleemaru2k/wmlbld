@@ -8,6 +8,7 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@nuxtjs/prismic": "^3.0.0-rc.2",
     "@nuxtjs/tailwindcss": "^6.2.0",
     "@sidebase/nuxt-auth": "^0.3.3",
     "@vueuse/core": "^9.10.0",
@@ -17,6 +18,7 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.6",
+    "@prisma/client": "^4.8.1",
     "fs": "^0.0.1-security",
     "pinia": "^2.0.28",
     "vue-dragscroll": "^4.0.5"

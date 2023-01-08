@@ -13,8 +13,16 @@ datasource db {
 model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
-  name  String?
-  isCreator Boolean @default(false)
+  name  String
+  password String @default("")
   authenticationCode String?
   isAuthenticated Boolean @default(false)
+  isCreator Boolean @default(false)
+  games Game[]
+}
+
+model Game {
+  id Int @id @default(autoincrement())
+  author User @relation(fields:[authorId], references: [id])
+  authorId Int
 }

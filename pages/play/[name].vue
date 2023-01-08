@@ -1,11 +1,7 @@
 <template>
   <div
     class="flex flex-col"
-    style="
-      background-repeat: repeat;
-      background-size: 100%;
-      back
-    "
+    style="background-repeat: repeat; background-size: 100%"
     :style="`background:url(/images/game_bg_${backgroundImageIndex}.png)`"
   >
     <div
@@ -15,9 +11,12 @@
         <span class="text-xl">⌛</span>
         <span class="font-bold text-xl">{{ playtimeInSeconds }}s</span>
       </div>
-      <div class="shrink-0 flex flex-row flex-nowrap">
-        <span class="text-xl">ℹ️ Info</span>
+      <div class="shrink-0 flex flex-row flex-nowrap w-18">
+        {{ foundEggs }} / {{ gameconfig?.game.eggs.length }} ⭐
       </div>
+      <basicButton class="shrink-0 flex flex-row flex-nowrap">
+        <span>ℹ️ Info</span>
+      </basicButton>
 
       <basicButton class="shrink-0" @click="toggleGrid()"
         >Raster <i>A</i></basicButton
@@ -28,8 +27,10 @@
     >
       <gameField
         @gamewon="gamewon = true"
-        v-if="gamewon === false"
+        @update-found-eggs="foundEggs = $event"
+        v-if="gamewon === false && gameconfig"
         :game-name="gameName"
+        :gameconfig="gameconfig"
         :show-grid="showGrid"
       ></gameField>
       <div v-else class="flex flex-col">
@@ -42,9 +43,14 @@
 <script setup lang="ts">
 import gameField from "~~/components/gameboard/game-field.vue";
 import basicButton from "~~/components/generic/button/basic.vue";
+import { GameConfig } from "~~/types/game";
 
 const gameName = <string>useRoute().params.name ?? "samplegame";
+const { data: gameconfig } = await useFetch<GameConfig>(
+  `/games/${gameName}/config.json`
+);
 const gamewon = ref(false);
+const foundEggs = ref(0);
 const showGrid = ref(false);
 const backgroundImageIndex = Math.floor(Math.random() * 6);
 
@@ -65,5 +71,6 @@ const playtimeInSeconds = computed(() => {
 
 watch(gamewon, () => {
   timestamp_pause();
+  useSfx().sounds.game_won.play();
 });
 </script>

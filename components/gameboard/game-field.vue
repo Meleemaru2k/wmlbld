@@ -26,19 +26,17 @@
 import { GameConfig } from "~~/types/game";
 import tileGrid from "./tile-grid.vue";
 import foundEggsVisual from "./found-eggs.vue";
+import { PropType } from "vue";
 
 const props = defineProps({
   gameName: { type: String, default: "samplegame" },
+  gameconfig: { type: Object as PropType<GameConfig>, required: true },
   showGrid: { type: Boolean, default: false },
 });
 
-const { data: gameconfig } = await useFetch<GameConfig>(
-  `/games/${props.gameName}/config.json`
-);
-
 const gameImage = ref<HTMLImageElement>();
 const grid = reactive({ height: 0, width: 0, rows: 6, columns: 4 });
-const clickfields = gameconfig.value?.game.eggs ?? [];
+const clickfields = props.gameconfig?.game.eggs ?? [];
 const foundEggs = ref<Set<GameConfig["game"]["eggs"][0]>>(new Set());
 const cursor = ref<String>("grab");
 
@@ -61,6 +59,7 @@ function handleGridClick(event: MouseEvent) {
   const foundEgg = pointIsInBox(x, y);
   if (foundEgg) {
     foundEggs.value.add(foundEgg);
+    emit("updateFoundEggs", foundEggs.value.size);
     if (allEggsFoundCheck()) {
       emit("gamewon");
     }
@@ -82,7 +81,7 @@ function pointIsInBox(x: number, y: number) {
 }
 
 function allEggsFoundCheck() {
-  if (foundEggs.value.size === gameconfig.value?.game.eggs.length) {
+  if (foundEggs.value.size === props.gameconfig.game.eggs.length) {
     return true;
   } else {
     return false;
@@ -93,5 +92,8 @@ function setCursor(style: string) {
   cursor.value = style;
 }
 
-const emit = defineEmits<{ (event: "gamewon"): void }>();
+const emit = defineEmits<{
+  (event: "gamewon"): void;
+  (event: "updateFoundEggs", value: number): void;
+}>();
 </script>
