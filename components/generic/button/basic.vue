@@ -1,6 +1,6 @@
 <template>
   <button
-    class="rounded shadow-inner transition-all relative border-solid border-[rgba(0,0,0,0.2)] border-[1px] px-3 py-1 text-center font-semibold font-mono"
+    class="overflow-hidden rounded focus:shadow-inner focus:shadow-[rgba(0,0,0,0.5)] transition-all relative border-solid border-[rgba(0,0,0,0.2)] border-[1px] px-3 py-1 text-center font-semibold font-mono before:block before:left-0 before:w-full before:h-8 before:-top-36 before:absolute before:bg-[rgba(255,255,255,0.10)] hover:before:top-[95%] before:transition-none hover:before:transition-all hover:before:ease-in-out hover:before:duration-200 hover:before:bg-[rgba(255,255,255,0.3)]"
     :class="[theme, { loading__all: loading }, { 'saturate-0': disabled }]"
     :disabled="disabled"
     @click="
