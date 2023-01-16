@@ -1,15 +1,16 @@
 import { User } from "@prisma/client";
 import PrismaDB from "~~/helper/prismaDB";
 export default defineEventHandler(async (event) => {
-  let response: User | null = null;
+  let response: Partial<User> | null = null;
   let emailToFind = event.context.params.name;
   const prisma = PrismaDB.getClient();
 
   async function dbOps() {
-    const users = await prisma.user.findFirst({
+    const user = await prisma.user.findFirst({
       where: { email: emailToFind },
+      select: { id: true, name: true },
     });
-    return users;
+    return user;
   }
 
   await dbOps()
@@ -19,7 +20,7 @@ export default defineEventHandler(async (event) => {
     })
     .catch(async (e) => {
       await prisma.$disconnect();
-      throw e;
+      throw createError(e);
     });
 
   return response;
