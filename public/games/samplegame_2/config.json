@@ -4,6 +4,7 @@
     "author": "Author Name here",
     "passphrase": "sample",
     "description": "Find things in this image! :)",
+    "image": "",
     "eggs": [
       {
         "x": 1468,

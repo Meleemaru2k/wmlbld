@@ -5,7 +5,10 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "dbmig": "npx prisma migrate dev",
+    "dbreset": "npx prisma migrate reset",
+    "dbinit": "npx prisma init --datasource-provider sqlite"
   },
   "devDependencies": {
     "@nuxtjs/prismic": "^3.0.0-rc.2",

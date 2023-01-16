@@ -28,19 +28,16 @@ export default NuxtAuthHandler({
 
         const user = await getUser()
           .then(async (user) => {
-            await prisma.$disconnect();
             return user;
           })
           .catch(async (e) => {
-            await prisma.$disconnect();
             return null;
+          })
+          .finally(async () => {
+            await prisma.$disconnect();
           });
 
-        if (user) {
-          if (user.password !== credentials.password) {
-            return null;
-          }
-
+        if (user && user.password === credentials.password) {
           const userData = {
             name: user.name,
             email: user.email,
@@ -49,7 +46,6 @@ export default NuxtAuthHandler({
 
           return userData;
         } else {
-          return null;
         }
       },
     }),

@@ -32,7 +32,7 @@ model Game {
   name String @unique
   description String?
   passphrase String?
-  image String
+  image String //64bit Img
 
   eggs Egg[]
   scores GameUserScore[]
