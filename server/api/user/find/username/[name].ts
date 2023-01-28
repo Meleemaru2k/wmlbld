@@ -1,5 +1,5 @@
 import { User } from "@prisma/client";
-import PrismaDB from "~~/helper/prismaDB";
+import PrismaDB from "~~/utils/prismaDB";
 export default defineEventHandler(async (event) => {
   let response: Array<Partial<User>> = [];
   let nameToFind = event.context.params.name;

@@ -1,6 +1,6 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import { NuxtAuthHandler } from "#auth";
-import PrismaDB from "~~/helper/prismaDB";
+import PrismaDB from "~~/utils/prismaDB";
 
 export default NuxtAuthHandler({
   pages: {

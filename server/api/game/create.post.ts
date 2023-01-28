@@ -1,6 +1,6 @@
 import { getServerSession } from "#auth";
 import { Egg, Game } from "@prisma/client";
-import PrismaDB from "~~/helper/prismaDB";
+import PrismaDB from "~~/utils/prismaDB";
 
 export default eventHandler(async (event) => {
   const session = await getServerSession(event);

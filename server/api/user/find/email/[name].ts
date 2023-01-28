@@ -1,5 +1,5 @@
 import { User } from "@prisma/client";
-import PrismaDB from "~~/helper/prismaDB";
+import PrismaDB from "~~/utils/prismaDB";
 export default defineEventHandler(async (event) => {
   let response: Partial<User> | null = null;
   let emailToFind = event.context.params.name;

@@ -1,4 +1,4 @@
-import PrismaDB from "~~/helper/prismaDB";
+import PrismaDB from "~~/utils/prismaDB";
 export default defineEventHandler(async (event) => {
   let response = { status: "ok" };
   const body = (await readBody(event)) as {
