@@ -22,6 +22,20 @@ export default eventHandler(async (event) => {
       where: { email: email },
       select: { id: true },
     });
+
+    //Dont let users create more than 3 games in total
+    const gameCount = await prisma.game.count({
+      where: { authorId: user.id },
+    });
+    if (gameCount >= 3) {
+      await prisma.$disconnect();
+      throw createError({
+        statusCode: 500,
+        statusMessage: "You have reached the maximum amount of games.",
+      });
+    }
+
+    //Create actual game
     gameData.authorId = user.id;
     return await prisma.game.create({ data: gameData });
   }

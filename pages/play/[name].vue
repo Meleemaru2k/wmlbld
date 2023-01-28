@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="flex flex-col"
-    style="background-repeat: repeat; background-size: 100%"
-    :style="`background:url(/images/game_bg_${backgroundImageIndex}.png)`"
-  >
+  <div class="flex flex-col">
     <div
       class="bg-slate-900 text-stone-100 px-8 py-4 flex flex-row items-baseline gap-x-4 overflow-auto"
     >
@@ -22,9 +18,7 @@
         >Raster <i>A</i></basicButton
       >
     </div>
-    <div
-      class="p-4 md:p-8 shadow-inner grow flex flex-col bg-opacity-80 bg-stone-300"
-    >
+    <div class="p-4 md:p-8 shadow-inner grow flex flex-col">
       <gameField
         @gamewon="gamewon = true"
         @update-found-eggs="foundEggs = $event"
