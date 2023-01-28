@@ -3,7 +3,7 @@
     <div class="bg-slate-900 text-stone-100 w-full flex flex-col pt-4 mb-4">
       <h1 class="text-center text-stone-100">Spiel erstellen</h1>
       <div class="mb-4 px-4 mx-auto">
-        <ol class="flex flex-row gap-x-4">
+        <ol class="flex flex-row flex-wrap md:flex-nowrap gap-x-4">
           <li>1. Bild hochladen</li>
           <li>2. Auf Punkt im Bild gedrückt halten um Secret zu erstellen</li>
           <li>3. Secret mit Infos schmücken</li>
@@ -18,20 +18,32 @@
       @image-picked="onImageChange($event)"
     />
 
-    <div class="flex flex-row flex-nowrap gap-x-4 px-4">
-      <div class="basis-10/12 h-[600px] relative">
+    <div class="flex flex-row flex-wrap md:flex-nowrap gap-4 px-4">
+      <div class="basis-full md:basis-10/12 h-[600px] relative">
         <div
           v-dragscroll:hidden
           class="absolute w-full h-full overflow-hidden overscroll-contain rounded-md"
         >
-          <div :style="imageDimensions" class="relative">
+          <div
+            @drop="placeEggAtPosition($event)"
+            @dragover.prevent
+            @dragenter.prevent
+            :style="{
+              height: imageDimensions.height.toString() + 'px',
+              width: imageDimensions.width.toString() + 'px',
+            }"
+            class="relative"
+          >
             <div
+              @mousedown.stop
               v-for="(egg, index) in gameData.eggs"
               :key="index"
               class="absolute rounded-full cursor-pointer"
               :style="getEggPosAndSize(egg)"
             >
               <div
+                draggable
+                @dragstart="currentlyDraggedEgg = egg"
                 class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                 style="text-shadow: 0px 0px 20px black"
                 :style="`font-size:${egg.size * 2}px;`"
@@ -39,7 +51,7 @@
                 ⭐
               </div>
               <div
-                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white font-bold pt-2"
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white font-bold pt-2 select-none"
                 style="text-shadow: 0px 0px 2px black"
                 :style="`font-size:${egg.size}px;`"
               >
@@ -50,9 +62,12 @@
           </div>
         </div>
       </div>
-      <div class="basis-2/12 flex shrink-0 flex-col">
+      <div class="basis-full md:basis-2/12 flex shrink-0 flex-col">
         <div class="h-[600px] overflow-auto p-4 bg-slate-100 rounded-md t">
-          <GameEditorEggEditor v-model="gameData.eggs" />
+          <GameEditorEggEditor
+            v-model="gameData.eggs"
+            :image-dimensions="imageDimensions"
+          />
         </div>
         <GenericButtonBasic class="mt-4" theme="success" @click="createGame()"
           >Spiel speichern</GenericButtonBasic
@@ -113,7 +128,15 @@ const gameData = reactive({
 const image = ref<HTMLInputElement | null>(null);
 const base64image = ref("");
 const gameImage = ref<HTMLImageElement | null>(null);
-const imageDimensions = reactive({ height: "100px", width: "100px" });
+const imageDimensions = reactive({ height: 100, width: 100 });
+const currentlyDraggedEgg = ref<null | Egg>(null);
+
+function placeEggAtPosition(e: DragEvent & { layerX: number; layerY: number }) {
+  if (currentlyDraggedEgg.value) {
+    currentlyDraggedEgg.value.pos_x = e.layerX;
+    currentlyDraggedEgg.value.pos_y = e.layerY;
+  }
+}
 
 function onImageChange(inputElement: HTMLInputElement) {
   image.value = inputElement;
@@ -123,8 +146,8 @@ function onImageChange(inputElement: HTMLInputElement) {
   });
 
   setTimeout(() => {
-    imageDimensions.height = gameImage.value?.naturalHeight.toString() + "px";
-    imageDimensions.width = gameImage.value?.naturalWidth.toString() + "px";
+    imageDimensions.height = gameImage.value?.naturalHeight ?? 100;
+    imageDimensions.width = gameImage.value?.naturalWidth ?? 100;
   }, 100);
 }
 

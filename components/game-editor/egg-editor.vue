@@ -34,11 +34,19 @@
           <div class="flex flex-row">
             <div>
               <label>Position X: {{ egg.pos_x }}</label>
-              <input type="range" v-model="egg.pos_x" />
+              <input
+                type="range"
+                v-model="egg.pos_x"
+                :max="imageDimensions?.height"
+              />
             </div>
             <div>
               <label>Position Y: {{ egg.pos_y }}</label>
-              <input type="range" v-model="egg.pos_y" />
+              <input
+                type="range"
+                v-model="egg.pos_y"
+                :max="imageDimensions?.width"
+              />
             </div>
           </div>
           <div class="w-full">
@@ -55,8 +63,10 @@
 
 <script setup lang="ts">
 import { Egg } from "@prisma/client";
+import { PropType } from "vue";
 const props = defineProps({
   modelValue: Array<Egg>,
+  imageDimensions: Object as PropType<{ height: number; width: number }>,
 });
 defineEmits(["update:modelValue"]);
 

@@ -21,10 +21,11 @@
     </div>
     <div
       :style="useBackgroundImage()"
+      class="grow"
       style="background-repeat: repeat; background-size: 100%"
     >
-      <div class="bg-opacity-80 bg-stone-300">
-        <slot />
+      <div class="bg-opacity-80 bg-stone-300 h-full">
+        <slot class="h-full" />
       </div>
     </div>
     <div class="bg-slate-700 py-2 px-6 text-stone-100 sticky bottom-0 z-40">

@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout>
-    <NuxtPage class="grow" />
+    <NuxtPage class="grow h-full" />
   </NuxtLayout>
 </template>
 <style></style>
