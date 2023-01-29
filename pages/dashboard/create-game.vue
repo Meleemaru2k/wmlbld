@@ -19,7 +19,7 @@
     />
 
     <div class="flex flex-row flex-wrap md:flex-nowrap gap-4 px-4">
-      <div class="basis-full md:basis-10/12 h-[600px] relative">
+      <div class="basis-full md:basis-9/12 h-[600px] relative">
         <div
           v-dragscroll:hidden
           ref="imageContainer"
@@ -71,7 +71,7 @@
         </div>
       </div>
       <div
-        class="basis-full md:basis-2/12 grow-0 flex shrink-0 flex-col"
+        class="basis-full md:basis-3/12 grow-0 flex shrink-0 flex-col"
         v-show="image"
       >
         <div class="h-[600px] overflow-auto p-4 bg-slate-100 rounded-md t">
@@ -82,7 +82,7 @@
             v-model="gameData.eggs"
             :image="base64image"
             :image-dimensions="imageDimensions"
-          />{{ base64image.length }}
+          />
         </div>
       </div>
     </div>
@@ -101,7 +101,7 @@
         v-model="gameData.description"
       />
       <GenericButtonBasic
-        class="mt-4 ml-auto w-full md:w-[320px]"
+        class="mt-4 ml-auto w-full md:w-3/12"
         theme="success"
         :disabled="!enableSaveButton"
         @click="createGame()"
@@ -114,7 +114,7 @@
 import { Egg } from "@prisma/client";
 import { convertImageToBase64 } from "~~/utils/imageConverter";
 const gameData = reactive({
-  name: "abc",
+  name: "samplegame",
   authorId: 1,
   passphrase: "sample",
   description: "Find things in this image! :)",
@@ -187,11 +187,12 @@ function addEgg() {
 }
 
 async function createGame() {
-  gameData.image = image.value ? await convertImageToBase64(image.value) : "";
-  console.log(gameData);
+  gameData.image = base64image.value;
   await useFetch("/api/game/create", {
     body: { gameData },
     method: "POST",
-  }).then((x) => console.log(x));
+  })
+    .then((x) => console.log(x))
+    .catch((x) => console.log(x));
 }
 </script>

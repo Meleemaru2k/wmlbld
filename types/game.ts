@@ -1,18 +1,3 @@
-import internal from "stream";
+import { Egg, Game } from "@prisma/client";
 
-export type GameConfig = {
-  game: {
-    id: number;
-    name: string;
-    authorId: number;
-    description?: string;
-    image: string;
-    eggs: Array<{
-      x: number;
-      y: number;
-      size: number;
-      description?: string;
-      hint?: string;
-    }>;
-  };
-};
+export type GameWithEggs = Game & { eggs: Array<Egg> };

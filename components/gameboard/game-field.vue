@@ -14,7 +14,7 @@
         class="absolute top-0 left-0 w-full h-full"
         @click="handleGridClick($event)"
       >
-        <img ref="gameImage" :src="`/games/${gameName}/img.jpg`" />
+        <img ref="gameImage" :src="game.image" />
       </div>
       <tileGrid v-if="showGrid" :rows="grid.rows" :columns="grid.columns" />
       <foundEggsVisual :found-eggs="foundEggs" />
@@ -23,21 +23,22 @@
 </template>
 
 <script setup lang="ts">
-import { GameConfig } from "~~/types/game";
 import tileGrid from "./tile-grid.vue";
 import foundEggsVisual from "./found-eggs.vue";
 import { PropType } from "vue";
+import { Egg } from ".prisma/client";
+import { GameWithEggs } from "~~/types/game";
 
 const props = defineProps({
   gameName: { type: String, default: "samplegame" },
-  gameconfig: { type: Object as PropType<GameConfig>, required: true },
+  game: { type: Object as PropType<GameWithEggs>, required: true },
   showGrid: { type: Boolean, default: false },
 });
 
 const gameImage = ref<HTMLImageElement>();
 const grid = reactive({ height: 0, width: 0, rows: 6, columns: 4 });
-const clickfields = props.gameconfig?.game.eggs ?? [];
-const foundEggs = ref<Set<GameConfig["game"]["eggs"][0]>>(new Set());
+const clickfields = props.game?.eggs ?? [];
+const foundEggs = ref<Set<Egg>>(new Set());
 const cursor = ref<String>("grab");
 
 onMounted(() => {
@@ -69,10 +70,10 @@ function handleGridClick(event: MouseEvent) {
 function pointIsInBox(x: number, y: number) {
   for (const field of clickfields) {
     if (
-      x >= field.x - field.size &&
-      x <= field.x + field.size &&
-      y >= field.y - field.size &&
-      y <= field.y + field.size
+      x >= field.pos_x - field.size &&
+      x <= field.pos_x + field.size &&
+      y >= field.pos_y - field.size &&
+      y <= field.pos_y + field.size
     ) {
       return field;
     }
@@ -81,7 +82,7 @@ function pointIsInBox(x: number, y: number) {
 }
 
 function allEggsFoundCheck() {
-  if (foundEggs.value.size === props.gameconfig.game.eggs.length) {
+  if (foundEggs.value.size === props.game.eggs.length) {
     return true;
   } else {
     return false;

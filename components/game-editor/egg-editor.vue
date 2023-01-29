@@ -34,31 +34,39 @@
           class="flex flex-row flex-wrap"
           @input="$emit('silderChange', egg)"
         >
-          <div class="flex flex-row">
-            <div>
-              <label>Position X: {{ egg.pos_x }}</label>
+          <div class="flex flex-col w-[150px] m-auto">
+            <div class="flex flex-row flex-wrap">
+              <label class="w-full">Position X: {{ egg.pos_x }}</label>
               <input
+                class="w-[140px]"
                 type="range"
                 v-model="egg.pos_x"
                 :max="imageDimensions?.width"
               />
             </div>
-            <div>
-              <label>Position Y: {{ egg.pos_y }}</label>
+            <div class="flex flex-row flex-wrap">
+              <label class="w-full">Position Y: {{ egg.pos_y }}</label>
               <input
+                class="w-[140px]"
                 type="range"
                 v-model="egg.pos_y"
                 :max="imageDimensions?.height"
               />
             </div>
-          </div>
-          <div class="w-1/2">
-            <label>Größe: {{ egg.size }}</label
-            ><br />
-            <input type="range" max="75" min="25" v-model="egg.size" />
+            <div class="flex flex-row flex-wrap">
+              <label class="w-full">Größe: {{ egg.size }}</label
+              ><br />
+              <input
+                class="w-[140px]"
+                type="range"
+                max="75"
+                min="25"
+                v-model="egg.size"
+              />
+            </div>
           </div>
           <!--Preview Image-->
-          <div class="w-1/2">
+          <div class="min-w-[110px] m-auto">
             <div
               class="mx-auto max-w-[100px] max-h-[100px] overflow-hidden rounded-full border-2 border-slate-500 border-solid shadow-inner shadow-black"
               ref="previewImages"

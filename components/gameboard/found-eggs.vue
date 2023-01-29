@@ -3,9 +3,9 @@
     v-for="(egg, index) in foundEggs"
     :key="index"
     class="star"
-    :style="`top: ${egg.y - egg.size}px; left: ${egg.x - egg.size}px; width:${
-      egg.size * 2
-    }px; height:${egg.size * 2}px;`"
+    :style="`top: ${egg.pos_y - egg.size}px; left: ${
+      egg.pos_x - egg.size
+    }px; width:${egg.size * 2}px; height:${egg.size * 2}px;`"
   >
     <div
       class="text-white absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
@@ -21,12 +21,12 @@
   </div>
 </template>
 <script setup lang="ts">
+import { Egg } from ".prisma/client";
 import { PropType } from "vue";
-import { GameConfig } from "~~/types/game";
 
 const props = defineProps({
   foundEggs: {
-    type: Object as PropType<Set<GameConfig["game"]["eggs"][0]>>,
+    type: Object as PropType<Set<Egg>>,
     required: true,
   },
 });

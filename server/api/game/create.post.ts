@@ -11,12 +11,58 @@ export default eventHandler(async (event) => {
     });
   }
 
-  const { gameData }: { gameData: Game & { eggs: Array<Egg> } } =
-    await readBody(event);
+  const {
+    gameData,
+  }: {
+    gameData: Game & { eggs: Array<Partial<Egg>> };
+  } = await readBody(event);
 
   const prisma = PrismaDB.getClient();
-  const gameDataForCreate = { ...gameData, eggs: { create: gameData.eggs } };
 
+  /**
+   * Some validation/sanitization and corrections are necessary
+   */
+  if (gameData.description && gameData.description.length > 254) {
+    gameData.description = gameData.description.slice(0, 254);
+  }
+
+  const gameDataForCreate = {
+    ...gameData,
+    eggs: {
+      create: gameData.eggs.map((egg: any) => {
+        if (egg.hint && egg.hint.length > 254) {
+          egg.hint = egg.hint.slice(0, 254);
+        }
+        if (egg.description && egg.description.length > 254) {
+          egg.description = egg.description.slice(0, 254);
+        }
+        delete egg.gameId;
+        delete egg.id;
+        egg.pos_x =
+          egg.pos_x === typeof "number" ? egg.pos_x : parseInt(egg.pos_x);
+        egg.pos_y =
+          egg.pos_y === typeof "number" ? egg.pos_y : parseInt(egg.pos_y);
+        egg.size = egg.size === typeof "number" ? egg.size : parseInt(egg.size);
+        return egg;
+      }),
+    },
+  };
+
+  const game = await addGame(gameDataForCreate, session.user.email)
+    .catch((e) => {
+      console.log(e);
+      throw createError({
+        statusCode: 500,
+        statusMessage: "Gamedata seems to be faulty or game already exists.",
+      });
+    })
+    .finally(async () => await prisma.$disconnect());
+
+  return { status: "Game Created: " + game.name };
+
+  /**
+   *  Helper functions
+   */
   async function addGame(gameData: Game, email: string) {
     const user = await prisma.user.findFirstOrThrow({
       where: { email: email },
@@ -27,8 +73,8 @@ export default eventHandler(async (event) => {
     const gameCount = await prisma.game.count({
       where: { authorId: user.id },
     });
+
     if (gameCount >= 3) {
-      await prisma.$disconnect();
       throw createError({
         statusCode: 500,
         statusMessage: "You have reached the maximum amount of games.",
@@ -39,16 +85,4 @@ export default eventHandler(async (event) => {
     gameData.authorId = user.id;
     return await prisma.game.create({ data: gameData });
   }
-
-  const game = await addGame(gameDataForCreate, session.user.email)
-    .catch((e) => {
-      throw createError({
-        statusCode: 500,
-        statusMessage: "Gamedata seems to be faulty.",
-        stack: e,
-      });
-    })
-    .finally(async () => await prisma.$disconnect());
-
-  return { status: "Game Created: " + game.name };
 });

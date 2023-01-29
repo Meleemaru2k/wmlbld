@@ -1,8 +1,25 @@
-import fs from "fs";
+import PrismaDB from "~~/utils/prismaDB";
 
-export default defineEventHandler((event) => {
-  const foldername = event.context.params.name;
-  return {
-    api: "works",
-  };
+export default defineEventHandler(async (event) => {
+  const gameName = event.context.params.name;
+  const prisma = PrismaDB.getClient();
+
+  const game = await prisma.game.findFirst({
+    where: {
+      name: gameName,
+    },
+    include: {
+      eggs: true,
+    },
+  });
+  await prisma.$disconnect();
+
+  if (!game) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: "Game not found.",
+    });
+  } else {
+    return game;
+  }
 });
