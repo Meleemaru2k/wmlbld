@@ -106,7 +106,7 @@ const showEgg = ref(new Map<number, boolean>());
 const previewImages = ref([] as Array<HTMLElement>);
 watch(props.modelValue, (newVal) => {
   for (let i = 0; i < newVal.length; i++) {
-    onEggPositionChange(i);
+    setTimeout(() => onEggPositionChange(i), 10);
   }
 });
 

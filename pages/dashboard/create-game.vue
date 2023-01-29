@@ -23,7 +23,13 @@
           class="absolute w-full h-full overflow-hidden overscroll-contain rounded-md"
         >
           <div
-            @drop="placeEggAtPosition($event)"
+            @mousedown="onMouseDown"
+            @touchstart="onTouchStart"
+            @touchend="onTouchEnd"
+            @mouseup="onMouseUp"
+            @touchmove="onTouchMove"
+            @mousemove="onMouseMove"
+            @drop="moveEggToPosition($event)"
             @dragover.prevent
             @dragenter.prevent
             :style="{
@@ -122,22 +128,33 @@ const gameData = reactive({
 const image = ref<HTMLInputElement | null>(null);
 const base64image = ref("");
 const gameImage = ref<HTMLImageElement | null>(null);
-const imageContainer = ref<HTMLElement | null>(null);
 const imageDimensions = reactive({ height: 100, width: 100 });
+
+const imageContainer = ref<HTMLElement | null>(null);
 const currentlyDraggedEgg = ref<null | Egg>(null);
 
 const enableSaveButton = computed(() => {
   return gameData.name && gameData.description && gameData.eggs.length > 0;
 });
 
-function placeEggAtPosition(
-  e: DragEvent & Partial<{ layerX: number; layerY: number }>
-) {
-  if (currentlyDraggedEgg.value && e.layerX && e.layerY) {
-    currentlyDraggedEgg.value.pos_x = e.layerX;
-    currentlyDraggedEgg.value.pos_y = e.layerY;
+const {
+  onMouseDown,
+  onMouseUp,
+  onMouseMove,
+  onTouchMove,
+  onTouchStart,
+  onTouchEnd,
+} = useCustomLongPress((e) => {
+  const event = e as any;
+  if (event.touches?.length > 0) {
+    const rect = event.target.getBoundingClientRect();
+    const x = event.touches[0].clientX - rect.left - event.target.scrollLeft;
+    const y = event.touches[0].clientY - rect.top - event.target.scrollTop;
+    addEgg({ x: x ?? 50, y: y ?? 50 });
+  } else {
+    addEgg({ x: event.layerX ?? 50, y: event.layerY ?? 50 });
   }
-}
+});
 
 function onSliderChange(egg: Egg) {
   if (imageContainer.value) {
@@ -167,16 +184,25 @@ function getEggPosAndSize(egg: Egg) {
   }px;height:${egg.size * 2}px;`;
 }
 
+function moveEggToPosition(
+  e: DragEvent & Partial<{ layerX: number; layerY: number }>
+) {
+  if (currentlyDraggedEgg.value && e.layerX && e.layerY) {
+    currentlyDraggedEgg.value.pos_x = e.layerX;
+    currentlyDraggedEgg.value.pos_y = e.layerY;
+  }
+}
+
 function removeEgg(index: number) {
   gameData.eggs.splice(index, 1);
 }
 
-function addEgg() {
+function addEgg(position?: { x: number; y: number }) {
   gameData.eggs.push({
     id: 0,
     gameId: 0,
-    pos_x: 50,
-    pos_y: 50,
+    pos_x: position?.x ?? 50,
+    pos_y: position?.y ?? 50,
     size: 25,
     description: "",
     hint: "",

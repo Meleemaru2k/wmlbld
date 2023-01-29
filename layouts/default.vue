@@ -28,6 +28,11 @@
           to="/dashboard/my-games"
           >Meine Spiele</NuxtLink
         >
+        <NuxtLink
+          :class="{ 'font-bold': $route.path === '/dashboard/my-ranks' }"
+          to="/dashboard/my-ranks"
+          >Meine Bestenlisteplätze</NuxtLink
+        >
       </div>
       <div class="ml-auto"></div>
       <div v-if="status !== 'authenticated'">
