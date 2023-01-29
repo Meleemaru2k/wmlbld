@@ -40,7 +40,9 @@
               </GenericButtonBasic>
             </td>
             <td>
-              <GenericButtonBasic theme="error"> Löschen </GenericButtonBasic>
+              <GenericButtonBasic theme="error" @click="deleteGame(game.id)">
+                Löschen
+              </GenericButtonBasic>
             </td>
             <td>
               <GenericButtonBasic theme="primary"> Ansehen </GenericButtonBasic>
@@ -55,4 +57,9 @@
 
 <script setup lang="ts">
 const { data: userGames } = await useFetch("/api/user/createdGames");
+
+async function deleteGame(id: number) {
+  const { data: gameDeleted } = await useFetch("/api/game/delete/" + id);
+  console.log(gameDeleted);
+}
 </script>

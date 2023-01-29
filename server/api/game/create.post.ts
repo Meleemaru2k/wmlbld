@@ -25,6 +25,9 @@ export default eventHandler(async (event) => {
   if (gameData.description && gameData.description.length > 254) {
     gameData.description = gameData.description.slice(0, 254);
   }
+  if (gameData.name && gameData.name.length > 254) {
+    gameData.name = gameData.name.slice(0, 254);
+  }
 
   const gameDataForCreate = {
     ...gameData,
