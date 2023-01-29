@@ -7,8 +7,10 @@
         ><img class="w-12 h-12 rounded" src="~/assets/images/logo/output2.jpg"
       /></NuxtLink>
 
-      <div v-if="status === 'authenticated'">
-        <NuxtLink to="/dashboard">Dashboard</NuxtLink>
+      <div class="[&_*]:mr-4" v-if="status === 'authenticated'">
+        <NuxtLink to="/dashboard">Dashboard@{{ data?.user?.name }}</NuxtLink>
+        <NuxtLink to="/dashboard/create-game">Spiel erstellen</NuxtLink>
+        <NuxtLink to="/dashboard/my-games">Meine Spiele</NuxtLink>
       </div>
       <div class="ml-auto"></div>
       <div v-if="status !== 'authenticated'">
