@@ -17,8 +17,6 @@ export default eventHandler(async (event) => {
     gameData: Game & { eggs: Array<Partial<Egg>> };
   } = await readBody(event);
 
-  const prisma = PrismaDB.getClient();
-
   /**
    * Some validation/sanitization and corrections are necessary
    */
@@ -63,6 +61,7 @@ export default eventHandler(async (event) => {
     },
   };
 
+  const prisma = PrismaDB.getClient();
   const game = await addGame(gameDataForCreate, session.user.email)
     .catch((e) => {
       console.log(e);
