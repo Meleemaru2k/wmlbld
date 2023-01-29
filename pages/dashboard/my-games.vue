@@ -1,5 +1,8 @@
 <template>
   <div class="w-full overflow-hidden">
+    <LayoutPageHeader headline="🕹️ Deine Spiele 🕹️"
+      >Momentanes Maximum sind 3 Spiele :)</LayoutPageHeader
+    >
     <div
       class="rounded-t-md m-4 border-[1px] border-black border-solid overflow-hidden"
       v-if="userGames"
@@ -9,8 +12,7 @@
           <tr class="text-left [&_th]:p-4">
             <th>Name / Beschreibung</th>
             <th>Bild & Secrets</th>
-            <th>Editieren 📝</th>
-            <th>Löschen ❌</th>
+            <th>Bearbeiten 📝</th>
             <th>Bestenliste 🔥</th>
           </tr>
         </thead>
@@ -35,17 +37,23 @@
               </div>
             </td>
             <td>
-              <GenericButtonBasic theme="primary">
-                Editieren
-              </GenericButtonBasic>
+              <div class="flex flex-col gap-y-4">
+                <GenericButtonBasic theme="primary" class="w-48">
+                  Editieren
+                </GenericButtonBasic>
+                <GenericButtonBasic
+                  class="w-48"
+                  theme="error"
+                  @click="deleteGame(game.id)"
+                >
+                  Löschen
+                </GenericButtonBasic>
+              </div>
             </td>
             <td>
-              <GenericButtonBasic theme="error" @click="deleteGame(game.id)">
-                Löschen
+              <GenericButtonBasic theme="primary" class="w-48">
+                Ansehen
               </GenericButtonBasic>
-            </td>
-            <td>
-              <GenericButtonBasic theme="primary"> Ansehen </GenericButtonBasic>
             </td>
           </tr>
         </tbody>
@@ -56,10 +64,13 @@
 </template>
 
 <script setup lang="ts">
-const { data: userGames } = await useFetch("/api/user/createdGames");
+const { data: userGames, refresh: userGamesRefresh } = await useFetch(
+  "/api/user/createdGames"
+);
 
 async function deleteGame(id: number) {
   const { data: gameDeleted } = await useFetch("/api/game/delete/" + id);
   console.log(gameDeleted);
+  await userGamesRefresh();
 }
 </script>
