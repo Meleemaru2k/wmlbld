@@ -8,28 +8,37 @@ A Wimmelbild-Game WebApp
    - Search Games by Gamename
    - Finished Games (last 25 only)
    - Leadboards by Gamename (top 25 only)
-   - Create games
-      - Upload Image
-      - Add Click-Areas
-      - Add Data (Description, Hints, Difficulty, etc.)
+   - Create games ✅
+      - Upload Image ✅
+      - Add Click-Areas ✅
+      - Add Data (Description, Hints, Difficulty, etc.) ✅
+   - Delete games ✅
 - Game
-   - Ready-Check
-   - Info: Timer, x/x Objectives, Description ✅
+   - Ready-Check + Game-Info
+   - Info: Timer, x/x Objectives ✅
    - Get hints/quests
    - Soundeffects ✅
    - Animations
    - Page/State visual transitions
    - Submit Score after game won
-## Todo (After Done)
+## Todo (After all the planned features are done)
 - General
    - Add Setup commands (create DB, create Admin, create Sample-Games...)
    - More info on setup (env vars and stuff)
 - Account
    - Add Password Hashing (with salt via env)
+   - Proper Auth Secret
    - Add (optional) Account E-Mail Validation and Password Reset functionality
       - Should be enabled via env
 - Game
    - Add a Pause & Resume function when playing a game
    - Make it a bit cheat-safe and get "objective found" info only from server (dont store coordinates clientside basically)
    - A "is ready to play" check
-   - Edit Game (only if isReadyToPlay == false)
+   - Edit Game 
+      - only if nobody has played the game yet
+- Editor
+   - Better UX
+- Code/Architecture
+   - Refactor some stuff into smaller components and try to reuse more code between actual game and game-editor if possible
+- Design
+   - Get something coherent going :)
