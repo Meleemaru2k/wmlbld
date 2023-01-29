@@ -22,6 +22,18 @@ export default eventHandler(async (event) => {
   /**
    * Some validation/sanitization and corrections are necessary
    */
+
+  if (
+    gameData.image &&
+    gameData.image.length > 0 &&
+    !gameData.image.match(/^data:image\/(png|jpg|jpeg);base64,/)
+  ) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: "Image is not in base64 format.",
+    });
+  }
+
   if (gameData.description && gameData.description.length > 254) {
     gameData.description = gameData.description.slice(0, 254);
   }
