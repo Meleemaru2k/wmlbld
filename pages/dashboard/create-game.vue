@@ -1,17 +1,14 @@
 <template>
   <div class="flex flex-col pb-12">
-    <div class="bg-slate-900 text-stone-100 w-full flex flex-col pt-4 mb-4">
-      <h1 class="text-center text-stone-100">Spiel erstellen</h1>
-      <div class="mb-4 px-4 mx-auto">
-        <ol class="flex flex-row flex-wrap md:flex-nowrap gap-x-4">
-          <li>1. Bild hochladen</li>
-          <li>2. Auf Punkt im Bild gedrückt halten um Secret zu erstellen</li>
-          <li>3. Secret mit Infos schmücken</li>
-          <li>4. Spiel beschreiben</li>
-          <li>5. Hochladen :)</li>
-        </ol>
-      </div>
-    </div>
+    <LayoutPageHeader headline="Spiel erstellen"
+      ><ol class="flex flex-row flex-wrap md:flex-nowrap gap-x-4">
+        <li>1. Bild hochladen</li>
+        <li>2. Auf Punkt im Bild gedrückt halten um Secret zu erstellen</li>
+        <li>3. Secret mit Infos schmücken</li>
+        <li>4. Spiel beschreiben</li>
+        <li>5. Hochladen :)</li>
+      </ol></LayoutPageHeader
+    >
     <GenericInputImagePicker
       v-show="!base64image"
       class="mx-auto mb-4 p-2 bg-slate-100 rounded-md"
