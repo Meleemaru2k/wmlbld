@@ -6,7 +6,7 @@ export default NuxtAuthHandler({
   pages: {
     signIn: "/login",
   },
-  secret: "noRealSecretYet", //@TODO: Change this to a real secret
+  secret: process.env.AUTH_SECRET,
   providers: [
     // @ts-expect-error Import is exported on .default during SSR, so we need to call it this way. May be fixed via Vite at some point
     CredentialsProvider.default({
