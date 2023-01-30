@@ -7,6 +7,7 @@ export default defineEventHandler(async (event) => {
     .findMany({
       include: {
         eggs: true,
+        author: { select: { name: true } },
       },
       take: 25,
     })

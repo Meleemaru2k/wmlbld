@@ -1,5 +1,5 @@
 <template>
-  <div class="relative flex flex-col w-full h-full">
+  <div class="relative flex flex-col w-full h-full max-h-[100vh]">
     <div
       class="bg-slate-700 py-2 h-[64px] min-h-[64px] px-6 text-stone-100 flex flex-row flex-nowrap items-center [&_>*]:mr-4 z-40 overflow-x-auto overflow-y-hidden"
     >
@@ -54,11 +54,11 @@
       class="grow"
       style="background-repeat: repeat; background-size: 100%"
     >
-      <div class="bg-opacity-80 bg-stone-300 h-full">
+      <div class="bg-opacity-80 bg-stone-300 h-full pb-8">
         <slot class="h-full" />
       </div>
     </div>
-    <div class="bg-slate-700 py-2 px-6 text-stone-100 sticky bottom-0 z-40">
+    <div class="bg-slate-700 py-2 px-6 text-stone-100 bottom-0 z-40">
       Footer
     </div>
   </div>

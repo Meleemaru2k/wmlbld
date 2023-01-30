@@ -103,7 +103,7 @@ export default eventHandler(async (event) => {
       where: { authorId: user.id },
     });
 
-    if (gameCount >= 3) {
+    if (gameCount >= 5) {
       throw createError({
         statusCode: 500,
         statusMessage: "You have reached the maximum amount of games.",

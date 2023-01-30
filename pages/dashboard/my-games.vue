@@ -1,8 +1,6 @@
 <template>
   <div class="w-full overflow-hidden">
-    <LayoutPageHeader headline="🕹️ Deine Spiele 🕹️"
-      >Momentanes Maximum sind 3 Spiele :)</LayoutPageHeader
-    >
+    <LayoutPageHeader headline="🕹️ Deine Spiele 🕹️" />
     <div
       class="rounded-t-md m-4 border-[1px] border-black border-solid overflow-auto"
       v-if="userGames"

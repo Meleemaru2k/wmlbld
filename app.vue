@@ -1,5 +1,5 @@
 <template>
-  <NuxtLayout class="max-w-[100vw]">
+  <NuxtLayout>
     <NuxtPage class="grow h-full" />
   </NuxtLayout>
 </template>
