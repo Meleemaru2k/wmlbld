@@ -1,7 +1,7 @@
 import PrismaDB from "~~/utils/prismaDB";
 
 export default defineEventHandler(async (event) => {
-  const gameName = event.context.params.name;
+  const gameName = decodeURIComponent(event.context.params.name);
   const prisma = PrismaDB.getClient();
 
   const game = await prisma.game.findFirst({

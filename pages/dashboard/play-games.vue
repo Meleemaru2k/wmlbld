@@ -6,7 +6,7 @@
         <NuxtLink
           v-for="game in games"
           :key="game.id"
-          :to="`/play/${game.name}`"
+          :to="encodeURI(`/play/${game.name}`)"
         >
           <div
             class="flex flex-col bg-blue-400 border-slate-900 border-[1px] border-solid rounded-md h-full relative"

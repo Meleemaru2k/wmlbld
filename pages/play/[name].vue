@@ -45,7 +45,7 @@ const gameName = <string>useRoute().params.name ?? "samplegame";
 const { data: game } = await useFetch<Game & { eggs: Array<Egg> }>(
   `/api/game/find/name/${gameName}`
 );
-console.log(game.value);
+
 if (!game.value) {
   await navigateTo("/dashboard");
 }
