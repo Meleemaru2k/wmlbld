@@ -5,7 +5,9 @@ A Wimmelbild-Game WebApp
    - Signup ✅
    - Login ✅
 - Dashboard
-   - Search Games by Gamename
+   - Search Games
+      - Search by GameName
+      - Latest Games (last 25 only) ✅
    - Finished Games (last 25 only)
    - Leadboards by Gamename (top 25 only)
    - Create games ✅
@@ -25,6 +27,7 @@ A Wimmelbild-Game WebApp
 - General
    - Add Setup commands (create DB, create Admin, create Sample-Games...)
    - More info on setup (env vars and stuff)
+   - Compress Images and add max-files size
 - Account
    - Add Password Hashing (with salt via env)
    - Proper Auth Secret

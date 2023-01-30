@@ -32,7 +32,11 @@
             </td>
             <td>
               <div class="flex flex-col gap-y-4">
-                <GenericButtonBasic theme="primary" class="w-48">
+                <GenericButtonBasic
+                  :disabled="true"
+                  theme="primary"
+                  class="w-48"
+                >
                   Editieren
                 </GenericButtonBasic>
                 <GenericButtonBasic
@@ -47,9 +51,20 @@
               </div>
             </td>
             <td>
-              <GenericButtonBasic theme="primary" class="w-48">
-                Ansehen
-              </GenericButtonBasic>
+              <div class="flex flex-col gap-y-4">
+                <GenericButtonBasic
+                  :disabled="true"
+                  theme="primary"
+                  class="w-48"
+                >
+                  Bestenlise Ansehen
+                </GenericButtonBasic>
+                <NuxtLink :to="'/play/' + game.name">
+                  <GenericButtonBasic theme="primary" class="w-48">
+                    Selber Spielen
+                  </GenericButtonBasic>
+                </NuxtLink>
+              </div>
             </td>
           </tr>
         </tbody>
