@@ -29,11 +29,7 @@
             <td>
               <div class="max-w-[200px] max-h-[200px] relative">
                 <img width="200" height="200" :src="game.image" />
-                <div
-                  class="absolute bottom-2 right-2 font-bold text-white px-1 bg-slate-600"
-                >
-                  {{ game.eggs.length }}⭐
-                </div>
+                <GameUtilsEggIndicator :eggCount="game.eggs.length" />
               </div>
             </td>
             <td>
@@ -67,7 +63,7 @@
 
 <script setup lang="ts">
 const { data: userGames, refresh: userGamesRefresh } = await useFetch(
-  "/api/user/createdGames"
+  "/api/user/find/createdGames"
 );
 
 const deleteGameButtonLoading = ref(false);

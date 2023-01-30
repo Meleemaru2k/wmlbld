@@ -1,50 +1,53 @@
 <template>
   <div class="relative flex flex-col w-full h-full">
     <div
-      class="bg-slate-700 py-2 h-[80px] min-h-[80px] px-6 text-stone-100 flex flex-row flex-nowrap items-center [&_>*]:mr-4 z-40 overflow-auto"
+      class="bg-slate-700 py-2 h-[64px] min-h-[64px] px-6 text-stone-100 flex flex-row flex-nowrap items-center [&_>*]:mr-4 z-40 overflow-x-auto overflow-y-hidden"
     >
-      <NuxtLink to="/"
-        ><img class="w-12 h-12 rounded" src="~/assets/images/logo/output2.jpg"
-      /></NuxtLink>
-
       <div
-        class="[&_*]:mr-4 flex flex-row flex-nowrap items-center"
+        class="[&_*]:mr-4 flex flex-row flex-nowrap items-center link-container"
         v-if="status === 'authenticated'"
       >
+        <NuxtLink to="/"
+          ><img
+            class="w-12 h-12 rounded"
+            src="~/assets/images/logo/output2.jpg"
+        /></NuxtLink>
         <NuxtLink
-          :class="{ 'font-bold': $route.path === '/dashboard' }"
+          :class="{ 'active-link': $route.path === '/dashboard' }"
           to="/dashboard"
           >Dashboard<br />@{{ data?.user?.name }}</NuxtLink
         >
         <NuxtLink
-          :class="{ 'font-bold': $route.path.startsWith('/play') }"
-          to="/dashboard"
+          :class="{ 'active-link': $route.path.includes('play-games') }"
+          to="/dashboard/play-games"
           >Spielen 🕹️</NuxtLink
         >
         <NuxtLink
-          :class="{ 'font-bold': $route.path === '/dashboard/create-game' }"
+          :class="{ 'active-link': $route.path === '/dashboard/create-game' }"
           to="/dashboard/create-game"
           >Spiel erstellen</NuxtLink
         >
         <NuxtLink
-          :class="{ 'font-bold': $route.path === '/dashboard/my-games' }"
+          :class="{ 'active-link': $route.path === '/dashboard/my-games' }"
           to="/dashboard/my-games"
           >Meine Spiele</NuxtLink
         >
         <NuxtLink
-          :class="{ 'font-bold': $route.path === '/dashboard/my-ranks' }"
+          :class="{ 'active-link': $route.path === '/dashboard/my-ranks' }"
           to="/dashboard/my-ranks"
           >Meine Bestenlisteplätze</NuxtLink
         >
+        <div class="ml-auto"></div>
+        <div v-if="status !== 'authenticated'">
+          <NuxtLink to="/login">Login</NuxtLink>
+        </div>
+        <div v-if="status !== 'authenticated'">
+          <NuxtLink to="/signup">Account erstellen</NuxtLink>
+        </div>
+        <div class="shrink-0" v-if="status === 'authenticated'">
+          <logoutButton />
+        </div>
       </div>
-      <div class="ml-auto"></div>
-      <div v-if="status !== 'authenticated'">
-        <NuxtLink to="/login">Login</NuxtLink>
-      </div>
-      <div v-if="status !== 'authenticated'">
-        <NuxtLink to="/signup">Account erstellen</NuxtLink>
-      </div>
-      <div v-if="status === 'authenticated'"><logoutButton /></div>
     </div>
     <div
       :style="useBackgroundImage()"
@@ -64,4 +67,18 @@
 import logoutButton from "~/components/account/logut-button.vue";
 const { status, data } = useSession();
 </script>
-<style scoped lang="pcss"></style>
+<style scoped lang="pcss">
+.link-container{
+  @apply w-full;
+  & > *{
+    @apply hover:scale-110 transition-all shrink-0;
+    &:hover{
+      text-shadow:  0px 0px 2px rgba(220,220,200);
+    }
+  }
+}
+
+.active-link{
+  @apply font-bold text-yellow-300 underline;
+}
+</style>
