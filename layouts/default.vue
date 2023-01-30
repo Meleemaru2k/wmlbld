@@ -48,6 +48,24 @@
           <logoutButton />
         </div>
       </div>
+      <div
+        class="[&_*]:mr-4 flex flex-row flex-nowrap items-center link-container"
+        v-else
+      >
+        <NuxtLink to="/"
+          ><img
+            class="w-12 h-12 rounded"
+            src="~/assets/images/logo/output2.jpg"
+        /></NuxtLink>
+
+        <div class="ml-auto"></div>
+        <div>
+          <NuxtLink to="/login">Login</NuxtLink>
+        </div>
+        <div>
+          <NuxtLink to="/signup">Account erstellen</NuxtLink>
+        </div>
+      </div>
     </div>
     <div
       :style="useBackgroundImage()"
