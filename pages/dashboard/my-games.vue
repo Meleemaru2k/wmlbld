@@ -4,12 +4,12 @@
       >Momentanes Maximum sind 3 Spiele :)</LayoutPageHeader
     >
     <div
-      class="rounded-t-md m-4 border-[1px] border-black border-solid overflow-hidden"
+      class="rounded-t-md m-4 border-[1px] border-black border-solid overflow-auto"
       v-if="userGames"
     >
-      <table class="w-full table-fixed">
+      <table class="w-full table-auto">
         <thead class="bg-pink-300">
-          <tr class="text-left [&_th]:p-4">
+          <tr class="text-left [&_th]:p-4 [&_th]:min-w-[200px]">
             <th>Name / Beschreibung</th>
             <th>Bild & Secrets</th>
             <th>Bearbeiten 📝</th>
@@ -44,7 +44,9 @@
                 <GenericButtonBasic
                   class="w-48"
                   theme="error"
+                  :confirm-click="true"
                   @click="deleteGame(game.id)"
+                  :loading="deleteGameButtonLoading"
                 >
                   Löschen
                 </GenericButtonBasic>
@@ -68,9 +70,11 @@ const { data: userGames, refresh: userGamesRefresh } = await useFetch(
   "/api/user/createdGames"
 );
 
+const deleteGameButtonLoading = ref(false);
 async function deleteGame(id: number) {
-  const { data: gameDeleted } = await useFetch("/api/game/delete/" + id);
-  console.log(gameDeleted);
+  deleteGameButtonLoading.value = true;
+  await useFetch("/api/game/delete/" + id);
   await userGamesRefresh();
+  deleteGameButtonLoading.value = false;
 }
 </script>

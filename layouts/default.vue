@@ -1,17 +1,20 @@
 <template>
   <div class="relative flex flex-col w-full h-full">
     <div
-      class="bg-slate-700 py-2 px-6 h-16 text-stone-100 flex flex-row flex-nowrap items-center [&_>*]:mr-4 z-40"
+      class="bg-slate-700 py-2 h-[80px] min-h-[80px] px-6 text-stone-100 flex flex-row flex-nowrap items-center [&_>*]:mr-4 z-40 overflow-auto"
     >
       <NuxtLink to="/"
         ><img class="w-12 h-12 rounded" src="~/assets/images/logo/output2.jpg"
       /></NuxtLink>
 
-      <div class="[&_*]:mr-4" v-if="status === 'authenticated'">
+      <div
+        class="[&_*]:mr-4 flex flex-row flex-nowrap items-center"
+        v-if="status === 'authenticated'"
+      >
         <NuxtLink
           :class="{ 'font-bold': $route.path === '/dashboard' }"
           to="/dashboard"
-          >Dashboard@{{ data?.user?.name }}</NuxtLink
+          >Dashboard<br />@{{ data?.user?.name }}</NuxtLink
         >
         <NuxtLink
           :class="{ 'font-bold': $route.path.startsWith('/play') }"

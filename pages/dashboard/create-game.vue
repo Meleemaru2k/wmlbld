@@ -107,6 +107,7 @@
         class="mt-4 ml-auto w-full md:w-3/12"
         theme="success"
         :disabled="!enableSaveButton"
+        :loading="saveGameButtonLoading"
         @click="createGame()"
         >Spiel speichern</GenericButtonBasic
       >
@@ -133,6 +134,7 @@ const imageDimensions = reactive({ height: 100, width: 100 });
 const imageContainer = ref<HTMLElement | null>(null);
 const currentlyDraggedEgg = ref<null | Egg>(null);
 
+const saveGameButtonLoading = ref(false);
 const enableSaveButton = computed(() => {
   return gameData.name && gameData.description && gameData.eggs.length > 0;
 });
@@ -210,12 +212,14 @@ function addEgg(position?: { x: number; y: number }) {
 }
 
 async function createGame() {
+  saveGameButtonLoading.value = true;
   gameData.image = base64image.value;
   await useFetch("/api/game/create", {
     body: { gameData },
     method: "POST",
   })
-    .then((x) => console.log(x))
-    .catch((x) => console.log(x));
+    .then(async () => await navigateTo("/dashboard/my-games"))
+    .catch((x) => console.log(x))
+    .finally(() => (saveGameButtonLoading.value = false));
 }
 </script>

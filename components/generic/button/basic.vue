@@ -3,13 +3,8 @@
     class="overflow-hidden rounded focus:shadow-inner focus:shadow-[rgba(0,0,0,0.5)] transition-all relative border-solid border-[rgba(0,0,0,0.2)] border-[1px] px-3 py-1 text-center font-semibold font-mono before:block before:left-0 before:w-full before:h-8 before:-top-36 before:absolute before:bg-[rgba(255,255,255,0.10)] hover:before:top-[95%] before:transition-none hover:before:transition-all hover:before:ease-in-out hover:before:duration-200 hover:before:bg-[rgba(255,255,255,0.3)]"
     :class="[theme, { loading__all: loading }, { 'saturate-0': disabled }]"
     :disabled="disabled"
-    @click="
-      {
-        useSfx().sounds.button_click.pause();
-        useSfx().sounds.button_click.currentTime = 0;
-        useSfx().sounds.button_click.play();
-      }
-    "
+    @click="clickHandler"
+    @focusout="reset"
   >
     <div
       v-show="loading"
@@ -21,7 +16,12 @@
       >
     </div>
     <span v-show="!loading">
-      <slot />
+      <template v-if="!waitingForConfirmation">
+        <slot />
+      </template>
+      <template v-else>
+        Sicher, dass du <i><slot /></i> ausführen willst?
+      </template>
     </span>
     <span v-show="loading">Lädt...</span>
   </button>
@@ -30,7 +30,7 @@
 <script setup lang="ts">
 import { PropType } from "vue";
 
-defineProps({
+const props = defineProps({
   theme: {
     type: String as PropType<"primary" | "secondary" | "success" | "error">,
     required: false,
@@ -38,7 +38,31 @@ defineProps({
   },
   disabled: { type: Boolean, default: false },
   loading: { type: Boolean, default: false },
+  confirmClick: { type: Boolean, default: false },
 });
+
+const waitingForConfirmation = ref(false);
+
+function clickHandler() {
+  {
+    useSfx().sounds.button_click.pause();
+    useSfx().sounds.button_click.currentTime = 0;
+    useSfx().sounds.button_click.play();
+  }
+  if (props.confirmClick && !waitingForConfirmation.value) {
+    waitingForConfirmation.value = true;
+  } else {
+    emit("click");
+  }
+}
+
+function reset() {
+  waitingForConfirmation.value = false;
+}
+
+const emit = defineEmits<{
+  (event: "click"): void;
+}>();
 </script>
 
 <style scoped lang="pcss">

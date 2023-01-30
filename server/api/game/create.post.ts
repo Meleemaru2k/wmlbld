@@ -2,6 +2,19 @@ import { getServerSession } from "#auth";
 import { Egg, Game } from "@prisma/client";
 import PrismaDB from "~~/utils/prismaDB";
 
+function randomIntFromInterval(min: number = 100000, max: number = 999999) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+const forbiddenGameNames = [
+  "create",
+  "update",
+  "delete",
+  "get",
+  "list",
+  "newest",
+  "new",
+];
+
 export default eventHandler(async (event) => {
   const session = await getServerSession(event);
   if (!session || !session.user?.email) {
@@ -31,12 +44,14 @@ export default eventHandler(async (event) => {
       statusMessage: "Image is not in base64 format.",
     });
   }
-
-  if (gameData.description && gameData.description.length > 254) {
+  if (gameData.description && gameData.description?.length > 254) {
     gameData.description = gameData.description.slice(0, 254);
   }
   if (gameData.name && gameData.name.length > 254) {
     gameData.name = gameData.name.slice(0, 254);
+  }
+  if (forbiddenGameNames.includes(gameData.name)) {
+    gameData.name = gameData.name + randomIntFromInterval();
   }
 
   const gameDataForCreate = {
