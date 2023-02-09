@@ -16,7 +16,7 @@
     "@sidebase/nuxt-auth": "^0.3.3",
     "@vueuse/core": "^9.10.0",
     "@vueuse/nuxt": "^9.10.0",
-    "nuxt": "3.0.0",
+    "nuxt": "^3.2.0",
     "prisma": "^4.8.1"
   },
   "dependencies": {
