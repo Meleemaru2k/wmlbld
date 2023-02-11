@@ -7,90 +7,29 @@
         <li>3. Secret mit Infos schmücken</li>
         <li>4. Spiel beschreiben</li>
         <li>5. Hochladen :)</li>
-      </ol></LayoutPageHeader
-    >
+      </ol>
+    </LayoutPageHeader>
     <GenericInputImagePicker
-      v-show="!base64image"
+      v-show="!gameData.image"
       class="mx-auto mb-4 p-2 bg-slate-100 rounded-md"
       @image-picked="onImageChange($event)"
     />
 
     <div class="flex flex-row flex-wrap md:flex-nowrap gap-4 px-4">
       <div class="basis-full md:basis-9/12 h-[600px] relative">
-        <div
-          v-dragscroll:hidden
-          ref="imageContainer"
-          class="absolute w-full h-full overflow-hidden overscroll-contain rounded-md"
-        >
-          <div
-            @mousedown="onMouseDown"
-            @touchstart="onTouchStart"
-            @touchend="onTouchEnd"
-            @mouseup="onMouseUp"
-            @touchmove="onTouchMove"
-            @mousemove="onMouseMove"
-            @drop="moveEggToPosition($event)"
-            @dragover.prevent
-            @dragenter.prevent
-            :style="{
-              height: imageDimensions.height.toString() + 'px',
-              width: imageDimensions.width.toString() + 'px',
-            }"
-            class="relative"
-          >
-            <div
-              @drop.stop
-              @mousedown.stop
-              @touchstart.stop
-              v-for="(egg, index) in gameData.eggs"
-              :key="index"
-              class="absolute rounded-full cursor-pointer bg-pink-300 border-dashed border-black border-4"
-              :style="getEggPosAndSize(egg)"
-            >
-              <div
-                class="w-full h-full relative select-auto"
-                draggable
-                @dragstart="currentlyDraggedEgg = egg"
-              ></div>
-              <div
-                @click="removeEgg(index)"
-                class="absolute -right-3 bottom-1/2 bg-white rounded-full select-none"
-              >
-                ❌
-              </div>
-              <div
-                class="absolute left-1/2 top-1/2 p-1 text-slate-900 text-2xl font-bold select-none pointer-events-none -translate-x-1/2 -translate-y-1/2"
-              >
-                #{{ index }}
-              </div>
-            </div>
-            <img
-              ref="gameImage"
-              draggable="false"
-              :src="base64image"
-              class="select-none"
-            />
-          </div>
-        </div>
+        <GameImage />
       </div>
       <div
         class="basis-full md:basis-3/12 grow-0 flex shrink-0 flex-col"
-        v-show="image"
+        v-show="gameData.image"
       >
         <div class="h-[600px] overflow-auto p-4 bg-slate-100 rounded-md t">
-          <GameEditorEggEditor
-            @silder-change="onSliderChange"
-            @add-egg="addEgg"
-            @remove-egg="removeEgg"
-            v-model="gameData.eggs"
-            :image="base64image"
-            :image-dimensions="imageDimensions"
-          />
+          <GameEditorEggEditor />
         </div>
       </div>
     </div>
     <div
-      v-show="image"
+      v-show="gameData.image"
       class="flex flex-row flex-wrap md:flex-nowrap gap-4 px-4 mt-4"
     >
       <GenericInputTextarea
@@ -108,118 +47,49 @@
         theme="success"
         :disabled="!enableSaveButton"
         :loading="saveGameButtonLoading"
-        @click="createGame()"
+        @click="createGame"
         >Spiel speichern</GenericButtonBasic
       >
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { Egg } from "@prisma/client";
 import { convertImageToBase64 } from "~~/utils/imageConverter";
-const gameData = reactive({
-  name: "samplegame",
-  authorId: 1,
-  passphrase: "sample",
-  description: "Find things in this image! :)",
-  image: "",
-  eggs: [] as Array<Egg>,
-});
 
-const image = ref<HTMLInputElement | null>(null);
-const base64image = ref("");
-const gameImage = ref<HTMLImageElement | null>(null);
-const imageDimensions = reactive({ height: 100, width: 100 });
-
-const imageContainer = ref<HTMLElement | null>(null);
-const currentlyDraggedEgg = ref<null | Egg>(null);
+const { gameData, resetGame } = useGameEditor();
 
 const saveGameButtonLoading = ref(false);
 const enableSaveButton = computed(() => {
   return gameData.name && gameData.description && gameData.eggs.length > 0;
 });
 
-const {
-  onMouseDown,
-  onMouseUp,
-  onMouseMove,
-  onTouchMove,
-  onTouchStart,
-  onTouchEnd,
-} = useCustomLongPress((e) => {
-  const event = e as any;
-  if (event.touches?.length > 0) {
-    const rect = event.target.getBoundingClientRect();
-    const x = event.touches[0].clientX - rect.left - event.target.scrollLeft;
-    const y = event.touches[0].clientY - rect.top - event.target.scrollTop;
-    addEgg({ x: x ?? 50, y: y ?? 50 });
-  } else {
-    addEgg({ x: event.layerX ?? 50, y: event.layerY ?? 50 });
-  }
-});
-
-function onSliderChange(egg: Egg) {
-  if (imageContainer.value) {
-    imageContainer.value.scrollLeft =
-      egg.pos_x - imageContainer.value.getBoundingClientRect().width / 2;
-    imageContainer.value.scrollTop =
-      egg.pos_y - imageContainer.value.getBoundingClientRect().height / 2;
-  }
-}
-
 function onImageChange(inputElement: HTMLInputElement) {
-  image.value = inputElement;
-
-  convertImageToBase64(image.value).then((b64String) => {
-    base64image.value = b64String;
-  });
-
-  setTimeout(() => {
-    imageDimensions.height = gameImage.value?.naturalHeight ?? 100;
-    imageDimensions.width = gameImage.value?.naturalWidth ?? 100;
-  }, 100);
-}
-
-function getEggPosAndSize(egg: Egg) {
-  return `top:${egg.pos_y - egg.size}px;left:${egg.pos_x - egg.size}px;width:${
-    egg.size * 2
-  }px;height:${egg.size * 2}px;`;
-}
-
-function moveEggToPosition(
-  e: DragEvent & Partial<{ layerX: number; layerY: number }>
-) {
-  if (currentlyDraggedEgg.value && e.layerX && e.layerY) {
-    currentlyDraggedEgg.value.pos_x = e.layerX;
-    currentlyDraggedEgg.value.pos_y = e.layerY;
-  }
-}
-
-function removeEgg(index: number) {
-  gameData.eggs.splice(index, 1);
-}
-
-function addEgg(position?: { x: number; y: number }) {
-  gameData.eggs.push({
-    id: 0,
-    gameId: 0,
-    pos_x: position?.x ?? 50,
-    pos_y: position?.y ?? 50,
-    size: 25,
-    description: "",
-    hint: "",
+  convertImageToBase64(inputElement).then((b64String) => {
+    gameData.image = b64String;
   });
 }
 
 async function createGame() {
   saveGameButtonLoading.value = true;
-  gameData.image = base64image.value;
   await useFetch("/api/game/create", {
     body: { gameData },
     method: "POST",
   })
-    .then(async () => await navigateTo("/dashboard/my-games"))
-    .catch((x) => console.log(x))
-    .finally(() => (saveGameButtonLoading.value = false));
+    .then(async (data) => {
+      if (!data.error.value) {
+        await navigateTo("/dashboard/my-games");
+        resetGame();
+      } else {
+        console.log({ err: data.error.value, gameData });
+      }
+    })
+    .catch((err) => console.log({ err: err, gameData }))
+    .finally(() => {
+      saveGameButtonLoading.value = false;
+    });
 }
+
+onUnmounted(() => {
+  resetGame();
+});
 </script>

@@ -1,13 +1,22 @@
 <template>
   <div>
     <div
-      v-for="(egg, index) in modelValue"
+      v-for="(egg, index) in gameData.eggs"
       :key="index"
-      class="mb-4 bg-green-100 max-w-full p-2 rounded-md relative min-h-[28px] border-[rgba(0,0,0,0.2)] border-solid border-[1px]"
+      class="mb-4 bg-slate-200 max-w-full p-2 rounded-md relative min-h-[28px] border-[rgba(0,0,0,0.2)] border-solid border-[1px]"
     >
       <div class="absolute top-0 right-0">
-        <div class="flex flex-row [&_*]:mr-2">
-          <span class="font-bold">#{{ index }}</span>
+        <div class="flex flex-row [&_*]:mr-2 items-center">
+          <span class="font-bold"
+            ><span class="font-normal text-sm"
+              >{{
+                showEgg.get(index) || showEgg.get(index) === undefined
+                  ? ""
+                  : shortenedDescriptions[index]
+              }}
+            </span>
+            #{{ index }}</span
+          >
           <span
             class="cursor-pointer"
             @click="
@@ -18,7 +27,9 @@
             "
             >➖</span
           >
-          <span @click="$emit('removeEgg', index)">❌</span>
+          <span class="cursor-pointer text-xs" @click="removeEgg(index)"
+            >❌</span
+          >
         </div>
       </div>
       <div class="[&_*]:mb-2" v-show="showEgg.get(index) ?? true">
@@ -77,34 +88,46 @@
                   width: imageDimensions?.width.toString() + 'px',
                 }"
               >
-                <img class="w-full h-full overflow-hidden" :src="image" />
+                <img
+                  class="w-full h-full overflow-hidden"
+                  :src="gameData.image"
+                />
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <GenericButtonBasic class="w-full" @click="$emit('addEgg')"
+    <GenericButtonBasic class="w-full" @click="addEgg()"
       >Secret Hinzufügen</GenericButtonBasic
     >
   </div>
 </template>
 
 <script setup lang="ts">
-import { Egg } from "@prisma/client";
-import { PropType } from "vue";
-const imagePreviewOffset = 50;
+const {
+  gameData,
+  imageDimensions,
+  removeEgg,
+  addEgg,
+  focusOnEgg_pos_x,
+  focusOnEgg_pos_y,
+} = useGameEditor();
 
-const props = defineProps({
-  modelValue: { type: Object as PropType<Array<Egg>>, required: true },
-  image: String,
-  imageDimensions: Object as PropType<{ height: number; width: number }>,
-});
-defineEmits(["update:modelValue", "silderChange", "removeEgg", "addEgg"]);
+const imagePreviewOffset = 50;
 
 const showEgg = ref(new Map<number, boolean>());
 const previewImages = ref([] as Array<HTMLElement>);
-watch(props.modelValue, (newVal) => {
+
+const shortenedDescriptions = computed(() => {
+  return gameData.eggs.map((egg) => {
+    return egg.description?.length > 15
+      ? egg.description?.slice(0, 12) + "..."
+      : egg.description;
+  });
+});
+
+watch(gameData.eggs, (newVal) => {
   for (let i = 0; i < newVal.length; i++) {
     setTimeout(() => onEggPositionChange(i), 10);
   }
@@ -113,9 +136,11 @@ watch(props.modelValue, (newVal) => {
 function onEggPositionChange(index: number) {
   try {
     previewImages.value[index].scrollTop =
-      props.modelValue[index].pos_y - imagePreviewOffset;
+      gameData.eggs[index].pos_y - imagePreviewOffset;
     previewImages.value[index].scrollLeft =
-      props.modelValue[index].pos_x - imagePreviewOffset;
+      gameData.eggs[index].pos_x - imagePreviewOffset;
+    focusOnEgg_pos_x.value = gameData.eggs[index].pos_x;
+    focusOnEgg_pos_y.value = gameData.eggs[index].pos_y;
   } catch {}
 }
 </script>
