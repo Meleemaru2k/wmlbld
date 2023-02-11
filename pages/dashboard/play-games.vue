@@ -2,37 +2,28 @@
   <div>
     <LayoutPageHeader headline="Neuste Spiele"> </LayoutPageHeader>
     <div class="px-4">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 overflow-hidden">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <NuxtLink
-          v-for="game in games"
+          v-for="(game, index) in games"
           :key="game.id"
           :to="encodeURI(`/play/${game.name}`)"
+          class="h-[330px]"
         >
-          <div
-            class="flex flex-col bg-blue-400 border-slate-900 border-[1px] border-solid rounded-md h-full relative"
-          >
-            <div class="relative overflow-hidden">
-              <img
-                :src="game.image"
-                :alt="game.name"
-                class="w-full h-48 object-cover hover:scale-[5] transition-all rounded-t-md"
-              />
+          <GenericContainerCard
+            class="h-[330px] cardwobble"
+            :image="{ src: game.image, altText: game.name }"
+            :options="{ showShine: true }"
+            ><template #imageOverlay>
               <GameUtilsEggIndicator :eggCount="game.eggs.length" />
-            </div>
-            <div
-              class="p-4 [&_*]:mb-2 [&_*]:text-center border-black border-t-[1px] border-solid relative"
-            >
-              <div class="font-bold text-xl">
-                {{ game.name }}
-              </div>
-              <div class="text-sm text-stone-100">
-                {{ game.description }}
-              </div>
-            </div>
-            <div class="text-xs text-stone-100 flex absolute right-2 bottom-1">
-              <span class="ml-auto">Autor: {{ game.author.name }}</span>
-            </div>
-          </div>
+            </template>
+            <template #headline>
+              {{ game.name }}
+            </template>
+            <template #mainContent>
+              {{ game.description }}
+            </template>
+            <template #bottomSmallInfo> Autor: {{ game.author.name }}</template>
+          </GenericContainerCard>
         </NuxtLink>
       </div>
     </div>
@@ -45,4 +36,33 @@ const { data: games, refresh: refreshGames } = await useFetch(
 );
 </script>
 
-<style scoped lang="postcss"></style>
+<style scoped lang="postcss">
+.cardwobble {
+  box-sizing: border-box;
+  &:hover {
+    @apply rounded-md p-[1px] m-0;
+    @apply contrast-125;
+    box-shadow: 0px 0px 0px rgba(255, 255, 255);
+    border: 0.5px solid white;
+    animation: wobble 1s ease-in infinite;
+  }
+}
+
+@keyframes wobble {
+  0% {
+    @apply p-[1px] m-0;
+    box-shadow: 0px 0px 10px rgb(255, 213, 135);
+  }
+  50% {
+    @apply p-0 m-[1px];
+    box-shadow: 0px 0px 20px rgb(255, 255, 255);
+  }
+  70% {
+    box-shadow: 0px 0px 10px rgb(135, 221, 255);
+  }
+  100% {
+    @apply p-[1px] m-0;
+    box-shadow: 0px 0px 10px rgb(255, 213, 135);
+  }
+}
+</style>
