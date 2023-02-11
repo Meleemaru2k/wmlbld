@@ -62,6 +62,7 @@
 
 <script setup lang="ts">
 import { Egg } from ".prisma/client";
+import useGameEditor from "~~/components/game-editor/composables/useGameEditor";
 
 const {
   gameData,

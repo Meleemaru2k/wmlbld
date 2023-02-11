@@ -43,8 +43,7 @@ function resetGame() {
 
 const focusOnEgg_pos_x = ref(0);
 const focusOnEgg_pos_y = ref(0);
-
-export const useGameEditor = () => {
+const useGameEditor = () => {
   return {
     gameData,
     imageDimensions,
@@ -55,3 +54,5 @@ export const useGameEditor = () => {
     focusOnEgg_pos_y,
   };
 };
+
+export default useGameEditor;

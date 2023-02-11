@@ -55,7 +55,7 @@
 </template>
 <script setup lang="ts">
 import { convertImageToBase64 } from "~~/utils/imageConverter";
-
+import useGameEditor from "~~/components/game-editor/composables/useGameEditor";
 const { gameData, resetGame } = useGameEditor();
 
 const saveGameButtonLoading = ref(false);

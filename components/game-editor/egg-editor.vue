@@ -105,6 +105,7 @@
 </template>
 
 <script setup lang="ts">
+import useGameEditor from "~~/components/game-editor/composables/useGameEditor";
 const {
   gameData,
   imageDimensions,
