@@ -121,7 +121,7 @@ const previewImages = ref([] as Array<HTMLElement>);
 
 const shortenedDescriptions = computed(() => {
   return gameData.eggs.map((egg) => {
-    return egg.description?.length > 15
+    return egg.description?.length ?? 0 > 15
       ? egg.description?.slice(0, 12) + "..."
       : egg.description;
   });
