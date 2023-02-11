@@ -2,19 +2,21 @@
   <div
     class="flex flex-col bg-orange-500 border-slate-900 border-[1px] border-solid rounded-md h-full relative overflow-hidden"
   >
-    <div class="relative overflow-hidden">
+    <div class="relative overflow-hidden h-48 shrink-0">
       <img
         :src="image.src"
         :alt="image.altText"
-        class="w-full h-48 object-cover hover:scale-[5] transition-all rounded-t-md"
+        class="w-full h-full object-cover hover:scale-[5] transition-all rounded-t-md"
       />
       <slot name="imageOverlay" />
     </div>
     <div
       class="p-4 [&_*]:mb-2 [&_*]:text-center border-black border-t-[1px] border-solid relative"
     >
-      <div class="font-bold text-xl text-slate-900">
-        <slot name="headline" />
+      <div class="font-bold text-xl">
+        <div class="w-full bg-slate-700 text-white p-[4px] rounded-md">
+          <slot name="headline" />
+        </div>
       </div>
       <div class="text-sm text-stone-100">
         <slot name="mainContent" />
@@ -25,7 +27,7 @@
     </div>
     <div
       v-if="options?.showShine"
-      class="absolute top-[85%] right-[50%] -rotate-[27deg] bg-white w-[200%] h-[200%] opacity-25"
+      class="absolute top-[66%] right-[66%] -rotate-[33deg] bg-white w-[120%] h-[120%] opacity-25"
     ></div>
   </div>
 </template>

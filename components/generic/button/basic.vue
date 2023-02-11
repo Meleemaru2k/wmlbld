@@ -32,7 +32,9 @@ import { PropType } from "vue";
 
 const props = defineProps({
   theme: {
-    type: String as PropType<"primary" | "secondary" | "success" | "error">,
+    type: String as PropType<
+      "primary" | "secondary" | "success" | "error" | "warning"
+    >,
     required: false,
     default: "primary",
   },
@@ -77,6 +79,11 @@ const emit = defineEmits<{
 .success {
   @apply bg-green-500 text-slate-100;
 }
+
+.warning {
+  @apply bg-yellow-500 text-slate-100;
+}
+
 
 .error {
   @apply bg-red-500 text-slate-100;

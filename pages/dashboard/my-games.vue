@@ -1,74 +1,63 @@
 <template>
   <div class="w-full overflow-hidden">
     <LayoutPageHeader headline="🕹️ Deine Spiele 🕹️" />
-    <div
-      class="rounded-t-md m-4 border-[1px] border-black border-solid overflow-auto"
-      v-if="userGames"
-    >
-      <table class="w-full table-auto">
-        <thead class="bg-pink-300">
-          <tr class="text-left [&_th]:p-4 [&_th]:min-w-[200px]">
-            <th>Name / Beschreibung</th>
-            <th>Bild & Secrets</th>
-            <th>Bearbeiten 📝</th>
-            <th>Bestenliste 🔥</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="game in userGames"
-            class="border-y-[1px] border-slate-600 border-solid [&_td]:p-4 [&_td]:odd:bg-pink-100 [&_td]:even:bg-blue-100"
-          >
-            <td class="text-center">
-              {{ game.name }}<br /><span class="text-sm">{{
-                game.description
-              }}</span>
-            </td>
-            <td>
-              <div class="max-w-[200px] max-h-[200px] relative">
-                <img width="200" height="200" :src="game.image" />
-                <GameUtilsEggIndicator :eggCount="game.eggs.length" />
-              </div>
-            </td>
-            <td>
-              <div class="flex flex-col gap-y-4">
-                <GenericButtonBasic
-                  :disabled="true"
-                  theme="primary"
-                  class="w-48"
-                >
-                  Editieren
-                </GenericButtonBasic>
-                <GenericButtonBasic
-                  class="w-48"
-                  theme="error"
-                  :confirm-click="true"
-                  @click="deleteGame(game.id)"
-                  :loading="deleteGameButtonLoading"
-                >
-                  Löschen
-                </GenericButtonBasic>
-              </div>
-            </td>
-            <td>
-              <div class="flex flex-col gap-y-4">
-                <GenericButtonBasic
-                  :disabled="true"
-                  theme="primary"
-                  class="w-48"
-                >
-                  Bestenlise Ansehen
-                </GenericButtonBasic>
-                <NuxtLink :to="'/play/' + game.name">
-                  <GenericButtonBasic theme="primary" class="w-48">
-                    Selber Spielen
-                  </GenericButtonBasic>
-                </NuxtLink>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="" v-if="userGames">
+      <div class="relative overflow-hidden">
+        <GenericContainerRainbowBorder
+          class="!-rotate-2 !my-8 !w-[calc(100%+32px)] !-ml-4"
+        >
+          <GenericContainerSlider class="bg-slate-600">
+            <div v-for="(game, index) in userGames" :key="game.id">
+              <GenericContainerCard
+                class="cardwobble"
+                :image="{ src: game.image, altText: game.name }"
+                :options="{ showShine: true }"
+                ><template #imageOverlay>
+                  <div
+                    class="absolute top-2 right-2 bg-slate-500 rounded-md p-1 text-white text-xs"
+                  >
+                    Game Played XXXX times 🔥
+                  </div>
+                  <GameUtilsEggIndicator :eggCount="game.eggs.length" />
+                </template>
+                <template #headline>
+                  {{ game.name }}
+                </template>
+                <template #mainContent>
+                  <div>{{ game.description }}</div>
+                  <div class="mt-4 flex flex-col gap-y-2 items-center">
+                    <NuxtLink :to="'/play/' + game.name" class="w-48">
+                      <GenericButtonBasic theme="primary" class="w-48 !m-0">
+                        Selber Spielen
+                      </GenericButtonBasic>
+                    </NuxtLink>
+                    <GenericButtonBasic theme="warning" class="w-48">
+                      Editieren
+                    </GenericButtonBasic>
+                    <GenericButtonBasic
+                      class="w-48"
+                      theme="error"
+                      :confirm-click="true"
+                      @click="deleteGame(game.id)"
+                      :loading="deleteGameButtonLoading"
+                    >
+                      Löschen
+                    </GenericButtonBasic>
+                    <GenericButtonBasic
+                      :disabled="true"
+                      theme="primary"
+                      class="w-48"
+                    >
+                      Bestenlise Ansehen
+                    </GenericButtonBasic>
+                  </div>
+                </template>
+                <template #bottomSmallInfo> Autor: Du!</template>
+              </GenericContainerCard>
+            </div>
+          </GenericContainerSlider>
+        </GenericContainerRainbowBorder>
+      </div>
     </div>
     <div v-else>Keine Spiele gefunden :(</div>
   </div>

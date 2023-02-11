@@ -69,10 +69,10 @@
     </div>
     <div
       :style="useBackgroundImage()"
-      class="grow"
+      class="grow movebg"
       style="background-repeat: repeat; background-size: 100%"
     >
-      <div class="bg-opacity-80 bg-stone-300 h-full pb-8">
+      <div class="bg-opacity-90 bg-pink-800 h-full pb-8">
         <slot class="h-full" />
       </div>
     </div>
@@ -96,7 +96,16 @@ const { status, data } = useSession();
   }
 }
 
+.movebg {
+  animation: movebg 40s linear infinite alternate;
+}
 .active-link{
   @apply font-bold text-yellow-300 underline;
+}
+
+@keyframes movebg {
+  to {
+    background-position: 200%;
+  }
 }
 </style>
