@@ -39,7 +39,7 @@
           ></div>
           <div
             @click="removeEgg(index)"
-            class="absolute text-xs -right-1/2 top-1/4 p-1 bg-white rounded-full select-none border-slate-400 border-[1px] -translate-y-1/2"
+            class="absolute text-xs -right-4 top-1/4 p-1 bg-white rounded-full select-none border-slate-400 border-[1px] -translate-y-1/2 translate-x-1/2"
           >
             ❌
           </div>
@@ -109,10 +109,12 @@ watch([focusOnEgg_pos_x, focusOnEgg_pos_y], ([newVal_x, newVal_y]) => {
 
 function onFocusChange(pos_x: number, pos_y: number) {
   if (imageContainer.value) {
-    imageContainer.value.scrollLeft =
-      pos_x - imageContainer.value.getBoundingClientRect().width / 2;
-    imageContainer.value.scrollTop =
-      pos_y - imageContainer.value.getBoundingClientRect().height / 2;
+    const x = pos_x - imageContainer.value.getBoundingClientRect().width / 2;
+    const y = pos_y - imageContainer.value.getBoundingClientRect().height / 2;
+    imageContainer.value.scrollTo({
+      top: y,
+      left: x,
+    });
   }
 }
 
