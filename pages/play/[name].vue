@@ -9,25 +9,17 @@
         <span class="font-bold text-xl">{{ playtimeInSeconds }}s</span>
       </div>
       <div class="shrink-0 flex flex-row flex-nowrap w-18">
-        {{ foundEggs }} / {{ game?.eggs.length }} ⭐
+        {{ foundEggs.size }} / {{ game?.eggs.length }} ⭐
       </div>
       <basicButton class="shrink-0 flex flex-row flex-nowrap">
         <span>ℹ️ Info</span>
       </basicButton>
-
       <basicButton class="shrink-0" @click="toggleGrid()"
         >Raster <i>A</i></basicButton
       >
     </div>
     <div v-if="game" class="p-4 md:p-8 shadow-inner grow flex flex-col">
-      <gameField
-        @gamewon="gamewon = true"
-        @update-found-eggs="foundEggs = $event"
-        v-if="gamewon === false && game"
-        :game-name="gameName"
-        :game="game"
-        :show-grid="showGrid"
-      ></gameField>
+      <gameField v-if="gameWon === false && game"></gameField>
       <div v-else class="flex flex-col">
         <div>Gewonnen!</div>
         <div>Zeit: {{ playtimeInSeconds }}</div>
@@ -38,6 +30,8 @@
 </template>
 <script setup lang="ts">
 import { Egg, Game } from ".prisma/client";
+import { gameState_IK } from "~~/utils/injectionKeys";
+import { GameWithEggs } from "~~/types/game";
 import gameField from "~~/components/gameboard/game-field.vue";
 import basicButton from "~~/components/generic/button/basic.vue";
 
@@ -49,8 +43,8 @@ const { data: game } = await useFetch<Game & { eggs: Array<Egg> }>(
 if (!game.value) {
   await navigateTo("/dashboard");
 }
-const gamewon = ref(false);
-const foundEggs = ref(0);
+const gameWon = ref(false);
+const foundEggs = ref(new Set<Egg>());
 const showGrid = ref(false);
 
 const timeStarted = new Date();
@@ -68,8 +62,33 @@ const playtimeInSeconds = computed(() => {
   return (((timeStarted.getTime() - timestamp.value) * -1) / 1000).toFixed(0);
 });
 
-watch(gamewon, () => {
+watch(
+  foundEggs,
+  () => {
+    if (allEggsFoundCheck()) {
+      gameWon.value = true;
+    }
+  },
+  { deep: true }
+);
+function allEggsFoundCheck() {
+  if (foundEggs.value.size === game.value?.eggs.length) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+watch(gameWon, () => {
   timestamp_pause();
   useSfx().sounds(SFX.game_won).play();
+});
+
+provide(gameState_IK, {
+  game: game as Ref<GameWithEggs>,
+  foundEggs,
+  gameWon,
+  showGrid,
+  playtimeInSeconds,
 });
 </script>

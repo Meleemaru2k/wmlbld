@@ -45,6 +45,9 @@
           <NuxtLink to="/signup">Account erstellen</NuxtLink>
         </div>
         <div class="shrink-0" v-if="status === 'authenticated'">
+          <NuxtLink to="/dashboard/my-games">Mein Profil 🥸</NuxtLink>
+        </div>
+        <div class="shrink-0" v-if="status === 'authenticated'">
           <logoutButton />
         </div>
       </div>

@@ -14,10 +14,14 @@
         class="absolute top-0 left-0 w-full h-full"
         @click="handleGridClick($event)"
       >
-        <img ref="gameImage" :src="game.image" />
+        <img ref="gameImage" :src="gameState?.game.value.image" />
       </div>
-      <tileGrid v-if="showGrid" :rows="grid.rows" :columns="grid.columns" />
-      <foundEggsVisual :found-eggs="foundEggs" />
+      <tileGrid
+        v-if="gameState?.showGrid.value"
+        :rows="grid.rows"
+        :columns="grid.columns"
+      />
+      <foundEggsVisual />
     </div>
   </div>
 </template>
@@ -25,20 +29,11 @@
 <script setup lang="ts">
 import tileGrid from "./tile-grid.vue";
 import foundEggsVisual from "./found-eggs.vue";
-import { PropType } from "vue";
-import { Egg } from ".prisma/client";
-import { GameWithEggs } from "~~/types/game";
-/**@TODO: Composables to the rescure! */
-const props = defineProps({
-  gameName: { type: String, default: "samplegame" },
-  game: { type: Object as PropType<GameWithEggs>, required: true },
-  showGrid: { type: Boolean, default: false },
-});
+import { gameState_IK } from "~~/utils/injectionKeys";
 
+const gameState = inject(gameState_IK);
 const gameImage = ref<HTMLImageElement>();
 const grid = reactive({ height: 0, width: 0, rows: 6, columns: 4 });
-const clickfields = props.game?.eggs ?? [];
-const foundEggs = ref<Set<Egg>>(new Set());
 const cursor = ref<String>("grab");
 
 onMounted(() => {
@@ -59,16 +54,12 @@ function handleGridClick(event: MouseEvent) {
 
   const foundEgg = pointIsInBox(x, y);
   if (foundEgg) {
-    foundEggs.value.add(foundEgg);
-    emit("updateFoundEggs", foundEggs.value.size);
-    if (allEggsFoundCheck()) {
-      emit("gamewon");
-    }
+    gameState?.foundEggs.value.add(foundEgg);
   }
 }
 
 function pointIsInBox(x: number, y: number) {
-  for (const field of clickfields) {
+  for (const field of gameState?.game?.value.eggs ?? []) {
     if (
       x >= field.pos_x - field.size &&
       x <= field.pos_x + field.size &&
@@ -81,20 +72,7 @@ function pointIsInBox(x: number, y: number) {
   return null;
 }
 
-function allEggsFoundCheck() {
-  if (foundEggs.value.size === props.game.eggs.length) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
 function setCursor(style: string) {
   cursor.value = style;
 }
-
-const emit = defineEmits<{
-  (event: "gamewon"): void;
-  (event: "updateFoundEggs", value: number): void;
-}>();
 </script>
