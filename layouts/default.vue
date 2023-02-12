@@ -75,7 +75,7 @@
       class="grow movebg"
       style="background-repeat: repeat; background-size: 100%"
     >
-      <div class="bg-opacity-90 bg-blue-800 h-full pb-8">
+      <div class="bg-opacity-90 bg-blue-800 h-full">
         <slot class="h-full" />
       </div>
     </div>

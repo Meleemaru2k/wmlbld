@@ -1,33 +1,35 @@
 <template>
-  <div class="flex flex-col">
-    <div v-if="game && !playerReady" class="w-full h-full flex">
+  <div class="flex flex-col relative">
+    <div v-if="game && !playerIsReady" class="w-full h-full flex z-10">
       <div class="m-auto pb-12">
         <GenericContainerStyleItemSelectFunky class="shadow-lg shadow-black">
           <GenericContainerStyleRainbowBorder class="rounded-md">
-            <basicButton @click="playerIsReady" class="!p-8 text-2xl"
+            <basicButton @click="setPlayerReady" class="!p-8 text-2xl"
               >Runde Starten</basicButton
             >
           </GenericContainerStyleRainbowBorder>
         </GenericContainerStyleItemSelectFunky>
       </div>
     </div>
-    <div v-else-if="game">
-      <div
-        class="bg-slate-900 text-stone-100 px-8 py-4 flex flex-row items-baseline gap-x-4 overflow-auto"
-      >
-        <div class="shrink-0 flex flex-row flex-nowrap w-28">
-          <span class="text-xl">⌛</span>
-          <span class="font-bold text-xl">{{ playtimeInSeconds }}s</span>
-        </div>
-        <div class="shrink-0 flex flex-row flex-nowrap w-18">
-          {{ foundEggs.size }} / {{ game?.eggs.length }} ⭐
-        </div>
-        <basicButton class="shrink-0 flex flex-row flex-nowrap">
-          <span>ℹ️ Info</span>
-        </basicButton>
-        <basicButton class="shrink-0" @click="toggleGrid()"
-          >Raster <i>A</i></basicButton
+    <div v-if="game && playerIsReady">
+      <div>
+        <div
+          class="bg-slate-900 text-stone-100 px-8 py-4 flex flex-row items-baseline gap-x-4 overflow-auto"
         >
+          <div class="shrink-0 flex flex-row flex-nowrap w-28">
+            <span class="text-xl">⌛</span>
+            <span class="font-bold text-xl">{{ playtimeInSeconds }}s</span>
+          </div>
+          <div class="shrink-0 flex flex-row flex-nowrap w-18">
+            {{ foundEggs.size }} / {{ game?.eggs.length }} ⭐
+          </div>
+          <basicButton class="shrink-0 flex flex-row flex-nowrap">
+            <span>ℹ️ Info</span>
+          </basicButton>
+          <basicButton class="shrink-0" @click="toggleGrid()"
+            >Raster <i>A</i></basicButton
+          >
+        </div>
       </div>
       <div class="p-4 md:p-8 shadow-inner grow flex flex-col">
         <gameField v-if="gameWon === false"></gameField>
@@ -37,6 +39,17 @@
         </div>
       </div>
       <div v-if="!game">Kein Spiel gefunden</div>
+    </div>
+    <div
+      class="curtains"
+      :class="{ 'curtains-down': !playerIsReady, 'curtains-up': playerIsReady }"
+    >
+      <div class="w-full h-full">
+        <img
+          src="~/assets/images/curtain_overlay.png"
+          class="w-full h-full object-cover opacity-100 grayscale contrast-150"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -58,19 +71,15 @@ if (!game.value) {
 const gameWon = ref(false);
 const foundEggs = ref(new Set<Egg>());
 const showGrid = ref(false);
-const playerReady = ref(false);
+const playerIsReady = ref(false);
 
 let timeStarted = new Date();
-let {
+const {
   timestamp,
   pause: timestamp_pause,
   resume: timestamp_resume,
 } = useTimestamp({ controls: true });
 timestamp_pause();
-
-function toggleGrid() {
-  showGrid.value = !showGrid.value;
-}
 
 const playtimeInSeconds = computed(() => {
   return (((timeStarted.getTime() - timestamp.value) * -1) / 1000).toFixed(0);
@@ -86,23 +95,47 @@ watch(
   { deep: true }
 );
 
-function playerIsReady() {
-  timeStarted = new Date();
-  timestamp_resume();
-  playerReady.value = true;
-}
-
 watch(gameWon, () => {
   timestamp_pause();
   useSfx().sounds(SFX.game_won).play();
 });
 
+function setPlayerReady() {
+  timeStarted = new Date();
+  timestamp_resume();
+  playerIsReady.value = true;
+}
+function toggleGrid() {
+  showGrid.value = !showGrid.value;
+}
+
 provide(gameState_IK, {
   game: game as Ref<GameWithEggs>,
-  playerReady,
+  playerReady: playerIsReady,
   foundEggs,
   gameWon,
   showGrid,
   playtimeInSeconds,
 });
 </script>
+
+<style scoped lang="postcss">
+.curtains {
+  @apply transition-all duration-[2000ms] shadow-lg shadow-black;
+  &-down {
+    @apply absolute left-0 top-0 h-full w-full bg-orange-400;
+  }
+  &-up {
+    @apply absolute left-0 -top-full h-full w-full bg-orange-400;
+  }
+}
+
+@keyframes curtains {
+  0% {
+    @apply h-full w-full top-0;
+  }
+  100% {
+    @apply -top-full;
+  }
+}
+</style>
