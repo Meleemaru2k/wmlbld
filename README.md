@@ -29,21 +29,23 @@ A Wimmelbild-Game WebApp
    - Add Setup commands (create DB, create Admin, create Sample-Games...)
    - More info on setup (env vars and stuff)
    - Compress Images and add max-files size
-   - Music Player :))))
+   - Music Player ✅
 - Account
    - Add Password Hashing (with salt via env)
-   - Proper Auth Secret
+   - Proper Auth Secret via env ✅
    - Add (optional) Account E-Mail Validation and Password Reset functionality
       - Should be enabled via env
 - Game
    - Add a Pause & Resume function when playing a game
    - Make it a bit cheat-safe and get "objective found" info only from server (dont store coordinates clientside basically)
-   - A "is ready to play" check
    - Edit Game 
-      - only if nobody has played the game yet
+      - only if nobody has played the game yet?
+      - maybe don't add this because it will have a lot of weird implications (do users keep their highscore etc)?
 - Editor
    - Better UX
 - Code/Architecture
-   - Refactor some stuff into smaller components and try to reuse more code between actual game and game-editor if possible
+   - Refactor some stuff into smaller components and composables ✅
+   - try to reuse more code between actual game and game-editor if possible
 - Design
    - Get something coherent going :)
+   - Rainbows and shiny stuff, i guess ✅

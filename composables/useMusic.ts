@@ -76,9 +76,13 @@ function transformAudio(
     ended: ref(false),
     songName: options?.songName ?? "unknown",
     artist: options?.artist ?? "unknown",
-    audioObject: audioObject,
   };
 
+  /**
+   * Dont aske me why it works this way with pause/play.
+   * Probably one of those code-pieces you come back to after months
+   * and immediately see what you did wrong.
+   */
   audioObject.addEventListener("play", () => {
     aObj.paused.value = true;
   });
