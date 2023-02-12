@@ -3,7 +3,7 @@
     <div
       v-for="(egg, index) in gameData.eggs"
       :key="index"
-      class="mb-4 bg-slate-200 max-w-full p-2 rounded-md relative min-h-[28px] border-[rgba(0,0,0,0.2)] border-solid border-[1px]"
+      class="mb-4 bg-slate-100 max-w-full p-2 rounded-md relative min-h-[28px] border-[rgba(0,0,0,0.2)] border-solid border-[1px]"
     >
       <div class="absolute top-0 right-0">
         <div class="flex flex-row [&_*]:mr-2 items-center">

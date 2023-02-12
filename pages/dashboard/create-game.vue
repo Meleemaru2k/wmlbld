@@ -23,7 +23,7 @@
         class="basis-full md:basis-3/12 grow-0 flex shrink-0 flex-col"
         v-show="gameData.image"
       >
-        <div class="h-[600px] overflow-auto p-4 bg-slate-100 rounded-md t">
+        <div class="h-[600px] overflow-auto p-4 bg-slate-200 rounded-md t">
           <GameEditorEggEditor />
         </div>
       </div>
@@ -33,17 +33,17 @@
       class="flex flex-row flex-wrap md:flex-nowrap gap-4 px-4 mt-4"
     >
       <GenericInputTextarea
-        class="w-full md:w-[320px]"
+        class="w-full md:w-[320px] bg-slate-200 p-2 rounded-t-md"
         label="Spiel-Name"
         v-model="gameData.name"
       />
       <GenericInputTextarea
-        class="w-full mr-auto md:w-[320px]"
+        class="w-full mr-auto md:w-[320px] bg-slate-200 p-2 rounded-t-md"
         label="Spiel-Beschreibung"
         v-model="gameData.description"
       />
       <GenericButtonBasic
-        class="mt-4 ml-auto w-full md:w-3/12"
+        class="ml-auto w-full md:w-3/12"
         theme="success"
         :disabled="!enableSaveButton"
         :loading="saveGameButtonLoading"
