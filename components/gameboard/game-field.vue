@@ -28,7 +28,7 @@ import foundEggsVisual from "./found-eggs.vue";
 import { PropType } from "vue";
 import { Egg } from ".prisma/client";
 import { GameWithEggs } from "~~/types/game";
-
+/**@TODO: Composables to the rescure! */
 const props = defineProps({
   gameName: { type: String, default: "samplegame" },
   game: { type: Object as PropType<GameWithEggs>, required: true },
