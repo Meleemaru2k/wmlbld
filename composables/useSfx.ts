@@ -9,9 +9,15 @@ export enum SFX {
 }
 
 const audioMap = reactive(new Map<SFX, ReturnType<typeof transformAudio>>());
-audioMap.set(SFX.egg_found, transformAudio(new Audio(egg_found)));
+audioMap.set(
+  SFX.egg_found,
+  transformAudio(new Audio(egg_found), { volume: 0.5 })
+);
 audioMap.set(SFX.button_click, transformAudio(new Audio(button_click)));
-audioMap.set(SFX.game_won, transformAudio(new Audio(game_won)));
+audioMap.set(
+  SFX.game_won,
+  transformAudio(new Audio(game_won), { volume: 0.2 })
+);
 
 export const useSfx = () => {
   const sounds = (sfx: SFX) => {
@@ -20,8 +26,12 @@ export const useSfx = () => {
   return { sounds };
 };
 
-//Helper
-function transformAudio(audioObject: HTMLAudioElement) {
+//Helper that returns a configured and simplified audio object
+function transformAudio(
+  audioObject: HTMLAudioElement,
+  options?: { volume?: number }
+) {
+  audioObject.volume = options?.volume ?? 1;
   return {
     pause: () => audioObject.pause(),
     resume: () => audioObject.play(),

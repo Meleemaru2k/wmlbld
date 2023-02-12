@@ -3,6 +3,7 @@ import { GameWithEggs } from "~~/types/game";
 
 export type GameState_IK = {
   game: Ref<GameWithEggs>;
+  playerReady: Ref<boolean>;
   gameWon: Ref<boolean>;
   foundEggs: Ref<Set<Egg>>;
   showGrid: Ref<boolean>;

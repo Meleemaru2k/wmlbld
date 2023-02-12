@@ -1,31 +1,43 @@
 <template>
   <div class="flex flex-col">
-    <div
-      v-if="game"
-      class="bg-slate-900 text-stone-100 px-8 py-4 flex flex-row items-baseline gap-x-4 overflow-auto"
-    >
-      <div class="shrink-0 flex flex-row flex-nowrap w-28">
-        <span class="text-xl">⌛</span>
-        <span class="font-bold text-xl">{{ playtimeInSeconds }}s</span>
+    <div v-if="game && !playerReady" class="w-full h-full flex">
+      <div class="m-auto pb-12">
+        <GenericContainerStyleItemSelectFunky class="shadow-lg shadow-black">
+          <GenericContainerStyleRainbowBorder class="rounded-md">
+            <basicButton @click="playerIsReady" class="!p-8 text-2xl"
+              >Runde Starten</basicButton
+            >
+          </GenericContainerStyleRainbowBorder>
+        </GenericContainerStyleItemSelectFunky>
       </div>
-      <div class="shrink-0 flex flex-row flex-nowrap w-18">
-        {{ foundEggs.size }} / {{ game?.eggs.length }} ⭐
-      </div>
-      <basicButton class="shrink-0 flex flex-row flex-nowrap">
-        <span>ℹ️ Info</span>
-      </basicButton>
-      <basicButton class="shrink-0" @click="toggleGrid()"
-        >Raster <i>A</i></basicButton
+    </div>
+    <div v-else-if="game">
+      <div
+        class="bg-slate-900 text-stone-100 px-8 py-4 flex flex-row items-baseline gap-x-4 overflow-auto"
       >
-    </div>
-    <div v-if="game" class="p-4 md:p-8 shadow-inner grow flex flex-col">
-      <gameField v-if="gameWon === false && game"></gameField>
-      <div v-else class="flex flex-col">
-        <div>Gewonnen!</div>
-        <div>Zeit: {{ playtimeInSeconds }}</div>
+        <div class="shrink-0 flex flex-row flex-nowrap w-28">
+          <span class="text-xl">⌛</span>
+          <span class="font-bold text-xl">{{ playtimeInSeconds }}s</span>
+        </div>
+        <div class="shrink-0 flex flex-row flex-nowrap w-18">
+          {{ foundEggs.size }} / {{ game?.eggs.length }} ⭐
+        </div>
+        <basicButton class="shrink-0 flex flex-row flex-nowrap">
+          <span>ℹ️ Info</span>
+        </basicButton>
+        <basicButton class="shrink-0" @click="toggleGrid()"
+          >Raster <i>A</i></basicButton
+        >
       </div>
+      <div class="p-4 md:p-8 shadow-inner grow flex flex-col">
+        <gameField v-if="gameWon === false"></gameField>
+        <div v-else class="flex flex-col">
+          <div>Gewonnen!</div>
+          <div>Zeit: {{ playtimeInSeconds }}</div>
+        </div>
+      </div>
+      <div v-if="!game">Kein Spiel gefunden</div>
     </div>
-    <div v-if="!game">Kein Spiel gefunden</div>
   </div>
 </template>
 <script setup lang="ts">
@@ -46,13 +58,15 @@ if (!game.value) {
 const gameWon = ref(false);
 const foundEggs = ref(new Set<Egg>());
 const showGrid = ref(false);
+const playerReady = ref(false);
 
-const timeStarted = new Date();
-const {
+let timeStarted = new Date();
+let {
   timestamp,
   pause: timestamp_pause,
   resume: timestamp_resume,
 } = useTimestamp({ controls: true });
+timestamp_pause();
 
 function toggleGrid() {
   showGrid.value = !showGrid.value;
@@ -65,18 +79,17 @@ const playtimeInSeconds = computed(() => {
 watch(
   foundEggs,
   () => {
-    if (allEggsFoundCheck()) {
+    if (foundEggs.value.size === game.value?.eggs.length) {
       gameWon.value = true;
     }
   },
   { deep: true }
 );
-function allEggsFoundCheck() {
-  if (foundEggs.value.size === game.value?.eggs.length) {
-    return true;
-  } else {
-    return false;
-  }
+
+function playerIsReady() {
+  timeStarted = new Date();
+  timestamp_resume();
+  playerReady.value = true;
 }
 
 watch(gameWon, () => {
@@ -86,6 +99,7 @@ watch(gameWon, () => {
 
 provide(gameState_IK, {
   game: game as Ref<GameWithEggs>,
+  playerReady,
   foundEggs,
   gameWon,
   showGrid,
