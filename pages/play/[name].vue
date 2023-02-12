@@ -42,7 +42,11 @@
     </div>
     <div
       class="curtains"
-      :class="{ 'curtains-down': !playerIsReady, 'curtains-up': playerIsReady }"
+      :class="{
+        'curtains-down': curtainState === 0,
+        'curtains-up': curtainState === 1,
+        'curtains-hidden': curtainState === 2,
+      }"
     >
       <div class="w-full h-full">
         <img
@@ -60,6 +64,8 @@ import { GameWithEggs } from "~~/types/game";
 import gameField from "~~/components/gameboard/game-field.vue";
 import basicButton from "~~/components/generic/button/basic.vue";
 
+/**@TODO Make curtain component :) */
+
 const gameName = <string>useRoute().params.name ?? "samplegame";
 const { data: game } = await useFetch<Game & { eggs: Array<Egg> }>(
   `/api/game/find/name/${gameName}`
@@ -72,6 +78,7 @@ const gameWon = ref(false);
 const foundEggs = ref(new Set<Egg>());
 const showGrid = ref(false);
 const playerIsReady = ref(false);
+const curtainState = ref(0); //0 = down, 1 = up, 2 = hidden
 
 let timeStarted = new Date();
 const {
@@ -105,7 +112,12 @@ function setPlayerReady() {
   timestamp_resume();
   useSfx().sounds(SFX.curtain_roll).play();
   playerIsReady.value = true;
+  curtainState.value = 1;
+  setTimeout(() => {
+    curtainState.value = 2;
+  }, 2000);
 }
+
 function toggleGrid() {
   showGrid.value = !showGrid.value;
 }
@@ -128,6 +140,9 @@ provide(gameState_IK, {
   }
   &-up {
     @apply absolute left-0 -top-full h-full w-full bg-orange-400;
+  }
+  &-hidden {
+    @apply hidden w-0 h-0;
   }
 }
 
