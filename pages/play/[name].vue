@@ -103,6 +103,7 @@ watch(gameWon, () => {
 function setPlayerReady() {
   timeStarted = new Date();
   timestamp_resume();
+  useSfx().sounds(SFX.curtain_roll).play();
   playerIsReady.value = true;
 }
 function toggleGrid() {

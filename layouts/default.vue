@@ -4,19 +4,15 @@
       class="bg-slate-700 py-2 h-[64px] min-h-[64px] px-6 text-stone-100 flex flex-row flex-nowrap items-center [&_>*]:mr-4 z-40 overflow-x-auto overflow-y-hidden"
     >
       <div
-        class="[&_*]:mr-4 [&_*]:font-bold [&_*]:leading-tight flex flex-row flex-nowrap items-center link-container"
+        class="[&_>*]:mr-4 [&_*]:font-bold [&_*]:leading-tight flex flex-row flex-nowrap items-center link-container"
         v-if="status === 'authenticated'"
       >
-        <NuxtLink to="/"
+        <!--<NuxtLink to="/"
           ><img
             class="w-12 h-12 rounded"
             src="~/assets/images/logo/output2.jpg"
-        /></NuxtLink>
-        <NuxtLink
-          :class="{ 'active-link': $route.path === '/dashboard' }"
-          to="/dashboard"
-          >Dashboard<br />@{{ data?.user?.name }}</NuxtLink
-        >
+        /></NuxtLink>-->
+        <div><MusicPlayer></MusicPlayer></div>
         <NuxtLink
           :class="{ 'active-link': $route.path.includes('play-games') }"
           to="/dashboard/play-games"
@@ -100,7 +96,7 @@ const { status, data } = useSession();
 }
 
 .movebg {
-  animation: movebg 40s linear infinite alternate;
+  animation: movebg 33s linear infinite alternate;
 }
 .active-link{
   @apply font-bold text-orange-300;

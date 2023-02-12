@@ -1,11 +1,13 @@
 import egg_found from "~/assets/sounds/egg_found.mp3";
 import button_click from "~/assets/sounds/button_click.mp3";
 import game_won from "~/assets/sounds/game_won.mp3";
+import curtain_roll from "~/assets/sounds/curtain_roll.mp3";
 
 export enum SFX {
   egg_found = "egg_found",
   button_click = "button_click",
   game_won = "game_won",
+  curtain_roll = "curtain_roll",
 }
 
 const audioMap = reactive(new Map<SFX, ReturnType<typeof transformAudio>>());
@@ -18,6 +20,7 @@ audioMap.set(
   SFX.game_won,
   transformAudio(new Audio(game_won), { volume: 0.2 })
 );
+audioMap.set(SFX.curtain_roll, transformAudio(new Audio(curtain_roll)));
 
 export const useSfx = () => {
   const sounds = (sfx: SFX) => {
