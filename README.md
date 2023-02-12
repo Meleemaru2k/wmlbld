@@ -8,7 +8,7 @@ A Wimmelbild-Game WebApp
    - Search Games
       - Search by GameName
       - Latest Games (last 25 only) ✅
-   - Finished Games (last 25 only)
+      - Finished Games Indicator
    - Leadboards by Gamename (top 25 only)
    - Create games ✅
       - Upload Image ✅
@@ -16,18 +16,20 @@ A Wimmelbild-Game WebApp
       - Add Data (Description, Hints, Difficulty, etc.) ✅
    - Delete games ✅
 - Game
-   - Ready-Check + Game-Info
+   - Ready-Check ✅
+   - Game-Info
    - Info: Timer, x/x Objectives ✅
    - Get hints/quests
    - Soundeffects ✅
-   - Animations
-   - Page/State visual transitions
+   - Animations ✅
+   - Page/State visual transitions ✅
    - Submit Score after game won
 ## Todo (After all the planned features are done)
 - General
    - Add Setup commands (create DB, create Admin, create Sample-Games...)
    - More info on setup (env vars and stuff)
    - Compress Images and add max-files size
+   - Music Player :))))
 - Account
    - Add Password Hashing (with salt via env)
    - Proper Auth Secret
