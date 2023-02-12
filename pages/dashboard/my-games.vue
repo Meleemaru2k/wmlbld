@@ -4,12 +4,13 @@
     <div class="" v-if="userGames">
       <div class="relative overflow-hidden">
         <GenericContainerStyleRainbowBorder
-          class="!-rotate-2 !my-8 !w-[calc(100%+32px)] !-ml-4"
+          class="!-rotate-2 !my-8 !w-[calc(100%+32px)] !-ml-4 shadow-md shadow-black"
         >
           <GenericContainerSlider class="bg-slate-600">
             <div v-for="(game, index) in userGames" :key="game.id">
               <GenericContainerStyleItemSelectFunky>
                 <GenericContainerCard
+                  class="shadow-md shadow-slate-900"
                   :image="{ src: game.image, altText: game.name }"
                   :options="{ showShine: true }"
                   ><template #imageOverlay>
@@ -26,30 +27,35 @@
                   <template #mainContent>
                     <div class="flex flex-col grow h-full">
                       <div>{{ game.description }}</div>
-                      <div class="mt-auto flex flex-col gap-y-2 items-center">
-                        <NuxtLink :to="'/play/' + game.name" class="w-48">
-                          <GenericButtonBasic theme="primary" class="w-48 !m-0">
-                            Selber Spielen
+                      <div
+                        class="pt-4 mt-auto flex flex-row flex-wrap gap-2 items-center justify-center"
+                      >
+                        <NuxtLink :to="'/play/' + game.name" class="w-32">
+                          <GenericButtonBasic
+                            theme="primary"
+                            class="w-full !m-0"
+                          >
+                            Spielen
                           </GenericButtonBasic>
                         </NuxtLink>
-                        <GenericButtonBasic theme="warning" class="w-48">
+                        <GenericButtonBasic theme="warning" class="w-32">
                           Editieren
                         </GenericButtonBasic>
                         <GenericButtonBasic
-                          class="w-48"
+                          :disabled="true"
+                          theme="primary"
+                          class="w-32"
+                        >
+                          Bestenlise
+                        </GenericButtonBasic>
+                        <GenericButtonBasic
+                          class="w-32"
                           theme="error"
                           :confirm-click="true"
                           @click="deleteGame(game.id)"
                           :loading="deleteGameButtonLoading"
                         >
                           Löschen
-                        </GenericButtonBasic>
-                        <GenericButtonBasic
-                          :disabled="true"
-                          theme="primary"
-                          class="w-48"
-                        >
-                          Bestenlise Ansehen
                         </GenericButtonBasic>
                       </div>
                     </div>

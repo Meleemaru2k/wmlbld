@@ -7,7 +7,7 @@
     >
     <div class="relative overflow-hidden">
       <GenericContainerStyleRainbowBorder
-        class="!-rotate-2 !my-8 !w-[calc(100%+32px)] !-ml-4"
+        class="!-rotate-2 !my-8 !w-[calc(100%+32px)] !-ml-4 shadow-md shadow-black"
       >
         <GenericContainerSlider class="bg-slate-600">
           <NuxtLink
@@ -20,6 +20,7 @@
           >
             <GenericContainerStyleItemSelectFunky>
               <GenericContainerCard
+                class="shadow-md shadow-slate-900"
                 :image="{ src: game.image, altText: game.name }"
                 :options="{ showShine: true }"
                 ><template #imageOverlay>
