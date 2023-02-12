@@ -14,9 +14,9 @@
                   :options="{ showShine: true }"
                   ><template #imageOverlay>
                     <div
-                      class="absolute top-2 right-2 bg-slate-500 rounded-md p-1 text-white text-xs"
+                      class="absolute bottom-2 left-2 bg-slate-600 rounded-md px-1 py-[2px] text-white text-xs"
                     >
-                      Game Played XXXX times 🔥
+                      🔥 Played XXXX times
                     </div>
                     <GameUtilsEggIndicator :eggCount="game.eggs.length" />
                   </template>

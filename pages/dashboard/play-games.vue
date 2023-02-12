@@ -23,7 +23,11 @@
                 :image="{ src: game.image, altText: game.name }"
                 :options="{ showShine: true }"
                 ><template #imageOverlay>
-                  <div class="absolute top-2 right-2 text-xl">✅</div>
+                  <div
+                    class="absolute bottom-2 left-2 p-1 bg-slate-600 rounded-md"
+                  >
+                    ✅
+                  </div>
                   <GameUtilsEggIndicator :eggCount="game.eggs.length" />
                 </template>
                 <template #headline>
