@@ -1,8 +1,7 @@
 <template>
   <div class="relative">
     <div
-      v-dragscroll:hidden
-      class="flex flex-row flex-nowrap snap-x overflow-hidden overscroll-contain mt-sm py-4 gap-x-8 bg-slate-700 slidewrapper w-full relative"
+      class="flex flex-row flex-nowrap overflow-scroll snap-x md:overflow-hidden overscroll-contain mt-sm py-4 gap-x-8 bg-slate-700 slidewrapper w-full relative"
       ref="slidewrapper"
     >
       <div class="!w-[20px] shrink-0"></div>
@@ -10,7 +9,13 @@
       <div class="!w-[20px] shrink-0"></div>
     </div>
     <div
-      @click="scroll(0)"
+      @click="
+        {
+          scroll(0);
+          useSfx().sounds.button_click.pause();
+          useSfx().sounds.button_click.play();
+        }
+      "
       class="pr-2 pl-4 left-0 directionalButton rounded-r-md"
     >
       <div
@@ -21,7 +26,13 @@
       </div>
     </div>
     <div
-      @click="scroll(1)"
+      @click="
+        {
+          scroll(1);
+          useSfx().sounds.button_click.pause();
+          useSfx().sounds.button_click.play();
+        }
+      "
       class="pl-2 pr-4 right-0 directionalButton rounded-l-md"
     >
       <div

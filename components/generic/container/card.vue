@@ -11,23 +11,27 @@
       <slot name="imageOverlay" />
     </div>
     <div
-      class="p-4 [&_*]:mb-2 [&_*]:text-center border-black border-t-[1px] border-solid relative"
+      class="p-4 [&_*]:mb-2 [&_*]:text-center grow border-black border-t-[1px] border-solid relative flex flex-col"
     >
       <div class="font-bold text-xl">
         <div class="w-full bg-slate-700 text-white p-[4px] rounded-md">
           <slot name="headline" />
         </div>
       </div>
-      <div class="text-sm text-stone-100">
+      <div class="text-sm text-stone-100 grow">
         <slot name="mainContent" />
       </div>
     </div>
-    <div class="text-xs text-stone-100 flex absolute right-2 bottom-1">
-      <span class="ml-auto"><slot name="bottomSmallInfo" /></span>
+    <div class="text-xs text-stone-100 flex absolute right-6 bottom-1">
+      <span class="mx-auto"><slot name="bottomSmallInfo" /></span>
     </div>
     <div
       v-if="options?.showShine"
-      class="absolute top-[66%] right-[66%] -rotate-[33deg] bg-white w-[120%] h-[120%] opacity-25"
+      class="absolute bottom-2 left-2 rounded-full -rotate-[45deg] bg-black w-2 h-2 opacity-20 shadow-inner shadow-black"
+    ></div>
+    <div
+      v-if="options?.showShine"
+      class="absolute bottom-2 right-2 rounded-full -rotate-[45deg] bg-black w-2 h-2 opacity-20 shadow-inner shadow-black"
     ></div>
   </div>
 </template>
