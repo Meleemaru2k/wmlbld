@@ -33,6 +33,17 @@
       v-if="options?.showShine"
       class="absolute bottom-2 right-2 rounded-full -rotate-[45deg] bg-black w-2 h-2 opacity-20 shadow-inner shadow-black"
     ></div>
+    <div
+      v-if="options?.showShine"
+      class="absolute top-1 right-1/2 translate-x-1/2 w-16 h-8"
+    >
+      <div
+        class="absolute bottom-0 right-0 rounded-xl bg-slate-700 w-16 h-4 shadow-inner shadow-black"
+      ></div>
+      <div
+        class="absolute top-[6px] right-1/2 translate-x-1/2 rounded-full bg-neutral-400 w-4 h-[20px] shadow-lg border-solid border-t-2 border-t-white border-b-black border-b-[1px] shadow-black"
+      ></div>
+    </div>
   </div>
 </template>
 <script setup lang="ts">

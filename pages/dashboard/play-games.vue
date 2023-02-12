@@ -15,10 +15,11 @@
             :key="game.id"
             :to="encodeURI(`/play/${game.name}`)"
             class="h-[400px]"
+            :class="{ sway: index < 6 }"
+            :style="{ animationDelay: `${index * 0.2}s` }"
           >
             <GenericContainerStyleItemSelectFunky>
               <GenericContainerCard
-                class="cardwobble"
                 :image="{ src: game.image, altText: game.name }"
                 :options="{ showShine: true }"
                 ><template #imageOverlay>
@@ -48,3 +49,49 @@ const { data: games, refresh: refreshGames } = await useFetch(
   "/api/game/find/newest"
 );
 </script>
+<style scoped lang="postcss">
+.sway {
+  @apply transition-all;
+  transform-origin: top;
+  animation: sway 2.5s ease-in-out;
+}
+@keyframes sway {
+  0% {
+    margin-top: -400px;
+    transform: rotate(0deg);
+  }
+  5% {
+    transform: rotate(-20deg);
+  }
+  18% {
+    margin-top: 25px;
+  }
+  20% {
+    margin-top: 0px;
+  }
+  30% {
+    transform: rotate(15deg);
+  }
+  50% {
+    transform: rotate(-12deg);
+  }
+  80% {
+    transform: rotate(5deg);
+  }
+  85% {
+    transform: rotate(-1.5deg);
+  }
+  90% {
+    transform: rotate(1deg);
+  }
+  93% {
+    transform: rotate(-0.3deg);
+  }
+  97% {
+    transform: rotate(0.1deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+</style>

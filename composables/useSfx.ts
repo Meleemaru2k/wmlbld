@@ -15,7 +15,6 @@ audioMap.set(SFX.game_won, transformAudio(new Audio(game_won)));
 
 export const useSfx = () => {
   const sounds = (sfx: SFX) => {
-    console.log("object", audioMap.get(sfx));
     return audioMap.get(sfx) as ReturnType<typeof transformAudio>;
   };
   return { sounds };
