@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-slate-200 flex flex-col">
+  <div class="flex flex-col">
     <div
       class="m-auto flex flex-col w-[350px] rounded shadow-inner bg-white border-[rgba(0,0,0,0.2)] border-solid border-[1px] p-4"
     >
