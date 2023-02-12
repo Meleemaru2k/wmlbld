@@ -8,12 +8,11 @@
       <slot />
       <div class="!w-[20px] shrink-0"></div>
     </div>
-    <div
+    <button
       @click="
         {
           scroll(0);
-          useSfx().sounds.button_click.pause();
-          useSfx().sounds.button_click.play();
+          useSfx().sounds(SFX.button_click).play();
         }
       "
       class="pr-2 pl-4 left-0 directionalButton rounded-r-md"
@@ -24,13 +23,12 @@
       >
         ⬅️
       </div>
-    </div>
-    <div
+    </button>
+    <button
       @click="
         {
           scroll(1);
-          useSfx().sounds.button_click.pause();
-          useSfx().sounds.button_click.play();
+          useSfx().sounds(SFX.button_click).play();
         }
       "
       class="pl-2 pr-4 right-0 directionalButton rounded-l-md"
@@ -41,7 +39,7 @@
       >
         ➡️
       </div>
-    </div>
+    </button>
   </div>
 </template>
 <script setup lang="ts">

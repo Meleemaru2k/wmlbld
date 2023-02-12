@@ -70,6 +70,6 @@ const playtimeInSeconds = computed(() => {
 
 watch(gamewon, () => {
   timestamp_pause();
-  useSfx().sounds.game_won.play();
+  useSfx().sounds(SFX.game_won).play();
 });
 </script>

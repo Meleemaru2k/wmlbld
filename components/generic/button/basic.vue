@@ -55,9 +55,7 @@ const waitingForConfirmation = ref(false);
 
 function clickHandler() {
   {
-    useSfx().sounds.button_click.pause();
-    useSfx().sounds.button_click.currentTime = 0;
-    useSfx().sounds.button_click.play();
+    useSfx().sounds(SFX.button_click).play();
   }
   if (props.confirmClick && !waitingForConfirmation.value) {
     waitingForConfirmation.value = true;

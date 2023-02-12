@@ -30,12 +30,11 @@ const props = defineProps({
     required: true,
   },
 });
-const sfx_eggFound = useSfx().sounds.egg_found;
 
 watch(
   () => props.foundEggs.size,
   () => {
-    sfx_eggFound.play();
+    useSfx().sounds(SFX.egg_found).play();
   }
 );
 </script>
