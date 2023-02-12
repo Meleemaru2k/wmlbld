@@ -9,4 +9,7 @@ export default defineNuxtConfig({
     "@sidebase/nuxt-auth",
   ],
   auth: { origin: process.env.AUTH_ORIGIN },
+  app: {
+    pageTransition: { name: "page", mode: "out-in" },
+  },
 });

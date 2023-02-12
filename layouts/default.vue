@@ -4,7 +4,7 @@
       class="bg-slate-700 py-2 h-[64px] min-h-[64px] px-6 text-stone-100 flex flex-row flex-nowrap items-center [&_>*]:mr-4 z-40 overflow-x-auto overflow-y-hidden"
     >
       <div
-        class="[&_*]:mr-4 flex flex-row flex-nowrap items-center link-container"
+        class="[&_*]:mr-4 [&_*]:font-bold [&_*]:leading-tight flex flex-row flex-nowrap items-center link-container"
         v-if="status === 'authenticated'"
       >
         <NuxtLink to="/"
@@ -91,7 +91,7 @@ const { status, data } = useSession();
   & > *{
     @apply hover:scale-110 transition-all shrink-0;
     &:hover{
-      text-shadow:  0px 0px 2px rgba(220,220,200);
+      text-shadow: 0px 0px 2px rgba(0,0,0), 0px 0px 2px rgba(220,220,200);
     }
   }
 }
@@ -100,7 +100,7 @@ const { status, data } = useSession();
   animation: movebg 40s linear infinite alternate;
 }
 .active-link{
-  @apply font-bold text-yellow-300 underline;
+  @apply font-bold text-orange-300;
 }
 
 @keyframes movebg {
