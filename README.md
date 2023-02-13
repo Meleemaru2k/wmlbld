@@ -30,6 +30,8 @@ A Wimmelbild-Game WebApp
    - More info on setup (env vars and stuff)
    - Compress Images and add max-files size
    - Music Player ✅
+      - Autoplay setting via cookies
+      - Looping
 - Account
    - Add Password Hashing (with salt via env)
    - Proper Auth Secret via env ✅
