@@ -1,4 +1,3 @@
-//import all files from assets/music
 import coding_night from "~/assets/music/coding_night.mp3";
 import jazz_cafe from "~/assets/music/jazz_cafe.mp3";
 import techno_loop from "~/assets/music/techno_loop.mp3";
@@ -65,7 +64,9 @@ function transformAudio(
       audioObject.pause();
     },
     resume: () => audioObject.play(),
-    reset: () => (audioObject.currentTime = 0),
+    reset: () => {
+      audioObject.currentTime = 0;
+    },
     play: () => {
       audioObject.pause();
       audioObject.currentTime = 0;
@@ -84,6 +85,7 @@ function transformAudio(
    * and immediately see what you did wrong.
    */
   audioObject.addEventListener("play", () => {
+    aObj.ended.value = false;
     aObj.paused.value = true;
   });
   audioObject.addEventListener("pause", () => {

@@ -32,6 +32,7 @@ function playOrPauseMusic() {
 }
 
 function nextSong() {
+  currentSong.value?.reset();
   if (currentSongId >= songList.length - 1) {
     currentSongId = 0;
   } else {
@@ -41,7 +42,7 @@ function nextSong() {
 }
 
 function prevSong() {
-  console.log(currentSongId, songList.length - 1);
+  currentSong.value?.reset();
   if (currentSongId === 0) {
     currentSongId = songList.length - 1;
   } else {
@@ -53,7 +54,7 @@ function prevSong() {
 watch(
   currentSong,
   (val) => {
-    if (val?.ended && val.paused) {
+    if (val?.ended) {
       nextSong();
     }
   },
