@@ -16,7 +16,7 @@
         <div
           class="bg-slate-900 text-stone-100 px-8 py-4 flex flex-row items-baseline gap-x-4 overflow-auto"
         >
-          <div class="shrink-0 flex flex-row flex-nowrap w-28">
+          <div class="shrink-0 flex flex-row flex-nowrap w-20">
             <span class="text-xl">⌛</span>
             <span class="font-bold text-xl">{{ playtimeInSeconds }}s</span>
           </div>
@@ -33,10 +33,11 @@
       </div>
       <div class="p-4 md:p-8 shadow-inner grow flex flex-col">
         <GameField v-if="gameWon === false"></GameField>
-        <div v-else class="flex flex-col">
-          <div>Gewonnen!</div>
-          <div>Zeit: {{ playtimeInSeconds }}</div>
-        </div>
+        <GameplayWinningScreen
+          v-else
+          :game="game"
+          :playtime-in-seconds="playtimeInSeconds"
+        />
       </div>
       <div v-if="!game">Kein Spiel gefunden</div>
     </div>

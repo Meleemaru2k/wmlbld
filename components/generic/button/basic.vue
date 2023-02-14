@@ -1,6 +1,6 @@
 <template>
   <button
-    class="overflow-hidden rounded focus:shadow-inner focus:shadow-[rgba(0,0,0,0.5)] transition-all relative border-solid border-[rgba(0,0,0,0.2)] border-[1px] px-3 py-1 text-center font-semibold font-mono before:block before:left-0 before:w-full before:h-8 before:-top-36 before:absolute before:bg-[rgba(255,255,255,0.10)] hover:before:top-[95%] before:transition-none hover:before:transition-all hover:before:ease-in-out hover:before:duration-200 hover:before:bg-[rgba(255,255,255,0.3)]"
+    class="additional-styles overflow-hidden rounded transition-all relative border-solid border-[rgba(0,0,0,0.2)] border-[1px] px-3 py-1 text-center font-semibold font-mono"
     :class="[
       theme,
       { loading__all: loading },
@@ -77,9 +77,35 @@ const emit = defineEmits<{
   @apply bg-yellow-500 text-slate-100;
 }
 
-
 .error {
   @apply bg-red-500 text-slate-100;
+}
+
+.additional-styles {
+  &:hover {
+    &:before {
+      content: "";
+      @apply top-[95%] transition-all ease-in-out duration-200 bg-[rgba(255,255,255,0.3)];
+    }
+  }
+
+  &:before {
+    content: "";
+    @apply block left-0 w-full h-8 -top-36 absolute bg-[rgba(255,255,255,0.10)] transition-none;
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: calc(100% - 2px);
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: rgba(0, 0, 0, 0.2);
+  }
+  &:focus {
+    box-shadow: inset -2px 2px 2px rgba(255,255,255,0.3), inset 2px -2px 2px rgba(255,255,255,0.3);
+  }
 }
 
 .loading__all {
@@ -101,16 +127,14 @@ const emit = defineEmits<{
     scale: 1;
   }
 }
-@keyframes loading{
+@keyframes loading {
   0% {
     filter: brightness(0.9);
     -webkit-filter: brightness(0.9);
-
   }
   100% {
     filter: brightness(1.1);
     -webkit-filter: brightness(1.1);
-
   }
 }
 </style>
