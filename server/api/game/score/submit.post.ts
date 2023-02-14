@@ -1,9 +1,56 @@
 import { getServerSession } from "#auth";
+import PrismaDB from "~~/utils/prismaDB";
 
 export default eventHandler(async (event) => {
   const session = await getServerSession(event);
-  if (!session) {
-    return { status: "unauthenticated!" };
+  if (!session || !session.user?.email) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: "User not found - are you logged in?",
+    });
   }
-  return { status: "authenticated!" };
+
+  const { gameId, score } = await readBody(event);
+
+  const prisma = PrismaDB.getClient();
+  const highscore = await addHighscore(gameId, session.user.email, score)
+    .catch((e) => {
+      console.log(e);
+      throw createError({
+        statusCode: 500,
+        statusMessage: "Couldn't submit score.",
+      });
+    })
+    .finally(async () => await prisma.$disconnect());
+
+  return highscore;
+
+  /**
+   *  Helper functions
+   */
+  async function addHighscore(gameId: number, email: string, score: number) {
+    const user = await prisma.user.findFirstOrThrow({
+      where: { email: email },
+      select: { id: true },
+    });
+    const game = await prisma.game.findFirstOrThrow({
+      where: { id: gameId },
+      select: { id: true },
+    });
+
+    if (!game || !user) {
+      throw createError({
+        statusCode: 500,
+        statusMessage: "No user or game found.",
+      });
+    }
+
+    return await prisma.gameUserScore.create({
+      data: {
+        user: { connect: { email: email } },
+        game: { connect: { id: gameId } },
+        score: score,
+      },
+    });
+  }
 });

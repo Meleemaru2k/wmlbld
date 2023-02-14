@@ -10,6 +10,13 @@ export default eventHandler(async (event) => {
     });
   }
 
+  if (!event?.context?.params?.id) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: "Game id not found.",
+    });
+  }
+
   const gameId = parseInt(event.context.params.id);
   const prisma = PrismaDB.getClient();
 
@@ -25,6 +32,7 @@ export default eventHandler(async (event) => {
         statusMessage: "User doesnt have permisson to delete this game.",
       });
     });
+
   const gameToDelete = await prisma.game
     .findFirstOrThrow({
       where: { id: gameId, authorId: user.id },
@@ -48,6 +56,18 @@ export default eventHandler(async (event) => {
       throw createError({
         statusCode: 500,
         statusMessage: "Error deleting game eggs.",
+      });
+    });
+
+  await prisma.gameUserScore
+    .deleteMany({
+      where: { gameId: gameToDelete.id },
+    })
+    .catch(() => {
+      prisma.$disconnect();
+      throw createError({
+        statusCode: 500,
+        statusMessage: "Error deleting game highscores.",
       });
     });
 

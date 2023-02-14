@@ -7,10 +7,14 @@
       <div class="mt-4">
         <GenericButtonBasic
           class="text-xl"
-          @click="saveHighscore"
+          @click="submit()"
+          :loading="loading"
           theme="success"
           >Bestzeit speichern</GenericButtonBasic
         >
+        <GenericStatusErrorMsg v-if="error">
+          {{ error }}
+        </GenericStatusErrorMsg>
       </div>
     </GenericContainerModal>
   </div>
@@ -24,7 +28,29 @@ const props = defineProps({
   game: { type: Object as PropType<GameWithEggs>, required: true },
 });
 
-function saveHighscore() {
-  console.log("Saving highscore");
+const loading = ref(false);
+const { execute: submitScore, error } = await useFetch(
+  "/api/game/score/submit",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: {
+      score: parseInt(props.playtimeInSeconds),
+      gameId: props.game.id,
+    },
+    immediate: false,
+  }
+);
+
+async function submit() {
+  loading.value = true;
+  await submitScore()
+    .then(async () => {
+      if (!error.value) await navigateTo("/dashboard");
+    })
+    .catch((e) => {})
+    .finally(() => (loading.value = false));
 }
 </script>

@@ -14,7 +14,7 @@
       >
         <GenericContainerSlider class="bg-slate-600">
           <NuxtLink
-            v-for="(game, index) in games"
+            v-for="(game, index) in data"
             :key="game.id"
             :to="encodeURI(`/play/${game.name}`)"
             class="h-[400px]"
@@ -28,9 +28,13 @@
                 :options="{ showShine: true }"
                 ><template #imageOverlay>
                   <div
-                    class="absolute bottom-2 left-2 p-1 bg-slate-600 rounded-md"
+                    v-if="game.scores[0]?.score"
+                    class="absolute bottom-2 left-2 px-1 bg-slate-600 rounded-sm text-white"
                   >
-                    ✅
+                    🏆
+                    <span class="pr-1 font-bold"
+                      >{{ game.scores[0]?.score }}s</span
+                    >
                   </div>
                   <GameUtilsEggCountIndicator :eggCount="game.eggs.length" />
                 </template>
@@ -53,9 +57,7 @@
 </template>
 
 <script setup lang="ts">
-const { data: games, refresh: refreshGames } = await useFetch(
-  "/api/game/find/newest"
-);
+const { data, refresh: refreshGames } = await useFetch("/api/game/find/newest");
 </script>
 <style scoped lang="postcss">
 .sway {

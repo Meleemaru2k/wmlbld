@@ -9,13 +9,9 @@
           label="🔐 Passwort"
           label-under="mindestens 10 Zeichen"
         />
-        <div
-          v-if="errorMessage"
-          class="font-bold text-slate-100 text-center bg-red-500 px-4 py-2"
-        >
-          ⚠️<br />
+        <GenericStatusErrorMsg v-if="errorMessage">
           {{ errorMessage }}
-        </div>
+        </GenericStatusErrorMsg>
         <GenericButtonBasic
           :disabled="isLoading"
           :loading="isLoading"
