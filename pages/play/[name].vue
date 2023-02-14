@@ -4,8 +4,8 @@
       <div class="m-auto pb-12">
         <GenericContainerStyleItemSelectFunky class="shadow-lg shadow-black">
           <GenericContainerStyleRainbowBorder class="rounded-md">
-            <basicButton @click="setPlayerReady" class="!p-8 text-2xl"
-              >Runde Starten</basicButton
+            <BasicButton @click="setPlayerReady" class="!p-8 text-2xl"
+              >Runde Starten</BasicButton
             >
           </GenericContainerStyleRainbowBorder>
         </GenericContainerStyleItemSelectFunky>
@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="p-4 md:p-8 shadow-inner grow flex flex-col">
-        <gameField v-if="gameWon === false"></gameField>
+        <GameField v-if="gameWon === false"></GameField>
         <div v-else class="flex flex-col">
           <div>Gewonnen!</div>
           <div>Zeit: {{ playtimeInSeconds }}</div>
@@ -61,8 +61,8 @@
 import { Egg, Game } from ".prisma/client";
 import { gameState_IK } from "~~/utils/injectionKeys";
 import { GameWithEggs } from "~~/types/game";
-import gameField from "~~/components/gameboard/game-field.vue";
-import basicButton from "~~/components/generic/button/basic.vue";
+import GameField from "~~/components/gameplay/gameboard/game-field.vue";
+import BasicButton from "~~/components/generic/button/basic.vue";
 
 /**@TODO Make curtain component :) */
 
