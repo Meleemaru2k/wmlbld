@@ -19,7 +19,7 @@
                     >
                       🔥 Played XXXX times
                     </div>
-                    <GameUtilsEggIndicator :eggCount="game.eggs.length" />
+                    <GameUtilsEggCountIndicator :eggCount="game.eggs.length" />
                   </template>
                   <template #headline>
                     {{ game.name }}
