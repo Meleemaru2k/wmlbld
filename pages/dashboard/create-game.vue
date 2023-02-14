@@ -71,8 +71,8 @@ function onImageChange(inputElement: HTMLInputElement) {
 
 async function createGame() {
   saveGameButtonLoading.value = true;
-  await useFetch("/api/game/create", {
-    body: { gameData },
+  useFetch("/api/game/create", {
+    body: { gameData: { ...gameData } },
     method: "POST",
   })
     .then(async (data) => {

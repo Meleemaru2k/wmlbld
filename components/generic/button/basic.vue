@@ -12,7 +12,7 @@
     ]"
     :disabled="disabled"
     @click="clickHandler"
-    @focusout="reset"
+    @mouseleave="(<any>$event?.target)?.blur()"
   >
     <div
       v-show="loading"
@@ -24,12 +24,7 @@
       >
     </div>
     <span v-show="!loading">
-      <template v-if="!waitingForConfirmation">
-        <slot />
-      </template>
-      <template v-else>
-        Sicher, dass du <i><slot /></i> ausführen willst?
-      </template>
+      <slot /> <span v-if="confirmClick" class="text-xs">🖱️x2</span>
     </span>
     <span v-show="loading">Lädt...</span>
   </button>
@@ -50,22 +45,14 @@ const props = defineProps({
   loading: { type: Boolean, default: false },
   confirmClick: { type: Boolean, default: false },
 });
-
-const waitingForConfirmation = ref(false);
+const doubleClick = useDoubleClick();
 
 function clickHandler() {
-  {
-    useSfx().sounds(SFX.button_click).play();
-  }
-  if (props.confirmClick && !waitingForConfirmation.value) {
-    waitingForConfirmation.value = true;
-  } else {
+  useSfx().sounds(SFX.button_click).play();
+  doubleClick?.clickHandler();
+  if (!props.confirmClick || doubleClick?.isDoubleClick?.value) {
     emit("click");
   }
-}
-
-function reset() {
-  waitingForConfirmation.value = false;
 }
 
 const emit = defineEmits<{
