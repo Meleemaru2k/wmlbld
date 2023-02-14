@@ -8,7 +8,7 @@ A Wimmelbild-Game WebApp
    - Search Games
       - Search by GameName
       - Latest Games (last 25 only) ✅
-      - Finished Games Indicator
+      - Finished Games / Highscore Indicator ✅
    - Leadboards by Gamename (top 25 only)
    - Create games ✅
       - Upload Image ✅
@@ -23,7 +23,7 @@ A Wimmelbild-Game WebApp
    - Soundeffects ✅
    - Animations ✅
    - Page/State visual transitions ✅
-   - Submit Score after game won
+   - Submit Score after game won ✅
 ## Todo (After all the planned features are done)
 - General
    - Add Setup commands (create DB, create Admin, create Sample-Games...)
@@ -43,6 +43,7 @@ A Wimmelbild-Game WebApp
    - Edit Game 
       - only if nobody has played the game yet?
       - maybe don't add this because it will have a lot of weird implications (do users keep their highscore etc)?
+   - Submit half-finished games score (x/x eggs found indicator)
 - Editor
    - Better UX
 - Code/Architecture
