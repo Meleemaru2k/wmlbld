@@ -32,6 +32,7 @@ A Wimmelbild-Game WebApp
    - Music Player ✅
       - Autoplay setting via cookies
       - Looping
+   - Timer in HH:MM:SS
 - Account
    - Add Password Hashing (with salt via env)
    - Proper Auth Secret via env ✅
