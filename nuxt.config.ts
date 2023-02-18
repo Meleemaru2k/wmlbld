@@ -12,4 +12,22 @@ export default defineNuxtConfig({
   app: {
     pageTransition: { name: "page", mode: "out-in" },
   },
+  nitro: {
+    storage: {
+      usercontent: {
+        driver: "fs",
+        base: "./public/usercontent",
+      },
+    },
+    devStorage: {
+      usercontent: {
+        driver: "fs",
+        base: "./public/usercontent",
+      },
+    },
+  },
+  runtimeConfig: {
+    AuthSecret: process.env.AUTH_SECRET,
+    db: process.env.DATABASE_URL,
+  },
 });

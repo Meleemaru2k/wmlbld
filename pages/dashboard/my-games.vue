@@ -68,7 +68,9 @@
         </GenericContainerStyleRainbowBorder>
       </div>
     </div>
-    <div v-else>Keine Spiele gefunden :(</div>
+    <LazyGenericContainerModal v-else class="w-[350px]">
+      <div class="text-center">Keine Spiele gefunden :(</div>
+    </LazyGenericContainerModal>
   </div>
 </template>
 

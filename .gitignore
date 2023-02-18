@@ -5,6 +5,7 @@ node_modules
 .cache
 .output
 .env
+data
 dist
 stuff.html
 stuff.ts

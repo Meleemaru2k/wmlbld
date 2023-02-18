@@ -84,7 +84,11 @@ export default eventHandler(async (event) => {
       });
     });
 
+  await useStorage().removeItem(
+    `usercontent:gameimages:image_${gameToDelete.id}`
+  );
   prisma.$disconnect();
+
   return {
     statusCode: 200,
     statusMessage: "Game deleted",

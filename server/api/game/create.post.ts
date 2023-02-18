@@ -3,6 +3,7 @@ import { Egg, Game } from "@prisma/client";
 import { GameWithEggs } from "~~/types/game";
 import PrismaDB from "~~/utils/prismaDB";
 import { GameValidator } from "~~/utils/validators/game";
+import Jimp from "jimp";
 
 export default eventHandler(async (event) => {
   const session = await getServerSession(event);
@@ -38,6 +39,11 @@ export default eventHandler(async (event) => {
       });
     })
     .finally(async () => await prisma.$disconnect());
+
+  await useStorage().setItem(
+    `usercontent:gameimages:image_${game.id}`,
+    game.image
+  );
 
   return { status: "Game Created: " + game.name };
 

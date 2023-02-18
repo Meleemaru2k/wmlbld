@@ -6,7 +6,7 @@ export default NuxtAuthHandler({
   pages: {
     signIn: "/login",
   },
-  secret: process.env.AUTH_SECRET,
+  secret: useRuntimeConfig().AuthSecret,
   providers: [
     // @ts-expect-error Import is exported on .default during SSR, so we need to call it this way. May be fixed via Vite at some point
     CredentialsProvider.default({
@@ -18,14 +18,6 @@ export default NuxtAuthHandler({
       },
       async authorize(credentials: any, req: any) {
         const prisma = PrismaDB.getClient();
-        async function getUser() {
-          const user = await prisma.user.findFirst({
-            where: {
-              email: credentials.username,
-            },
-          });
-          return user;
-        }
 
         const user = await getUser()
           .then(async (user) => {
@@ -47,6 +39,18 @@ export default NuxtAuthHandler({
 
           return userData;
         } else {
+          throw createError({
+            statusCode: 500,
+            statusMessage: "Login credentaials are incorrect",
+          });
+        }
+        async function getUser() {
+          const user = await prisma.user.findFirst({
+            where: {
+              email: credentials.username,
+            },
+          });
+          return user;
         }
       },
     }),
