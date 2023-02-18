@@ -13,23 +13,23 @@
     </div>
     <div v-if="game && playerIsReady">
       <div>
-        <div
-          class="bg-slate-900 text-stone-100 px-8 py-4 flex flex-row items-baseline gap-x-4 overflow-auto"
-        >
-          <div class="shrink-0 flex flex-row flex-nowrap w-20">
-            <span class="text-xl">⌛</span>
-            <span class="font-bold text-xl">{{ playtimeInSeconds }}s</span>
+        <LayoutPageHeader
+          ><div class="flex flex-row flex-nowrap gap-x-4 items-center">
+            <div class="shrink-0 flex flex-row flex-nowrap w-20">
+              <span class="text-xl">⌛</span>
+              <span class="font-bold text-xl">{{ playtimeInSeconds }}s</span>
+            </div>
+            <div class="shrink-0 flex flex-row flex-nowrap w-18">
+              {{ foundEggs.size }} / {{ game?.eggs.length }} ⭐
+            </div>
+            <basicButton class="shrink-0 flex flex-row flex-nowrap">
+              <span>ℹ️ Info</span>
+            </basicButton>
+            <basicButton class="shrink-0" @click="toggleGrid()"
+              >Raster <i>A</i></basicButton
+            >
           </div>
-          <div class="shrink-0 flex flex-row flex-nowrap w-18">
-            {{ foundEggs.size }} / {{ game?.eggs.length }} ⭐
-          </div>
-          <basicButton class="shrink-0 flex flex-row flex-nowrap">
-            <span>ℹ️ Info</span>
-          </basicButton>
-          <basicButton class="shrink-0" @click="toggleGrid()"
-            >Raster <i>A</i></basicButton
-          >
-        </div>
+        </LayoutPageHeader>
       </div>
       <div class="p-4 md:p-8 shadow-inner grow flex flex-col">
         <GameField v-if="gameWon === false"></GameField>
