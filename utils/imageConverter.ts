@@ -15,18 +15,3 @@ export function convertImageToBase64(image: HTMLInputElement): Promise<string> {
     }
   });
 }
-
-export async function urltoFile(
-  url: string,
-  filename: string,
-  mimeType: string
-) {
-  return fetch(url)
-    .then(function (res) {
-      return res.arrayBuffer();
-    })
-    .then(function (buf) {
-      console.log(buf);
-      return new File([buf], filename, { type: mimeType });
-    });
-}

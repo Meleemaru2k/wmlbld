@@ -40,10 +40,13 @@ export default eventHandler(async (event) => {
     })
     .finally(async () => await prisma.$disconnect());
 
-  await useStorage().setItem(
-    `usercontent:gameimages:image_${game.id}`,
-    game.image
-  );
+  /**
+   * @TODO Add image to storage (probably azure blob storage?)
+   */
+  //await useStorage().setItem(
+  //  `usercontent:gameimages:image_${game.id}`,
+  //  game.image
+  //);
 
   return { status: "Game Created: " + game.name };
 

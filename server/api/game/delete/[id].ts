@@ -84,9 +84,12 @@ export default eventHandler(async (event) => {
       });
     });
 
-  await useStorage().removeItem(
-    `usercontent:gameimages:image_${gameToDelete.id}`
-  );
+  /**
+   * @TODO Remove image from storage
+   */
+  //await useStorage().removeItem(
+  //  `usercontent:gameimages:image_${gameToDelete.id}`
+  //);
   prisma.$disconnect();
 
   return {
