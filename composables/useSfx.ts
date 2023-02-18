@@ -13,12 +13,12 @@ export enum SFX {
 const audioMap = reactive(new Map<SFX, ReturnType<typeof transformAudio>>());
 audioMap.set(
   SFX.egg_found,
-  transformAudio(new Audio(egg_found), { volume: 0.5 })
+  transformAudio(new Audio(egg_found), { volume: 0.7 })
 );
 audioMap.set(SFX.button_click, transformAudio(new Audio(button_click)));
 audioMap.set(
   SFX.game_won,
-  transformAudio(new Audio(game_won), { volume: 0.2 })
+  transformAudio(new Audio(game_won), { volume: 0.5 })
 );
 audioMap.set(SFX.curtain_roll, transformAudio(new Audio(curtain_roll)));
 
