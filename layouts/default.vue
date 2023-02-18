@@ -4,7 +4,7 @@
       class="bg-slate-700 py-2 h-[64px] min-h-[64px] px-6 text-stone-100 flex flex-row flex-nowrap items-center [&_>*]:mr-4 z-40 overflow-x-auto overflow-y-hidden"
     >
       <div
-        class="[&_>*]:mr-4 [&_*]:font-bold [&_*]:leading-tight flex flex-row flex-nowrap items-center link-container"
+        class="[&_>*]:mr-4 [&_>*]:font-bold [&_>*]:text-3xl [&_>*]:bg-slate-900 [&_>*]:p-[4px] [&_>*]:rounded-md [&_>*]:leading-tight flex flex-row flex-nowrap items-center link-container"
         v-if="status === 'authenticated'"
       >
         <!--<NuxtLink to="/"
@@ -16,24 +16,24 @@
         <NuxtLink
           :class="{ 'active-link': $route.path.includes('play-games') }"
           to="/dashboard/play-games"
-          >Spielen 🕹️</NuxtLink
-        >
+          >🕹️+🔍<br
+        /></NuxtLink>
         <NuxtLink
           :class="{ 'active-link': $route.path === '/dashboard/create-game' }"
           to="/dashboard/create-game"
-          >Spiel erstellen</NuxtLink
+          >✍️</NuxtLink
         >
         <NuxtLink
           :class="{ 'active-link': $route.path === '/dashboard/my-games' }"
           to="/dashboard/my-games"
-          >Meine Spiele</NuxtLink
+          >📚</NuxtLink
         >
         <NuxtLink
           :class="{ 'active-link': $route.path === '/dashboard/my-ranks' }"
           to="/dashboard/my-ranks"
-          >Meine Bestenlisteplätze</NuxtLink
+          >🏅</NuxtLink
         >
-        <div class="ml-auto"></div>
+        <div class="ml-auto !p-0"></div>
         <div v-if="status !== 'authenticated'">
           <NuxtLink to="/login">Login</NuxtLink>
         </div>
@@ -41,9 +41,9 @@
           <NuxtLink to="/signup">Account erstellen</NuxtLink>
         </div>
         <div class="shrink-0" v-if="status === 'authenticated'">
-          <NuxtLink to="/dashboard/my-games">Mein Profil 🥸</NuxtLink>
+          <NuxtLink to="/dashboard/my-games">🥸</NuxtLink>
         </div>
-        <div class="shrink-0" v-if="status === 'authenticated'">
+        <div class="shrink-0 !text-base" v-if="status === 'authenticated'">
           <logoutButton />
         </div>
       </div>
@@ -99,7 +99,8 @@ const { status, data } = useSession();
   animation: movebg 33s linear infinite alternate;
 }
 .active-link{
-  @apply font-bold text-orange-300;
+  @apply font-bold bg-orange-600 border border-solid border-white shadow-md shadow-black;
+  text-shadow: -1px -1px 2px rgba(0,0,0),1px 1px 2px rgba(0,0,0);
 }
 
 @keyframes movebg {
