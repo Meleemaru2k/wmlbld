@@ -22,7 +22,7 @@ h4,h5,h6{
 }
 
 h1,h2,h3,h4,h5,h6{
-  @apply text-gray-900 mb-4 font-psp font-thin;
+  @apply text-gray-900 mb-4 font-retro font-thin;
 }
 label{
 @apply text-sm;

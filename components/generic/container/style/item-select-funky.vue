@@ -3,6 +3,9 @@
     <slot />
   </div>
 </template>
+<script setup lang="ts">
+//@TODO make colors adjustable
+</script>
 <style scoped lang="postcss">
 .cardwobble {
   @apply p-[1px] m-0 transition-all box-border h-full w-full;

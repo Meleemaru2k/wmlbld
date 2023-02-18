@@ -4,7 +4,7 @@ export default <Partial<Config>>{
   theme: {
     extend: {
       fontFamily: {
-        psp: ["psp", defaultTheme.fontFamily.mono],
+        retro: ["retro", defaultTheme.fontFamily.mono],
         fredoka: ['"Fredoka One"', defaultTheme.fontFamily.sans],
       },
     },

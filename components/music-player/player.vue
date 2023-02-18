@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-[100px] bg-slate-700 border-[1px] border-solid border-slate-200 py-[1px] px-[4px] rounded-sm flex flex-col text-xs font-thin overflow-hidden shadow-sm shadow-black"
+    class="w-[100px] bg-slate-900 border-[1px] border-solid border-slate-400 py-[1px] px-[4px] rounded-sm flex flex-col text-xs font-thin overflow-hidden shadow-sm shadow-black"
   >
     <div
       class="flex text-base flex-row py-[2px] flex-nowrap justify-between [&_*]:cursor-pointer"
