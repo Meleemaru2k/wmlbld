@@ -15,3 +15,34 @@ export function convertImageToBase64(image: HTMLInputElement): Promise<string> {
     }
   });
 }
+
+export async function base64ToBlob(base64: string): Promise<Blob> {
+  const response = await fetch(base64);
+  const blob = await response.blob();
+  return blob;
+}
+
+//get mime type from base64
+export function base64MimeType(encoded: string): string | null {
+  let result = null;
+
+  if (typeof encoded !== "string") {
+    return result;
+  }
+
+  const mime = encoded.match(/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).*,.*/);
+  if (mime && mime.length) {
+    result = mime[1];
+  }
+
+  return result;
+}
+
+export function base64FileExtension(encoded: string): string | null {
+  const mime = base64MimeType(encoded);
+  if (mime) {
+    return mime.split("/")[1];
+  } else {
+    return null;
+  }
+}

@@ -3,7 +3,7 @@ import { Egg, Game } from "@prisma/client";
 import { GameWithEggs } from "~~/types/game";
 import PrismaDB from "~~/utils/prismaDB";
 import { GameValidator } from "~~/utils/validators/game";
-
+import { base64FileExtension, base64ToBlob } from "~~/utils/imageConverter";
 export default eventHandler(async (event) => {
   const session = await getServerSession(event);
   if (!session || !session.user?.email) {
@@ -42,9 +42,11 @@ export default eventHandler(async (event) => {
   /**
    * @TODO Add image to storage (probably azure blob storage?)
    */
+  //const imageExtension = base64FileExtension(game.image);
+  //const imageBlob = base64ToBlob(game.image);
   //await useStorage().setItem(
-  //  `usercontent:gameimages:image_${game.id}`,
-  //  game.image
+  //  `usercontent:gameimages:image_${game.id}.${imageExtension}`,
+  //  imageBlob
   //);
 
   return { status: "Game Created: " + game.name };
