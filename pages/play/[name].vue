@@ -16,7 +16,7 @@
         <LayoutPageHeader
           ><div class="flex flex-row flex-nowrap gap-x-4 items-center">
             <div class="shrink-0 flex flex-row flex-nowrap w-20">
-              <span class="text-xl">⌛</span>
+              <span class="text-xl hourglass">⌛</span>
               <span class="font-bold text-xl">{{ playtimeInSeconds }}s</span>
             </div>
             <div class="shrink-0 flex flex-row flex-nowrap w-18">
@@ -153,6 +153,32 @@ provide(gameState_IK, {
   }
   100% {
     @apply -top-full;
+  }
+}
+
+.hourglass {
+  @apply inline-block origin-center;
+  animation: hourglass 6s infinite linear alternate;
+}
+
+@keyframes hourglass {
+  0% {
+    transform: rotate(0deg);
+  }
+  45% {
+    transform: rotate(0deg);
+    translate: 0px;
+  }
+  50% {
+    transform: rotate(180deg);
+    translate: 0px -5px;
+  }
+  55% {
+    transform: rotate(360deg);
+    translate: 0px;
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>
