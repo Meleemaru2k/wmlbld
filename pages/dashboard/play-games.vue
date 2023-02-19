@@ -10,7 +10,7 @@
           class="w-[200px]"
         />
         <GenericInputDropdown
-          class="w-[200px]"
+          class="w-[100px] md:w-[200px]"
           :options="filterOptions"
           label="Filter"
           v-model="filter.type"
@@ -85,18 +85,40 @@ const data = ref<Array<GameWithEggsScoreAuthor>>([]);
 const filterOptions = ["Neuste", "Spielname", "Autor", "Ungespielt"];
 const filter = reactive({ type: "0", searchTerm: "" });
 const isLoading = ref(false);
+let lastFilter: FilterOptions = 0;
 
 onMounted(async () => {
   isLoading.value = true;
+
   const fetch = await useFetch("/api/game/usersearch/newest");
   data.value = (fetch.data.value as GameWithEggsScoreAuthor[]) ?? [];
+  lastFilter = FilterOptions.Newest;
+
   isLoading.value = false;
 });
 
 const onFilterChange = useDebounceFn(async () => {
   isLoading.value = true;
   let apiUrl = `/api/game/usersearch/newest`;
-  switch (parseInt(filter.type)) {
+
+  const filterType = parseInt(filter.type);
+  const dontRerunThoseFilters = [FilterOptions.Newest, FilterOptions.Unplayed];
+  const dontRunWithoutInputFilter = [FilterOptions.Name, FilterOptions.Author];
+
+  if (dontRerunThoseFilters.includes(filterType) && lastFilter === filterType) {
+    isLoading.value = false;
+    return;
+  }
+
+  if (
+    dontRunWithoutInputFilter.includes(filterType) &&
+    (!filter.searchTerm || filter.searchTerm.length < 3)
+  ) {
+    isLoading.value = false;
+    return;
+  }
+
+  switch (filterType) {
     case FilterOptions.Newest:
       apiUrl = `/api/game/usersearch/newest`;
       break;
@@ -115,8 +137,11 @@ const onFilterChange = useDebounceFn(async () => {
       apiUrl = `/api/game/usersearch/newest`;
       break;
   }
+
   const fetch = await useFetch(apiUrl);
   data.value = (fetch.data.value as GameWithEggsScoreAuthor[]) ?? [];
+  lastFilter = filterType;
+
   isLoading.value = false;
 }, 1500);
 

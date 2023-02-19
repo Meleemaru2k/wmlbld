@@ -73,7 +73,7 @@
     <GenericContainerStyleNeonBorder>
       <div class="bg-slate-900 pt-8 px-6 text-stone-100 bottom-0 z-40 relative">
         <div class="absolute right-2 top-2 text-xs ml-auto text-slate-600">
-          EmeraldHedgehog
+          Danke für's spielen ❤️ {{ data?.user?.name }}
         </div>
       </div>
     </GenericContainerStyleNeonBorder>
