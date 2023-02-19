@@ -37,6 +37,10 @@ export default eventHandler(async (event) => {
       where: { id: gameId },
       select: { id: true },
     });
+    const userScore = await prisma.gameUserScore.findFirstOrThrow({
+      where: { userId: user.id, gameId: game.id },
+      select: { score: true },
+    });
 
     if (!game || !user) {
       throw createError({
@@ -45,8 +49,14 @@ export default eventHandler(async (event) => {
       });
     }
 
-    return await prisma.gameUserScore.create({
-      data: {
+    if (userScore.score < score) {
+      return { score: userScore.score };
+    }
+
+    return await prisma.gameUserScore.upsert({
+      where: { userId_gameId: { userId: user.id, gameId: game.id } },
+      update: { score: score },
+      create: {
         user: { connect: { email: email } },
         game: { connect: { id: gameId } },
         score: score,

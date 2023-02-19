@@ -13,4 +13,7 @@
   opacity: 0;
   filter: blur(0.2rem);
 }
+body {
+  @apply font-texty;
+}
 </style>

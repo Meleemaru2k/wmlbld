@@ -1,6 +1,6 @@
 <template>
   <button
-    class="additional-styles overflow-hidden rounded transition-all relative border-solid border-[rgba(0,0,0,0.2)] border-[1px] px-3 py-1 text-center font-semibold font-mono"
+    class="additional-styles overflow-hidden rounded transition-all relative border-solid border-[rgba(0,0,0,0.2)] border-[1px] px-3 py-1 text-center"
     :class="[
       theme,
       { loading__all: loading },
@@ -82,6 +82,7 @@ const emit = defineEmits<{
 }
 
 .additional-styles {
+  @apply font-mono;
   &:hover {
     &:before {
       content: "";

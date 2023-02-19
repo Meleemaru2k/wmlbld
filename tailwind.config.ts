@@ -5,7 +5,7 @@ export default <Partial<Config>>{
     extend: {
       fontFamily: {
         retro: ["retro", defaultTheme.fontFamily.mono],
-        fredoka: ['"Fredoka One"', defaultTheme.fontFamily.sans],
+        texty: ["texty", defaultTheme.fontFamily.sans],
       },
     },
   },
