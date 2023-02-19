@@ -14,12 +14,12 @@
                   :image="{ src: game.image, altText: game.name }"
                   :options="{ showShine: true }"
                   ><template #imageOverlay>
-                    <div
-                      class="absolute bottom-2 left-2 bg-slate-600 rounded-sm px-1 py-[2px] text-white text-sm"
+                    <MicroInfoIndicator class="absolute bottom-2 left-2"
+                      >❤️ XXX Plays</MicroInfoIndicator
                     >
-                      ❤️ XXX Plays
-                    </div>
-                    <GameUtilsEggCountIndicator :eggCount="game.eggs.length" />
+                    <MicroInfoIndicator class="absolute bottom-2 right-2"
+                      >{{ game.eggs.length }}⭐</MicroInfoIndicator
+                    >
                   </template>
                   <template #headline>
                     {{ game.name }}
@@ -75,6 +75,8 @@
 </template>
 
 <script setup lang="ts">
+import MicroInfoIndicator from "~~/components/generic/container/utils/micro-info-indicator.vue";
+
 const { data: userGames, refresh: userGamesRefresh } = await useFetch(
   "/api/user/find/createdGames"
 );

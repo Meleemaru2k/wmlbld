@@ -27,16 +27,15 @@
                 :image="{ src: game.image, altText: game.name }"
                 :options="{ showShine: true }"
                 ><template #imageOverlay>
-                  <div
-                    v-if="game.scores[0]?.score"
-                    class="absolute bottom-2 left-2 px-1 bg-slate-600 rounded-sm text-white"
-                  >
+                  <MicroInfoIndicator class="absolute bottom-2 left-2">
                     🏆
-                    <span class="pr-1 font-bold"
-                      >{{ game.scores[0]?.score }}s</span
+                    <span class="pr-1" v-if="game.scores[0]">
+                      {{ game.scores[0]?.score }}s</span
                     >
-                  </div>
-                  <GameUtilsEggCountIndicator :eggCount="game.eggs.length" />
+                  </MicroInfoIndicator>
+                  <MicroInfoIndicator class="absolute bottom-2 right-2"
+                    >{{ game.eggs.length }}⭐</MicroInfoIndicator
+                  >
                 </template>
                 <template #headline>
                   {{ game.name }}
@@ -57,6 +56,8 @@
 </template>
 
 <script setup lang="ts">
+import MicroInfoIndicator from "~~/components/generic/container/utils/micro-info-indicator.vue";
+
 const { data, refresh: refreshGames } = await useFetch("/api/game/find/newest");
 </script>
 <style scoped lang="postcss">
