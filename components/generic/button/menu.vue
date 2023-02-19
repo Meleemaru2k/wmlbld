@@ -23,7 +23,7 @@ const emit = defineEmits<{
   &:focus {
     @apply active;
     & > * {
-      @apply scale-125;
+      @apply scale-125 -rotate-6;
     }
   }
 }

@@ -5,15 +5,17 @@
     <div
       class="flex text-base flex-row py-[2px] flex-nowrap justify-between [&_*]:cursor-pointer"
     >
-      <div @click="prevSong">⏮️</div>
-      <div @click="playOrPauseMusic">
+      <button @click="prevSong" class="control-button">⏮️</button>
+      <button @click="playOrPauseMusic" class="control-button">
         {{ currentSong?.paused ? "⏸️" : "▶️" }}
-      </div>
-      <div @click="nextSong">⏭️</div>
+      </button>
+      <button @click="nextSong" class="control-button">⏭️</button>
     </div>
     <div class="w-full h-[0.5px] mt-[4px] bg-slate-400"></div>
-    <div class="moveText">
-      💿 {{ currentSong?.artist }} - {{ currentSong?.songName }}
+    <div class="w-[90px] mr-[5px] justify-self-center overflow-hidden">
+      <div class="moveText">
+        💿 {{ currentSong?.artist }} - {{ currentSong?.songName }}
+      </div>
     </div>
   </div>
 </template>
@@ -66,6 +68,28 @@ watch(
   @apply whitespace-nowrap overflow-hidden w-fit text-xs;
   animation: moveText 15s linear infinite;
 }
+
+.control-button {
+  &:focus {
+    animation: click 0.5s ease-in-out;
+  }
+  &:hover {
+    text-shadow: 0 0 0.2rem #fff;
+  }
+}
+
+@keyframes click {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 @keyframes moveText {
   0% {
     transform: translateX(120%);
