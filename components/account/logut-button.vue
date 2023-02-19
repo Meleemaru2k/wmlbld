@@ -4,11 +4,13 @@
     :loading="isLoading"
     @click="logoutUser()"
     theme="primary"
-    >👋 Logout</GenericButtonBasic
-  >
+    class="relative"
+    ><span>👋 Logout &#8205; </span>
+  </GenericButtonBasic>
 </template>
 <script setup lang="ts">
-const { signOut } = useSession();
+const { signOut, getSession } = useSession();
+const username = (await getSession())?.user?.name;
 const isLoading = ref(false);
 
 async function logoutUser() {

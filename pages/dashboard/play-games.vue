@@ -10,7 +10,7 @@
     >
     <div class="relative overflow-hidden">
       <GenericContainerStyleRainbowBorder
-        class="!-rotate-2 !my-2 md:!my-8 !w-[calc(100%+32px)] !-ml-4 shadow-md shadow-black"
+        class="!-rotate-2 !my-2 md:!my-8 !w-[calc(100%+32px)] h-[420px] !-ml-4 shadow-md shadow-black"
       >
         <GenericContainerSlider class="bg-slate-600">
           <NuxtLink
