@@ -6,18 +6,20 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model User {
   id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String
+  email String  @db.VarChar(60) @unique
+  name  String  @db.VarChar(50)
   password String @default("")
+  salt String @default("")
   authenticationCode String?
   isAuthenticated Boolean @default(false)
-  
+  loginAttempts Int @default(0)
+
   isCreator Boolean @default(false)
 
   games Game[]
@@ -29,9 +31,9 @@ model Game {
   author User @relation(fields:[authorId], references: [id])
   authorId Int
 
-  name String @unique
-  description String?
-  passphrase String?
+  name String @db.VarChar(50) @unique
+  description String? @db.VarChar(200)
+  passphrase String? @db.VarChar(50)
   image String //64bit Img
 
   eggs Egg[]
@@ -46,8 +48,8 @@ model Egg {
   pos_x Int
   pos_y Int
   size Int
-  description String?
-  hint String?
+  description String? @db.VarChar(50)
+  hint String? @db.VarChar(120)
 }
 
 model GameUserScore{

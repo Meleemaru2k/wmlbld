@@ -2,14 +2,14 @@
   "private": true,
   "scripts": {
     "clean": "npx prisma migrate dev reset && nuxt dev",
-    "build": "nuxt build",
+    "build": "nuxt build && npx prisma migrate dev",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "dbmig": "npx prisma migrate dev",
     "dbreset": "npx prisma migrate reset",
-    "dbinit": "npx prisma init --datasource-provider sqlite",
+    "dbinit": "npx prisma init --datasource-provider postgres",
     "start": "node .output/server/index.mjs"
   },
   "devDependencies": {
