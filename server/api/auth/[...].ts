@@ -1,6 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import { NuxtAuthHandler } from "#auth";
 import PrismaDB from "~~/utils/prismaDB";
+import bcrypt from "bcrypt";
 
 export default NuxtAuthHandler({
   pages: {
@@ -30,7 +31,11 @@ export default NuxtAuthHandler({
             await prisma.$disconnect();
           });
 
-        if (user && user.password === credentials.password) {
+        const passwordIsValid = user?.password
+          ? await bcrypt.compare(credentials.password, user?.password)
+          : false;
+
+        if (user && passwordIsValid) {
           const userData = {
             name: user.name,
             email: user.email,

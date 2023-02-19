@@ -14,8 +14,7 @@ model User {
   id    Int     @id @default(autoincrement())
   email String  @db.VarChar(60) @unique
   name  String  @db.VarChar(50)
-  password String @default("")
-  salt String @default("")
+  password String @default("") //salt+hash
   authenticationCode String?
   isAuthenticated Boolean @default(false)
   loginAttempts Int @default(0)

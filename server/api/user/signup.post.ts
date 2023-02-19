@@ -1,6 +1,8 @@
 import PrismaDB from "~~/utils/prismaDB";
+import bcrypt from "bcrypt";
+
 export default defineEventHandler(async (event) => {
-  let response = { status: "ok" };
+  let response = { status: "Initial" };
   const body = (await readBody(event)) as {
     name: string;
     email: string;
@@ -21,29 +23,33 @@ export default defineEventHandler(async (event) => {
   }
 
   const prisma = PrismaDB.getClient();
-  async function dbOps() {
+
+  await bcrypt.hash(body.password, 10).then(async (hash: string) => {
+    await dbOps(hash)
+      .then(async (user) => {
+        await prisma.$disconnect();
+        response = { status: "ok" };
+      })
+      .catch(async (e) => {
+        await prisma.$disconnect();
+        console.log(e);
+        throw createError({
+          statusCode: 400,
+          message: "Nuzter existiert bereits",
+        });
+      });
+  });
+
+  return response;
+
+  async function dbOps(hashedPassword: string) {
     const user = await prisma.user.create({
       data: {
         name: body.name,
         email: body.email,
-        password: body.password,
+        password: hashedPassword,
       },
     });
     return user;
   }
-
-  await dbOps()
-    .then(async (user) => {
-      await prisma.$disconnect();
-      response = { status: "ok" };
-    })
-    .catch(async (e) => {
-      await prisma.$disconnect();
-      throw createError({
-        statusCode: 400,
-        message: "Nuzter existiert bereits",
-      });
-    });
-
-  return response;
 });

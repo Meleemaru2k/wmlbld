@@ -16,6 +16,7 @@
     "@nuxtjs/prismic": "^3.0.0-rc.2",
     "@nuxtjs/tailwindcss": "^6.2.0",
     "@sidebase/nuxt-auth": "^0.4.1",
+    "@types/bcrypt": "^5.0.0",
     "@vueuse/core": "^9.10.0",
     "@vueuse/nuxt": "^9.10.0",
     "nuxt": "^3.2.2",
@@ -24,6 +25,7 @@
   "dependencies": {
     "@pinia/nuxt": "^0.4.6",
     "@prisma/client": "^4.8.1",
+    "bcrypt": "^5.1.0",
     "fs": "^0.0.1-security",
     "pinia": "^2.0.28",
     "vue-dragscroll": "^4.0.5"
