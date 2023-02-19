@@ -1,6 +1,6 @@
 <template>
   <div class="w-full overflow-hidden">
-    <LayoutPageHeader headline="🕹️ Deine Spiele 🕹️" />
+    <LayoutPageHeader headline="Deine Spiele" />
     <div class="" v-if="userGames">
       <div class="relative overflow-hidden">
         <GenericContainerStyleRainbowBorder
@@ -15,7 +15,7 @@
                   :options="{ showShine: true }"
                   ><template #imageOverlay>
                     <MicroInfoIndicator class="absolute bottom-2 left-2"
-                      >❤️ XXX Plays</MicroInfoIndicator
+                      >❤️ {{ game._count.scores }}</MicroInfoIndicator
                     >
                     <MicroInfoIndicator class="absolute bottom-2 right-2"
                       >{{ game.eggs.length }}⭐</MicroInfoIndicator

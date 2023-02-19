@@ -38,11 +38,18 @@
                 :options="{ showShine: true }"
                 ><template #imageOverlay>
                   <MicroInfoIndicator class="absolute bottom-2 left-2">
-                    🏆
-                    <span class="pr-1" v-if="game.scores[0]">
-                      {{ game.scores[0]?.score }}s</span
+                    <span class="mr-1">
+                      🏁
+                      <span class="pr-1" v-if="game.scores[0]">
+                        {{ game.scores[0]?.score }}s </span
+                      ><span v-else>-</span></span
                     >
+                    <span
+                      >❤️
+                      {{ game._count.scores }}
+                    </span>
                   </MicroInfoIndicator>
+
                   <MicroInfoIndicator class="absolute bottom-2 right-2"
                     >{{ game.eggs.length }}⭐</MicroInfoIndicator
                   >

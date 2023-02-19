@@ -23,6 +23,7 @@ export default eventHandler(async (event) => {
       where: { authorId: user.id },
       include: {
         eggs: true,
+        _count: { select: { scores: true } },
       },
     });
   } finally {

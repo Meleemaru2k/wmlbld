@@ -6,4 +6,5 @@ export type GameWithEggsScoreAuthor = Game & {
   eggs: Array<Egg>;
   scores: GameUserScore[];
   author: { name: string };
+  _count: { scores: number };
 };

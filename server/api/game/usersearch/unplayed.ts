@@ -20,6 +20,7 @@ export default defineEventHandler(async (event) => {
               where: { user: { email: email } },
             }
           : false,
+        _count: { select: { scores: true } },
       },
       take: 25,
     })
