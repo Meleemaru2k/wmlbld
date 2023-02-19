@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "clean": "npx prisma migrate reset && nuxt dev",
+    "clean": "npx prisma migrate dev reset && nuxt dev",
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
@@ -9,7 +9,8 @@
     "postinstall": "nuxt prepare",
     "dbmig": "npx prisma migrate dev",
     "dbreset": "npx prisma migrate reset",
-    "dbinit": "npx prisma init --datasource-provider sqlite"
+    "dbinit": "npx prisma init --datasource-provider sqlite",
+    "start": "buildpacks:set heroku/nodejs"
   },
   "devDependencies": {
     "@nuxtjs/prismic": "^3.0.0-rc.2",
