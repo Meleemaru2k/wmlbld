@@ -6,7 +6,8 @@ A Wimmelbild-Game WebApp
    - Login ✅
 - Dashboard
    - Search Games
-      - Search by GameName
+      - Search by GameName ✅
+      - Search by User ✅
       - Latest Games (last 25 only) ✅
       - Finished Games / Highscore Indicator ✅
    - Leadboards by Gamename (top 25 only)
