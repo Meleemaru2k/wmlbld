@@ -31,7 +31,7 @@
           </div>
         </LayoutPageHeader>
       </div>
-      <div class="p-4 md:p-8 shadow-inner grow flex flex-col">
+      <div class="px-4 pb-4 md:px-4 shadow-inner grow flex flex-col">
         <GameField v-if="gameWon === false"></GameField>
         <GameplayWinningScreen
           v-else
