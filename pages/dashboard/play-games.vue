@@ -35,6 +35,7 @@
             class="h-[400px]"
             :class="{ sway: index < 6 }"
             :style="{ animationDelay: `${index * 0.2}s` }"
+            @mouseenter="useSfx().sounds(SFX.plopp).play()"
           >
             <GenericContainerStyleItemSelectFunky>
               <GenericContainerCard
@@ -80,8 +81,8 @@
 <script setup lang="ts">
 import MicroInfoIndicator from "~~/components/generic/container/utils/micro-info-indicator.vue";
 import { GameWithEggsScoreAuthor } from "~~/types/game";
-const data = ref<Array<GameWithEggsScoreAuthor>>([]);
 
+const data = ref<Array<GameWithEggsScoreAuthor>>([]);
 const filterOptions = ["Neuste", "Spielname", "Autor", "Ungespielt"];
 const filter = reactive({ type: "0", searchTerm: "" });
 const isLoading = ref(false);

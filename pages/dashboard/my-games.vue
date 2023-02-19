@@ -10,7 +10,8 @@
             <div v-for="(game, index) in userGames" :key="game.id">
               <GenericContainerStyleItemSelectFunky>
                 <GenericContainerCard
-                  class="shadow-md shadow-slate-900"
+                  @mouseenter="useSfx().sounds(SFX.plopp).play()"
+                  class="shadow-md shadow-slate-900 cursor-pointer"
                   :image="{ src: game.image, altText: game.name }"
                   :options="{ showShine: true }"
                   ><template #imageOverlay>
