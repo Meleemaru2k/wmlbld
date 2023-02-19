@@ -19,7 +19,7 @@
     </LayoutPageHeader>
     <div class="relative overflow-hidden">
       <GenericContainerStyleRainbowBorder
-        class="!-rotate-1 !my-2 md:!my-8 !w-[calc(100%+32px)] !h-[460px] !-ml-4 shadow-md shadow-black"
+        class="!-rotate-1 !mt-2 !mb-4 md:!my-8 !w-[calc(100%+32px)] !min-h-[400px] !-ml-4 shadow-md shadow-black"
         ><div v-show="isLoading" class="nogames-info">Suche Spiele...</div>
         <div v-show="data?.length === 0 && !isLoading" class="nogames-info">
           Keine Spiele gefunden
