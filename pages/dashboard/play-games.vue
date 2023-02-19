@@ -19,10 +19,15 @@
     </LayoutPageHeader>
     <div class="relative overflow-hidden">
       <GenericContainerStyleRainbowBorder
-        v-show="data?.length > 0"
-        class="!-rotate-2 !my-2 md:!my-8 !w-[calc(100%+32px)] !h-[460px] !-ml-4 shadow-md shadow-black"
-      >
-        <GenericContainerSlider class="!bg-slate-700 h-full">
+        class="!-rotate-1 !my-2 md:!my-8 !w-[calc(100%+32px)] !h-[460px] !-ml-4 shadow-md shadow-black"
+        ><div v-show="isLoading" class="nogames-info">Suche Spiele...</div>
+        <div v-show="data?.length === 0 && !isLoading" class="nogames-info">
+          Keine Spiele gefunden
+        </div>
+        <GenericContainerSlider
+          class="!bg-slate-700 h-full"
+          v-show="data?.length > 0 && !isLoading"
+        >
           <NuxtLink
             v-for="(game, index) in data"
             :key="game.id"
@@ -79,13 +84,17 @@ const data = ref<Array<GameWithEggsScoreAuthor>>([]);
 
 const filterOptions = ["Neuste", "Spielname", "Autor", "Ungespielt"];
 const filter = reactive({ type: "0", searchTerm: "" });
+const isLoading = ref(false);
 
 onMounted(async () => {
+  isLoading.value = true;
   const fetch = await useFetch("/api/game/usersearch/newest");
   data.value = (fetch.data.value as GameWithEggsScoreAuthor[]) ?? [];
+  isLoading.value = false;
 });
 
 const onFilterChange = useDebounceFn(async () => {
+  isLoading.value = true;
   let apiUrl = `/api/game/usersearch/newest`;
   switch (parseInt(filter.type)) {
     case FilterOptions.Newest:
@@ -107,17 +116,13 @@ const onFilterChange = useDebounceFn(async () => {
       break;
   }
   const fetch = await useFetch(apiUrl);
-  console.log(fetch.data ?? fetch.error);
   data.value = (fetch.data.value as GameWithEggsScoreAuthor[]) ?? [];
+  isLoading.value = false;
 }, 1500);
 
-watch(
-  filter,
-  (newVal, oldVal) => {
-    onFilterChange();
-  },
-  { deep: true }
-);
+watch(filter, async () => {
+  await onFilterChange();
+});
 
 enum FilterOptions {
   Newest,
@@ -127,6 +132,9 @@ enum FilterOptions {
 }
 </script>
 <style scoped lang="postcss">
+.nogames-info {
+  @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-2xl text-white text-3xl font-bold text-center;
+}
 .sway {
   @apply transition-all;
   transform-origin: top;

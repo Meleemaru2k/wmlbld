@@ -1,7 +1,9 @@
 <template>
   <div class="flex flex-col pb-12">
     <LayoutPageHeader headline="Spiel erstellen"
-      ><ol class="flex flex-row flex-wrap md:flex-nowrap gap-x-4">
+      ><ol
+        class="flex flex-row flex-wrap md:flex-nowrap gap-x-4 justify-start md:justify-center"
+      >
         <li>1. Bild hochladen</li>
         <li>2. Auf Punkt im Bild gedrückt halten um Secret zu erstellen</li>
         <li>3. Secret mit Infos schmücken</li>
