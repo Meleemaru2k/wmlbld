@@ -1,18 +1,28 @@
 <template>
   <div>
     <LayoutPageHeader headline="Spielauswahl">
-      <div class="flex flex-row">
-        <div>
-          Suche: [ ---------TEXT--------- ] | Art: [ ---------Dropdown---------
-          ]
-        </div>
-      </div></LayoutPageHeader
-    >
+      <div class="flex flex-row flex-wrap gap-4 justify-center">
+        <GenericInputText
+          v-model="filter.searchTerm"
+          placeholder="Suchbegriff..."
+          label="Suchbegriff"
+          maxChars="20"
+          class="w-[200px]"
+        />
+        <GenericInputDropdown
+          class="w-[200px]"
+          :options="filterOptions"
+          label="Filter"
+          v-model="filter.type"
+        />
+      </div>
+    </LayoutPageHeader>
     <div class="relative overflow-hidden">
       <GenericContainerStyleRainbowBorder
-        class="!-rotate-2 !my-2 md:!my-8 !w-[calc(100%+32px)] h-[420px] !-ml-4 shadow-md shadow-black"
+        v-show="data?.length > 0"
+        class="!-rotate-2 !my-2 md:!my-8 !w-[calc(100%+32px)] !h-[460px] !-ml-4 shadow-md shadow-black"
       >
-        <GenericContainerSlider class="bg-slate-600">
+        <GenericContainerSlider class="!bg-slate-700 h-full">
           <NuxtLink
             v-for="(game, index) in data"
             :key="game.id"
@@ -57,8 +67,57 @@
 
 <script setup lang="ts">
 import MicroInfoIndicator from "~~/components/generic/container/utils/micro-info-indicator.vue";
+import { GameWithEggsScoreAuthor } from "~~/types/game";
+const data = ref<Array<GameWithEggsScoreAuthor>>([]);
 
-const { data, refresh: refreshGames } = await useFetch("/api/game/find/newest");
+const filterOptions = ["Neuste", "Spielname", "Autor", "Ungespielt"];
+const filter = reactive({ type: "0", searchTerm: "" });
+
+onMounted(async () => {
+  const fetch = await useFetch("/api/game/usersearch/newest");
+  data.value = (fetch.data.value as GameWithEggsScoreAuthor[]) ?? [];
+});
+
+const onFilterChange = useDebounceFn(async () => {
+  let apiUrl = `/api/game/usersearch/newest`;
+  switch (parseInt(filter.type)) {
+    case FilterOptions.Newest:
+      apiUrl = `/api/game/usersearch/newest`;
+      break;
+    case FilterOptions.Name:
+      if (filter.searchTerm)
+        apiUrl = `/api/game/usersearch/name/${filter.searchTerm}`;
+      break;
+    case FilterOptions.Author:
+      if (filter.searchTerm)
+        apiUrl = `/api/game/usersearch/author/${filter.searchTerm}`;
+      break;
+    case FilterOptions.Unplayed:
+      apiUrl = `/api/game/usersearch/unplayed`;
+      break;
+    default:
+      apiUrl = `/api/game/usersearch/newest`;
+      break;
+  }
+  const fetch = await useFetch(apiUrl);
+  console.log(fetch.data ?? fetch.error);
+  data.value = (fetch.data.value as GameWithEggsScoreAuthor[]) ?? [];
+}, 1500);
+
+watch(
+  filter,
+  (newVal, oldVal) => {
+    onFilterChange();
+  },
+  { deep: true }
+);
+
+enum FilterOptions {
+  Newest,
+  Name,
+  Author,
+  Unplayed,
+}
 </script>
 <style scoped lang="postcss">
 .sway {

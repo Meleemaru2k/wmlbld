@@ -1,6 +1,12 @@
 import PrismaDB from "~~/utils/prismaDB";
 
 export default defineEventHandler(async (event) => {
+  if (!event.context.params?.name) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: "No search params given.",
+    });
+  }
   const gameName = decodeURIComponent(event.context.params.name);
   const prisma = PrismaDB.getClient();
 

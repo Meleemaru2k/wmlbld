@@ -1,3 +1,9 @@
-import { Egg, Game } from "@prisma/client";
+import { Egg, Game, GameUserScore } from "@prisma/client";
 
 export type GameWithEggs = Game & { eggs: Array<Egg> };
+
+export type GameWithEggsScoreAuthor = Game & {
+  eggs: Array<Egg>;
+  scores: GameUserScore[];
+  author: { name: string };
+};

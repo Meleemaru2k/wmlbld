@@ -6,10 +6,6 @@ export default defineEventHandler(async (event) => {
   const prisma = PrismaDB.getClient();
   const email = session?.user?.email;
 
-  /**
-   * @todo: Select score doesn't work on scores somehow
-   */
-
   const games = await prisma.game
     .findMany({
       include: {

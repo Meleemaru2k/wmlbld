@@ -115,6 +115,7 @@ function onFocusChange(pos_x: number, pos_y: number) {
     imageContainer.value.scrollTo({
       top: y,
       left: x,
+      behavior: "smooth",
     });
   }
 }
