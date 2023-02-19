@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "clean": "npx prisma migrate dev reset && nuxt dev",
-    "build": "nuxt build && npx prisma migrate dev",
+    "build": "nuxt build && npx prisma migrate deploy",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
