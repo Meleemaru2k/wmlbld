@@ -10,7 +10,7 @@
     "dbmig": "npx prisma migrate dev",
     "dbreset": "npx prisma migrate reset",
     "dbinit": "npx prisma init --datasource-provider sqlite",
-    "start": "buildpacks:set heroku/nodejs"
+    "start": "node .output/server/index.mjs"
   },
   "devDependencies": {
     "@nuxtjs/prismic": "^3.0.0-rc.2",
