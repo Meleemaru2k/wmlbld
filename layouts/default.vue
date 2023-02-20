@@ -34,7 +34,7 @@
         </div>
         <div class="shrink-0" v-if="status === 'authenticated'">
           <GenericButtonMenu>
-            <NuxtLink to="/dashboard/my-games">🥸</NuxtLink>
+            <NuxtLink to="/dashboard/my-profile">🥸</NuxtLink>
           </GenericButtonMenu>
         </div>
         <div v-if="status === 'authenticated'"><MusicPlayer></MusicPlayer></div>

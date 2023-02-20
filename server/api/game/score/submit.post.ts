@@ -37,22 +37,14 @@ export default eventHandler(async (event) => {
       where: { id: gameId },
       select: { id: true },
     });
-    const userScore = await prisma.gameUserScore.findFirstOrThrow({
+    const userScore = await prisma.gameUserScore.findFirst({
       where: { userId: user.id, gameId: game.id },
       select: { score: true },
     });
 
-    if (!game || !user) {
-      throw createError({
-        statusCode: 500,
-        statusMessage: "No user or game found.",
-      });
-    }
-
-    if (userScore.score < score) {
+    if (userScore?.score && userScore?.score < score) {
       return { score: userScore.score };
     }
-
     return await prisma.gameUserScore.upsert({
       where: { userId_gameId: { userId: user.id, gameId: game.id } },
       update: { score: score },

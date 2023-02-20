@@ -48,7 +48,7 @@ async function submit() {
   loading.value = true;
   await submitScore()
     .then(async () => {
-      if (!error.value) await navigateTo("/dashboard");
+      if (!error.value) await navigateTo("/dashboard/my-ranks");
     })
     .catch((e) => {})
     .finally(() => (loading.value = false));
