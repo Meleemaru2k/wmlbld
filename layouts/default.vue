@@ -49,7 +49,7 @@
         <NuxtLink to="/"
           ><img
             class="w-12 h-12 rounded"
-            src="~/assets/images/logo/output2.jpg"
+            src="~/assets/images/logo/owimpic_3.jpg"
         /></NuxtLink>
 
         <div class="ml-auto"></div>

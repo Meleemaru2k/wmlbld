@@ -8,8 +8,8 @@
             <div class="w-40 h-40 mx-auto mb-4">
               <NuxtLink to="/login">
                 <img
-                  class="rounded shadow-lg shadow-black transition-all"
-                  src="~/assets/images/logo/output2.jpg"
+                  class="rounded border border-solid border-slate-400 transition-all"
+                  src="~/assets/images/logo/owimpic_3.jpg"
                 />
               </NuxtLink>
             </div>
