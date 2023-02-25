@@ -5,7 +5,7 @@
       <ItemSelectFunky
         v-for="(game, index) in gameData"
         :key="index"
-        class="flex flex-row mt-2 rounded-md text-slate-50 shadow-md shadow-black cursor-pointer"
+        class="flex flex-row mt-2 rounded-md text-slate-50 shadow-md shadow-black cursor-pointer border-slate-900 border-[1px] border-solid"
         :class="{ 'bg-slate-600': index % 2, 'bg-slate-700': !(index % 2) }"
         @click="goToGame(game.name)"
       >
