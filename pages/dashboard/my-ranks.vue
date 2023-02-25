@@ -5,14 +5,17 @@
       <ItemSelectFunky
         v-for="(game, index) in gameData"
         :key="index"
-        class="flex flex-row mt-2 rounded-md text-slate-50 shadow-md shadow-black cursor-pointer border-slate-900 border-[1px] border-solid"
-        :class="{ 'bg-slate-600': index % 2, 'bg-slate-700': !(index % 2) }"
+        class="flex flex-row mt-2 rounded-none text-slate-50 shadow-md shadow-black cursor-pointer border-slate-900 border-[1px] border-solid"
+        :class="{
+          'bg-slate-600': index % 2,
+          'bg-slate-700': !(index % 2),
+          'rounded-t-md': index === 0,
+          'rounded-b-md': index === gameData?.length - 1,
+        }"
         @click="goToGame(game.name)"
       >
         <div class="flex flex-row gap-x-4">
-          <div
-            class="overflow-hidden h-auto w-[160px] shrink-0 grow-0 rounded-l-md"
-          >
+          <div class="overflow-hidden h-auto w-[160px] shrink-0 grow-0">
             <img
               class="object-cover h-full w-full scale-[3]"
               :src="game.image"
