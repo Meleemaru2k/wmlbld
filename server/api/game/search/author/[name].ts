@@ -17,6 +17,7 @@ export default defineEventHandler(async (event) => {
   const games = await prisma.game
     .findMany({
       where: { author: { name: { contains: username } } },
+      select: { passphrase: false },
       include: {
         eggs: true,
         author: { select: { name: true } },

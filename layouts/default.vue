@@ -10,11 +10,7 @@
         <GenericButtonMenu :is-active="$route.path.includes('play-games')">
           <NuxtLink to="/dashboard/play-games">🔍<br /></NuxtLink>
         </GenericButtonMenu>
-        <GenericButtonMenu
-          :is-active="$route.path.includes('/dashboard/create-game')"
-        >
-          <NuxtLink to="/dashboard/create-game">✍️</NuxtLink>
-        </GenericButtonMenu>
+
         <GenericButtonMenu
           :is-active="$route.path.includes('/dashboard/my-games')"
         >
@@ -25,20 +21,18 @@
         >
           <NuxtLink to="/dashboard/my-ranks">🏅</NuxtLink></GenericButtonMenu
         >
-
-        <div v-if="status !== 'authenticated'">
-          <NuxtLink to="/login">Login</NuxtLink>
-        </div>
-        <div v-if="status !== 'authenticated'">
-          <NuxtLink to="/signup">Account erstellen</NuxtLink>
-        </div>
-        <div class="shrink-0" v-if="status === 'authenticated'">
+        <GenericButtonMenu
+          :is-active="$route.path.includes('/dashboard/create-game')"
+        >
+          <NuxtLink to="/dashboard/create-game">✍️</NuxtLink>
+        </GenericButtonMenu>
+        <div class="shrink-0">
           <GenericButtonMenu>
             <NuxtLink to="/dashboard/my-profile">🥸</NuxtLink>
           </GenericButtonMenu>
         </div>
-        <div v-if="status === 'authenticated'"><MusicPlayer></MusicPlayer></div>
-        <div class="shrink-0 !text-base" v-if="status === 'authenticated'">
+        <div><MusicPlayer></MusicPlayer></div>
+        <div class="shrink-0 !text-base">
           <logoutButton />
         </div>
       </div>

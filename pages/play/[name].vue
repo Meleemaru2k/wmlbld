@@ -31,7 +31,9 @@
           </div>
         </LayoutPageHeader>
       </div>
-      <div class="px-4 pb-4 md:px-4 shadow-inner grow flex flex-col">
+      <div
+        class="px-4 pb-4 md:px-4 shadow-inner grow flex flex-col w-fit mx-auto max-w-full"
+      >
         <GameField v-if="gameWon === false"></GameField>
         <GameplayWinningScreen
           v-else

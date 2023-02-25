@@ -91,7 +91,7 @@ let lastFilter: FilterOptions = 0;
 onMounted(async () => {
   isLoading.value = true;
 
-  const fetch = await useFetch("/api/game/usersearch/newest");
+  const fetch = await useFetch("/api/game/search/newest");
   data.value = (fetch.data.value as GameWithEggsScoreAuthor[]) ?? [];
   lastFilter = FilterOptions.Newest;
 
@@ -100,7 +100,7 @@ onMounted(async () => {
 
 const onFilterChange = useDebounceFn(async () => {
   isLoading.value = true;
-  let apiUrl = `/api/game/usersearch/newest`;
+  let apiUrl = `/api/game/search/newest`;
 
   const filterType = parseInt(filter.type);
   const dontRerunThoseFilters = [FilterOptions.Newest, FilterOptions.Unplayed];
@@ -121,21 +121,21 @@ const onFilterChange = useDebounceFn(async () => {
 
   switch (filterType) {
     case FilterOptions.Newest:
-      apiUrl = `/api/game/usersearch/newest`;
+      apiUrl = `/api/game/search/newest`;
       break;
     case FilterOptions.Name:
       if (filter.searchTerm)
-        apiUrl = `/api/game/usersearch/name/${filter.searchTerm}`;
+        apiUrl = `/api/game/search/name/${filter.searchTerm}`;
       break;
     case FilterOptions.Author:
       if (filter.searchTerm)
-        apiUrl = `/api/game/usersearch/author/${filter.searchTerm}`;
+        apiUrl = `/api/game/search/author/${filter.searchTerm}`;
       break;
     case FilterOptions.Unplayed:
-      apiUrl = `/api/game/usersearch/unplayed`;
+      apiUrl = `/api/me/game/search/unplayed`;
       break;
     default:
-      apiUrl = `/api/game/usersearch/newest`;
+      apiUrl = `/api/game/search/newest`;
       break;
   }
 

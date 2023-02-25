@@ -82,7 +82,7 @@
 import MicroInfoIndicator from "~~/components/generic/container/utils/micro-info-indicator.vue";
 
 const { data: userGames, refresh: userGamesRefresh } = await useFetch(
-  "/api/user/find/createdGames"
+  "/api/me/game/created"
 );
 
 const deleteGameButtonLoading = ref(false);

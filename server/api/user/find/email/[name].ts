@@ -2,7 +2,7 @@ import { User } from "@prisma/client";
 import PrismaDB from "~~/utils/prismaDB";
 export default defineEventHandler(async (event) => {
   let response: Partial<User> | null = null;
-  let emailToFind = event.context.params.name;
+  let emailToFind = event.context?.params?.name;
   const prisma = PrismaDB.getClient();
 
   async function dbOps() {
