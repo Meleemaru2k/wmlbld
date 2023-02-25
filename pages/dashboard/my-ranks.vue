@@ -5,7 +5,7 @@
       <ItemSelectFunky
         v-for="(game, index) in gameData"
         :key="index"
-        class="flex flex-row mt-2 rounded-none text-slate-50 shadow-md shadow-black cursor-pointer border-slate-900 border-[1px] border-solid"
+        class="flex flex-row mt-2 rounded-none overflow-hidden text-slate-50 shadow-md shadow-black cursor-pointer border-slate-900 border-[1px] border-solid"
         :class="{
           'bg-slate-600': index % 2,
           'bg-slate-700': !(index % 2),
@@ -17,6 +17,10 @@
         <div class="flex flex-row gap-x-4">
           <div class="overflow-hidden h-auto w-[160px] shrink-0 grow-0">
             <img
+              :class="{
+                'rounded-t-md': index === 0,
+                'rounded-b-md': index === gameData.length - 1,
+              }"
               class="object-cover h-full w-full scale-[3]"
               :src="game.image"
             />
