@@ -61,7 +61,7 @@
                           theme="error"
                           :confirm-click="true"
                           @click="deleteGame(game.id)"
-                          :loading="deleteGameButtonLoading"
+                          :loading="deleteGameButtonLoading === game.id"
                         >
                           Löschen
                         </GenericButtonBasic>
@@ -89,11 +89,11 @@ const { data: userGames, refresh: userGamesRefresh } = await useFetch(
   "/api/me/game/created"
 );
 
-const deleteGameButtonLoading = ref(false);
+const deleteGameButtonLoading = ref<number | null>(null);
 async function deleteGame(id: number) {
-  deleteGameButtonLoading.value = true;
+  deleteGameButtonLoading.value = id;
   await useFetch("/api/game/delete/" + id);
   await userGamesRefresh();
-  deleteGameButtonLoading.value = false;
+  deleteGameButtonLoading.value = null;
 }
 </script>
