@@ -15,12 +15,14 @@
         @click="goToGame(game.name)"
       >
         <div class="flex flex-row gap-x-4">
-          <div class="overflow-hidden h-auto w-[160px] shrink-0 grow-0">
+          <div
+            class="overflow-hidden h-auto w-[160px] shrink-0 grow-0"
+            :class="{
+              'rounded-tl-md': index === 0,
+              'rounded-bl-md': index === gameData.length - 1,
+            }"
+          >
             <img
-              :class="{
-                'rounded-t-md': index === 0,
-                'rounded-b-md': index === gameData.length - 1,
-              }"
               class="object-cover h-full w-full scale-[3]"
               :src="game.image"
             />
