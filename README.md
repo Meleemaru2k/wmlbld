@@ -10,7 +10,7 @@ A Wimmelbild-Game WebApp
       - Search by User ✅
       - Latest Games (last 25 only) ✅
       - Finished Games / Highscore Indicator ✅
-   - Leadboards by Gamename (top 25 only)
+   - Leadboards for Games User has played (top 25 only)
    - Create games ✅
       - Upload Image ✅
       - Add Click-Areas ✅
