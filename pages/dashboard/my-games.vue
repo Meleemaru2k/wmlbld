@@ -89,7 +89,7 @@ const { data: userGames, refresh: userGamesRefresh } = await useFetch(
   "/api/me/game/created"
 );
 
-const deleteGameButtonLoading = ref<number | null>(null);
+const deleteGameButtonLoading = ref<number | null>(null); // id of game
 async function deleteGame(id: number) {
   deleteGameButtonLoading.value = id;
   await useFetch("/api/game/delete/" + id);
