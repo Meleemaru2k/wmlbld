@@ -1,6 +1,6 @@
 <template>
   <div class="w-full overflow-hidden">
-    <LayoutPageHeader headline="Deine Spiele" />
+    <LayoutPageHeader headline="Meine Spiele" />
     <div class="" v-if="userGames">
       <div class="relative overflow-hidden">
         <GenericContainerStyleRainbowBorder
