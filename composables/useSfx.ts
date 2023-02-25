@@ -15,17 +15,17 @@ export enum SFX {
 const audioMap = reactive(new Map<SFX, ReturnType<typeof transformAudio>>());
 audioMap.set(
   SFX.egg_found,
-  transformAudio(new Audio(egg_found), { volume: 0.7 })
+  transformAudio(new Audio(egg_found), { volume: 0.9 })
 );
 audioMap.set(SFX.button_click, transformAudio(new Audio(button_click)));
 audioMap.set(
   SFX.game_won,
-  transformAudio(new Audio(game_won), { volume: 0.5 })
+  transformAudio(new Audio(game_won), { volume: 0.8 })
 );
 audioMap.set(SFX.curtain_roll, transformAudio(new Audio(curtain_roll)));
 audioMap.set(
   SFX.plopp,
-  transformAudio(new Audio(plopp), { volume: 0.1, playBackRate: 0.7 })
+  transformAudio(new Audio(plopp), { volume: 0.05, playBackRate: 1 })
 );
 
 export const useSfx = () => {
