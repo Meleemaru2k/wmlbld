@@ -42,7 +42,11 @@
                             Spielen
                           </GenericButtonBasic>
                         </NuxtLink>
-                        <GenericButtonBasic theme="warning" class="w-32">
+                        <GenericButtonBasic
+                          :disabled="true"
+                          theme="warning"
+                          class="w-32"
+                        >
                           Editieren
                         </GenericButtonBasic>
                         <GenericButtonBasic

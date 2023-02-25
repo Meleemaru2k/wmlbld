@@ -16,17 +16,16 @@
   >
     <div
       v-show="loading"
-      class="flex flex-col items-center h-full w-10 bg-[rgba(0,0,0,0.2)] absolute left-0 top-0"
+      class="flex flex-col items-center h-full w-full bg-[rgba(0,0,0,0.66)] absolute left-0 top-0"
     >
       <span
-        class="absolute top-1/2 -translate-y-1/2 loading__cloud items-center text-xl"
-        >📨</span
+        class="absolute top-1/2 -translate-y-1/2 loading__cloud items-center text-2xl"
+        >🤔</span
       >
     </div>
-    <span v-show="!loading">
+    <span :style="loading ? 'color:rgba(0,0,0,0)' : ''">
       <slot /> <span v-if="confirmClick" class="text-xs">🖱️x2</span>
     </span>
-    <span v-show="loading">Lädt...</span>
   </button>
 </template>
 
@@ -82,7 +81,6 @@ const emit = defineEmits<{
 }
 
 .additional-styles {
-  @apply font-mono;
   &:hover {
     &:before {
       content: "";
@@ -111,10 +109,12 @@ const emit = defineEmits<{
 
 .loading__all {
   animation: loading linear 0.5s infinite alternate;
+  text-shadow: 0 0 0.5em #ffffff, 0 0 1em #000000;
 }
 .loading__cloud {
   animation: loading__cloud linear 1s infinite alternate;
   transform-origin: center;
+  text-shadow: 0 0 1px #000000, 0 0 4px #000000, 0 0 5px #FFFFFF;
 }
 
 @keyframes loading__cloud {
