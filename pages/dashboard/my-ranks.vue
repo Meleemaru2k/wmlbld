@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <LayoutPageHeader headline="Meine Platzierungen"> </LayoutPageHeader>
-    <div class="px-4 pb-4 mx-auto w-full md:max-w-lg">
+    <div class="px-4 pb-4 mx-auto w-full md:max-w-lg" v-if="gameData?.length">
       <ItemSelectFunky
         v-for="(game, index) in gameData"
         :key="index"
@@ -10,7 +10,7 @@
           'bg-slate-600': index % 2,
           'bg-slate-700': !(index % 2),
           'rounded-t-md': index === 0,
-          'rounded-b-md': index === gameData?.length - 1,
+          'rounded-b-md': index === gameData.length - 1,
         }"
         @click="goToGame(game.name)"
       >
