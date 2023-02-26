@@ -31,8 +31,9 @@ export class GameValidator {
     if (this.forbiddenGameNames.includes(game.name)) {
       game.name = game.name + this.randomIntFromInterval();
     }
-    if (game.name && !game.name.match(/^[a-zA-Z0-9 ]+$/)) {
-      game.name = game.name.replace(/[^a-zA-Z0-9 ]/g, "");
+    //only allow alphanumeric characters and spaces and umlauts (and similar)
+    if (game.name && !game.name.match(/^[a-zA-Z0-9À-ž ]+$/)) {
+      game.name = game.name.replace(/[^a-zA-Z0-9À-ž ]/g, "");
     }
     return game;
   }

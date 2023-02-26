@@ -1,9 +1,9 @@
 import { getServerSession } from "#auth";
-import { Egg, Game } from "@prisma/client";
+import { Game } from "@prisma/client";
 import { GameWithEggs } from "~~/types/game";
 import PrismaDB from "~~/utils/prismaDB";
 import { GameValidator } from "~~/utils/validators/game";
-import { base64FileExtension, base64ToBlob } from "~~/utils/imageConverter";
+
 export default eventHandler(async (event) => {
   const session = await getServerSession(event);
   if (!session || !session.user?.email) {
