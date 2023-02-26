@@ -34,6 +34,7 @@ model Game {
   description String? @db.VarChar(200)
   passphrase String? @db.VarChar(50)
   image String //64bit Img
+  imageThumbnail String @default("") //64bit Img
 
   eggs Egg[]
   scores GameUserScore[]
