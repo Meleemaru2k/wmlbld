@@ -13,6 +13,7 @@ export default defineNuxtConfig({
     pageTransition: { name: "page", mode: "out-in" },
   },
   nitro: {
+    compressPublicAssets: true,
     //storage: {
     //  usercontent: {
     //    driver: "fs",
