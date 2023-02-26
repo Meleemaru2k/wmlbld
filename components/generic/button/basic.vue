@@ -16,7 +16,7 @@
   >
     <div
       v-show="loading"
-      class="flex flex-col items-center h-full w-full bg-[rgba(0,0,0,0.66)] absolute left-0 top-0"
+      class="flex flex-col items-center h-full w-full bg-[rgba(0,0,0,0.33)] absolute left-0 top-0"
     >
       <span
         class="absolute top-1/2 -translate-y-1/2 loading__cloud items-center text-2xl"
