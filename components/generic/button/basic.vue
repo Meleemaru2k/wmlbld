@@ -5,8 +5,7 @@
       theme,
       { loading__all: loading },
       {
-        'saturate-0': disabled,
-        'brightness-75': disabled,
+        '!bg-gray-400': disabled,
         'cursor-not-allowed': disabled,
       },
     ]"
@@ -120,12 +119,14 @@ const emit = defineEmits<{
 @keyframes loading__cloud {
   0% {
     scale: 1;
+    rotate: 0deg;
   }
   50% {
-    scale: 1.1;
+    scale: 1.05;
+    rotate: 3deg;
   }
   100% {
-    scale: 1;
+    rotate: 0deg;
   }
 }
 @keyframes loading {
