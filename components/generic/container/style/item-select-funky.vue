@@ -9,9 +9,7 @@
 <style scoped lang="postcss">
 .cardwobble {
   @apply p-[1px] m-0 transition-all box-border h-full w-full;
-  &:hover,
-  :focus,
-  :active {
+  &:hover {
     @apply rounded-md p-[1px] m-0 scale-105;
     box-shadow: 0px 0px 0px rgba(255, 255, 255);
     animation: wobble 1s linear infinite;
