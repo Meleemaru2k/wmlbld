@@ -5,6 +5,8 @@
       <ItemSelectFunky
         v-for="(game, index) in gameData"
         :key="index"
+        role="button"
+        tabindex="0"
         class="flex flex-row mt-2 rounded-none overflow-hidden hover:!my-2 text-slate-50 shadow-md shadow-black cursor-pointer border-slate-900 border-[1px] border-solid"
         :class="{
           'bg-slate-600': index % 2,
@@ -13,6 +15,7 @@
           'rounded-b-md': index === gameData.length - 1,
         }"
         @click="goToGame(game.name)"
+        @keydown.enter="goToGame(game.name)"
       >
         <div class="flex flex-row gap-x-4">
           <div

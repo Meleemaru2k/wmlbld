@@ -7,27 +7,33 @@
         class="[&_>*]:mr-4 w-full flex flex-row flex-nowrap items-center link-container justify-start md:justify-center"
         v-if="status === 'authenticated'"
       >
-        <GenericButtonMenu :is-active="$route.path.includes('play-games')">
+        <GenericButtonMenu
+          tabindex="-1"
+          :is-active="$route.path.includes('play-games')"
+        >
           <NuxtLink to="/dashboard/play-games">🔍<br /></NuxtLink>
         </GenericButtonMenu>
 
         <GenericButtonMenu
+          tabindex="-1"
           :is-active="$route.path.includes('/dashboard/my-games')"
         >
           <NuxtLink to="/dashboard/my-games">📚</NuxtLink>
         </GenericButtonMenu>
         <GenericButtonMenu
+          tabindex="-1"
           :is-active="$route.path.includes('/dashboard/my-ranks')"
         >
           <NuxtLink to="/dashboard/my-ranks">🏅</NuxtLink></GenericButtonMenu
         >
         <GenericButtonMenu
+          tabindex="-1"
           :is-active="$route.path.includes('/dashboard/create-game')"
         >
           <NuxtLink to="/dashboard/create-game">✍️</NuxtLink>
         </GenericButtonMenu>
         <div class="shrink-0">
-          <GenericButtonMenu>
+          <GenericButtonMenu tabindex="-1">
             <NuxtLink to="/dashboard/my-profile">🥸</NuxtLink>
           </GenericButtonMenu>
         </div>
